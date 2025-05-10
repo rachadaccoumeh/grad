@@ -1,0 +1,226 @@
+/* Category Item Management Page Styles */
+
+.main-content {
+    position: absolute;
+    width: calc(100% - 300px);
+    left: 300px;
+    min-height: 100vh;
+    background: #fff;
+    transition: 0.5s;
+    padding: 20px;
+}
+
+.main-content h1 {
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.card h2 {
+    margin-bottom: 15px;
+    color: #333;
+    font-weight: 500;
+}
+
+.category-form {
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #333;
+}
+
+.form-group input[type="text"],
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.form-group textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-primary {
+    background: #24424c;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background: #24424c;
+}
+
+.btn-danger {
+    background: #f44336;
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background: #d32f2f;
+}
+
+/* Align Edit/Delete buttons side by side */
+.action-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.table th {
+    background: #f9f9f9;
+    font-weight: 600;
+    color: #333;
+}
+
+.table tr:hover {
+    background: #f5f5f5;
+}
+
+.category-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.alert {
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.alert-success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-danger {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Active navigation item styling */
+.navigation ul li.active {
+    background-color: #fff;
+}
+
+.navigation ul li.active a {
+    color: #24424c;
+}
+
+.navigation ul li.active a::before {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: -50px;
+    width: 50px;
+    height: 50px;
+    background-color: transparent;
+    border-radius: 50%;
+    box-shadow: 35px 35px 0 10px #fff;
+    pointer-events: none;
+}
+
+.navigation ul li.active a::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: -50px;
+    width: 50px;
+    height: 50px;
+    background-color: transparent;
+    border-radius: 50%;
+    box-shadow: 35px -35px 0 10px #fff;
+    pointer-events: none;
+}
+
+/* Responsive styles */
+@media (max-width: 991px) {
+    .navigation {
+        left: -300px;
+    }
+    .main-content {
+        width: 100%;
+        left: 0;
+    }
+    .navigation.active {
+        width: 300px;
+        left: 0;
+    }
+    .main-content.active {
+        width: calc(100% - 300px);
+        left: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .table td, .table th {
+        padding: 10px;
+    }
+    .btn {
+        padding: 8px 15px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-content {
+        padding: 10px;
+    }
+    .card {
+        padding: 15px;
+    }
+    .table {
+        display: block;
+        overflow-x: auto;
+    }
+    .category-image {
+        width: 60px;
+        height: 60px;
+    }
+}

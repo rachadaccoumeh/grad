@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RoomGenius Wishlist</title>
+  <link rel="stylesheet" href="gallery.css">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    
+
+    .empty-wishlist {
+      text-align: center;
+      padding: 40px;
+      color: #24424c;
+      background-color: #fff8e3;
+      border-radius: 10px;
+      margin: 20px auto;
+      max-width: 600px;
+    }
+    
+    .wishlist-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    
+    .continue-shopping {
+      background-color: #24424c;
+      color: #fff8e3;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+    
+    .continue-shopping:hover {
+      background-color: #fff8e3;
+      color: #24424c;
+      border: 1px solid #24424c;
+    }
+    
+    .wishlist-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    
+    .remove-from-wishlist {
+      background-color: #c9b99e;
+      color: #24424c;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .remove-from-wishlist:hover {
+      background-color: #aa9a7f;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="logo"><i class="fas fa-brain"></i>
+      <i class="fas fa-couch"></i>
+      RoomGenius
+    </div>
+
+    <div class="search-bar">
+      <input type="text" placeholder="Search here..." id="searchInput" />
+      <button onclick="searchProducts()"><i class="fas fa-search"></i></button>
+    </div>
+    <div class="right-section">
+      <div class="icons">
+        <span class="cart-container" onclick="toggleCart()">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="cart-count" id="cartCount">0</span>
+        </span>
+        <span class="wishlist-container" onclick="window.location.href='wishlist.html'">
+          <i class="fas fa-heart" style="color: red;"></i>
+          <span class="wishlist-count" id="wishlistCount">0</span>
+        </span>
+        <span class="user-container">
+          <i class="fas fa-user"></i>
+        </span>
+      </div>
+      <div class="ai-button-container">
+        <button class="ai-button" onclick="window.location.href='ai-page.html'">
+          <i class="fas fa-robot"></i> Ai room genie
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="cartTab">
+    <h1>Shopping Cart</h1>
+    <div class="listCart">
+      <div class="empty-cart">Your cart is empty</div>
+    </div>
+    <div class="btn">
+      <button class="close" onclick="toggleCart()">CLOSE</button>
+      <button class="checkOut">CHECK OUT</button>
+    </div>
+  </div>
+  <script src="cart.js"></script>
+  <script src="wishlist.js"></script>
+  <script src="gallery.js"></script>
+
+
+  <div class="main-content">
+    <div class="carousel-container">
+      <div class="carousel">
+        <div class="carousel-image"><img src="photos/kitchen.PNG" alt="Living Room Interior"></div>
+        <div class="carousel-image"><img src="photos/bedroom.png" alt="Home Office Interior"></div>
+        <div class="carousel-image"><img src="photos/garden.png" alt="Bedroom Interior"></div>
+        <div class="carousel-image"><img src="photos/diningroom.PNG" alt="Kitchen Interior"></div>
+        <div class="carousel-image"><img src="photos/clothingroom.PNG" alt="Dining Room Interior"></div>
+      </div>
+      <div class="carousel-overlay">
+        <h1>MY WISHLIST</h1>
+        <div class="breadcrumb">
+          <a href="home.php"><i class='bx bx-home'></i>Home</a><a href="gallery.php">/ Gallery </a> / Wishlist
+        </div>
+      </div>
+    </div>
+
+    <section class="products">
+      <div class="wishlist-header">
+        <h3>My Favorite Items</h3>
+        <button class="continue-shopping" onclick="window.location.href='gallery.php'">
+          Continue Shopping
+        </button>
+      </div>
+
+      <div class="product-grid" id="wishlistGrid">
+        <!-- Wishlist items will be dynamically added here -->
+      </div>
+      
+      <div id="emptyWishlist" class="empty-wishlist">
+        <h3><i class="fas fa-heart-broken" style="font-size: 30px; margin-bottom: 15px;"></i></h3>
+        <h3>Your wishlist is empty</h3>
+        <p>Add items to your wishlist by clicking the heart icon on products you love</p>
+        <button class="continue-shopping" onclick="window.location.href='gallery.php'" style="margin-top: 20px;">
+          Start Shopping
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Function to toggle cart visibility
+    function toggleCart() {
+      document.body.classList.toggle('showCart');
+    }
+    
+    // Function to load wishlist items from localStorage
+    function loadWishlist() {
+      const wishlistGrid = document.getElementById('wishlistGrid');
+      const emptyWishlist = document.getElementById('emptyWishlist');
+      const wishlistCount = document.getElementById('wishlistCount');
+      
+      // Get wishlist from localStorage
+      let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+      
+      // Update wishlist count
+      wishlistCount.textContent = wishlist.length;
+      
+      // Show/hide empty wishlist message
+      if (wishlist.length === 0) {
+        emptyWishlist.style.display = 'block';
+        wishlistGrid.style.display = 'none';
+        return;
+      } else {
+        emptyWishlist.style.display = 'none';
+        wishlistGrid.style.display = 'grid';
+      }
+      
+      // Clear existing items
+      wishlistGrid.innerHTML = '';
+      
+      // Add each wishlist item to the grid
+      wishlist.forEach(item => {
+        const productCard = document.createElement('div');
+        productCard.className = 'product-card';
+        productCard.setAttribute('data-id', item.id);
+        
+        productCard.innerHTML = `
+          <img src="${item.image}" alt="${item.title}" />
+          <h4>${item.title}</h4>
+          <div class="gallery-description">${item.description}</div>
+          <div class="gallery-meta">
+            <div class="price">${item.price}</div>
+            <div class="action-buttons">
+              <button class="remove-from-wishlist" onclick="removeFromWishlist('${item.id}')">
+                <i class="fas fa-trash"></i> Remove
+              </button>
+              <button class="add-to-cart" onclick="addToCart(this, '${item.id}')">Add to cart</button>
+            </div>
+          </div>
+        `;
+        
+        wishlistGrid.appendChild(productCard);
+      });
+    }
+    
+    // Function to remove an item from wishlist
+    function removeFromWishlist(id) {
+      // Get current wishlist
+      let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+      
+      // Filter out the item to remove
+      wishlist = wishlist.filter(item => item.id !== id);
+      
+      // Save updated wishlist
+      localStorage.setItem('wishlist', JSON.stringify(wishlist));
+      
+      // Show notification
+      const notification = document.createElement('div');
+      notification.textContent = `Item removed from wishlist!`;
+      notification.style.position = 'fixed';
+      notification.style.bottom = '20px';
+      notification.style.right = '20px';
+      notification.style.backgroundColor = '#24424c';
+      notification.style.color = '#fff8e3';
+      notification.style.padding = '10px 20px';
+      notification.style.borderRadius = '5px';
+      notification.style.zIndex = '1000';
+      notification.style.transition = 'opacity 0.5s';
+      
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        notification.style.opacity = '0';
+        setTimeout(() => {
+          document.body.removeChild(notification);
+        }, 500);
+      }, 2000);
+      
+      // Reload wishlist
+      loadWishlist();
+    }
+    
+    // Function to add item to cart from wishlist
+    function addToCart(button, id) {
+      // Get cart count and update it
+      const cartCount = document.getElementById('cartCount');
+      let currentCount = parseInt(cartCount.textContent);
+      cartCount.textContent = currentCount + 1;
+      
+      // Get wishlist item details
+      let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+      const item = wishlist.find(item => item.id === id);
+      
+      // Add to cart (in a real implementation, you would add to cart array/object)
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart.push(item);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      
+      // Visual feedback for adding to cart
+      button.textContent = "Added!";
+      setTimeout(() => {
+        button.textContent = "Add to cart";
+      }, 1500);
+      
+      // Show notification
+      const notification = document.createElement('div');
+      notification.textContent = `${item.title} added to cart!`;
+      notification.style.position = 'fixed';
+      notification.style.bottom = '20px';
+      notification.style.right = '20px';
+      notification.style.backgroundColor = '#24424c';
+      notification.style.color = '#fff8e3';
+      notification.style.padding = '10px 20px';
+      notification.style.borderRadius = '5px';
+      notification.style.zIndex = '1000';
+      notification.style.transition = 'opacity 0.5s';
+      
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        notification.style.opacity = '0';
+        setTimeout(() => {
+          document.body.removeChild(notification);
+        }, 500);
+      }, 2000);
+    }
+    
+    // Load wishlist when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      // Load wishlist items
+      loadWishlist();
+      
+      // Load cart count (if you have cart functionality)
+      const cartCount = document.getElementById('cartCount');
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cartCount.textContent = cart.length;
+    });
+  </script>
+</body>
+</html>

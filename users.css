@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.main {
+    margin-left: 300px;
+    padding: 30px;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.topbar h2 {
+    font-weight: 600;
+    font-size: 28px;
+    color: #24424c;
+}
+
+.details {
+    background: #fff;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.recentOrders {
+    overflow-x: auto;
+}
+
+.recentOrders table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+}
+
+.recentOrders thead {
+    background-color: #24424c;
+    color: #fff;
+}
+
+.recentOrders th,
+.recentOrders td {
+    text-align: left;
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.recentOrders tbody tr:hover {
+    background-color: #f0faff;
+}
+
+.recentOrders tbody tr td {
+    color: #333;
+}
+
+/* Responsive tweaks */
+@media screen and (max-width: 768px) {
+    .main {
+        margin-left: 0;
+        padding: 20px;
+    }
+
+    .topbar h2 {
+        font-size: 22px;
+    }
+
+    .recentOrders table {
+        font-size: 14px;
+    }
+}

@@ -1,0 +1,241 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+.nav {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    z-index: 10; /* Make sure it's above other elements */
+    display: flex;
+    align-items: center; /* Center logo vertically */
+    height: 40px; /* Reduced height for minimized navbar */
+}
+
+.logo {
+    font-size: 24px; /* Smaller font size for minimized logo */
+    color: #e4e4e4;
+    font-weight: 600;
+    display: flex;
+    align-items: center; /* Center logo text and icons vertically */
+}
+
+
+.logo i {
+    margin-right: 8px; /* Smaller space between icons and text */
+    color: #e4e4e4; /* Adjust the color of the icons */
+    font-size: 22px; /* Smaller icon size for minimized navbar */
+}
+body {
+    min-height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), 
+                url("background/IMG-7228.jpg") no-repeat center center/cover;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding-top: 60px; /* Adjusted padding-top to give space for minimized navbar */
+}
+/* Main container */
+.wrapper {
+    width: 600px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    padding: 30px;
+    color: #e4e4e4;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    height: auto;
+    max-height: 90vh;
+    overflow: hidden;
+}
+
+/* Form title */
+form h2 {
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #e4e4e4;
+}
+
+/* Input field container */
+.input-field {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+}
+
+/* Input box */
+.input-box {
+    position: relative;
+    width: 48%;
+    height: 50px;
+    border-bottom: 2px solid #e4e4e4;
+    margin-bottom: 20px;
+}
+
+/* Full-width elements */
+.input-field > div:nth-child(5),
+.input-field .terms-conditions {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+/* Input styling */
+.input-box input {
+    width: 100%;
+    padding: 10px;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    color: #e4e4e4;
+}
+
+.input-box input:focus {
+    border-color: #9b470f;
+}
+
+.input-box label {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    font-size: 16px;
+    font-weight: 500;
+    pointer-events: none;
+    transition: 0.3s ease;
+}
+
+/* Label animation */
+.input-box input:focus ~ label,
+.input-box input:valid ~ label {
+    top: -5px;
+    font-size: 14px;
+}
+
+/* Icon styling */
+.input-box .icon {
+    position: absolute;
+    top: 15px;
+    right: 0;
+    font-size: 18px;
+}
+
+/* Dropdown select */
+select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    background-color: transparent;
+    color: #e4e4e4;
+    transition: border-color 0.3s;
+}
+
+select:focus {
+    border-color: #9b470f;
+}
+
+/* Terms and conditions */
+.terms-conditions label input {
+    accent-color: #e4e4e4;
+    margin-right: 5px;
+}
+
+/* Submit button */
+.btn {
+    width: 100%;
+    height: 40px;
+    background: #9b470f;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 15px;
+    color: #e4e4e4;
+    font-weight: 500;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    transition: background 0.3s;
+}
+
+.btn:hover {
+    background-color: #b5541a;
+}
+
+.login-register {
+    width: 100%;
+    text-align: center;
+    margin-top: 15px;
+    font-size: 14px;
+    color: #e4e4e4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.login-register a {
+    color: #e4e4e4;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.login-register a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 620px) {
+    .wrapper {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .input-box {
+        width: 100%;
+    }
+}
+
+/* Password Strength Styles */
+#password-strength {
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 5px;
+    transition: color 0.3s;
+}
+
+/* Color indicators for password strength */
+#password-strength.weak {
+    color: red;
+}
+
+#password-strength.medium {
+    color: orange;
+}
+
+#password-strength.strong {
+    color: green;
+}
+
+/* Adjustments for password input focus */
+.input-box input:focus ~ #password-strength {
+    display: block;
+}
+
+/* Ensure password strength is hidden by default */
+#password-strength {
+    display: none;
+}

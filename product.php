@@ -26,6 +26,12 @@ $product_id = $name = $description = $price = $style = $category = $stock_quanti
 $product_id_err = $name_err = $description_err = $price_err = $style_err = $category_err = $stock_err = $image_err = "";
 $success_message = $error_message = "";
 
+// Set active tab - default to add-product unless manage-products is specifically requested
+$active_tab = "add-product";
+if (isset($_GET['tab']) && $_GET['tab'] == "manage-products") {
+  $active_tab = "manage-products";
+}
+
 // Process form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   
@@ -156,6 +162,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $success_message = "Product added successfully!";
         // Clear form fields after successful submission
         $product_id = $name = $description = $price = $style = $category = $stock_quantity = $is_featured = "";
+        
+        // Redirect to manage products tab after successful addition
+        $active_tab = "manage-products";
       } else {
         $error_message = "Something went wrong. Please try again later.";
       }
@@ -168,9 +177,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
 }
 
-// Fetch all products for display
-$sql = "SELECT * FROM products ORDER BY created_at DESC";
-$result = $conn->query($sql);
+// Initialize search variables
+$search_query = "";
+if (isset($_GET['search']) && !empty($_GET['search'])) {
+  $search_query = trim($_GET['search']);
+  // If search is being performed, set active tab to manage-products
+  $active_tab = "manage-products";
+}
+
+// Fetch products with search functionality
+if (!empty($search_query)) {
+  // Prepare the search query
+  $sql = "SELECT * FROM products WHERE 
+          product_id LIKE ? OR 
+          name LIKE ? OR 
+          description LIKE ? OR 
+          category LIKE ? OR 
+          style LIKE ? 
+          ORDER BY created_at DESC";
+          
+  if ($stmt = $conn->prepare($sql)) {
+    $search_param = "%$search_query%";
+    $stmt->bind_param("sssss", $search_param, $search_param, $search_param, $search_param, $search_param);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $stmt->close();
+  }
+} else {
+  // Fetch all products for display
+  $sql = "SELECT * FROM products ORDER BY created_at DESC";
+  $result = $conn->query($sql);
+}
 
 // Close connection
 $conn->close();
@@ -249,11 +286,14 @@ $conn->close();
                 <div class="toggle">
                     <i class='bx bx-menu'></i>
                 </div>
-                <div class="search">
-                    <label>
-                        <input type="text" placeholder="Search here">
-                        <i class='bx bx-search'></i>
-                    </label>
+                <div class="search" id="search-container">
+                    <form id="search-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="GET">
+                        <label>
+                            <input type="text" name="search" placeholder="Search products..." value="<?php echo htmlspecialchars($search_query); ?>">
+                            <input type="hidden" name="tab" value="manage-products">
+                            <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
+                        </label>
+                    </form>
                 </div>
                 <div class="user">
                     <img src="images/admin.png" alt="Admin">
@@ -264,8 +304,8 @@ $conn->close();
                 <div class="product-header">
                     <h2>Product Management</h2>
                     <div class="tabs">
-                        <button class="tab-btn active" data-tab="add-product">Add Product</button>
-                        <button class="tab-btn" data-tab="manage-products">Manage Products</button>
+                        <button class="tab-btn <?php echo $active_tab == 'add-product' ? 'active' : ''; ?>" data-tab="add-product">Add Product</button>
+                        <button class="tab-btn <?php echo $active_tab == 'manage-products' ? 'active' : ''; ?>" data-tab="manage-products">Manage Products</button>
                     </div>
                 </div>
 
@@ -276,8 +316,15 @@ $conn->close();
                 <?php if(!empty($error_message)): ?>
                     <div class="alert alert-danger"><?php echo $error_message; ?></div>
                 <?php endif; ?>
+                
+                <?php if(!empty($search_query)): ?>
+                    <div class="search-results">
+                        <h3>Search Results for: "<?php echo htmlspecialchars($search_query); ?>"</h3>
+                        <a href="product.php?tab=manage-products" class="clear-search">Clear Search</a>
+                    </div>
+                <?php endif; ?>
 
-                <div class="tab-content active" id="add-product">
+                <div class="tab-content <?php echo $active_tab == 'add-product' ? 'active' : ''; ?>" id="add-product">
                     <div class="form-card">
                         <h3>Add New Product</h3>
                         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
@@ -371,7 +418,7 @@ $conn->close();
                     </div>
                 </div>
 
-                <div class="tab-content" id="manage-products">
+                <div class="tab-content <?php echo $active_tab == 'manage-products' ? 'active' : ''; ?>" id="manage-products">
                     <div class="table-container">
                         <table>
                             <thead>
@@ -442,6 +489,24 @@ $conn->close();
                 // Add active class to clicked button and corresponding content
                 btn.classList.add('active');
                 document.getElementById(btn.getAttribute('data-tab')).classList.add('active');
+                
+                // Update URL to maintain tab state
+                const tabName = btn.getAttribute('data-tab');
+                if (tabName === 'manage-products') {
+                    // Only add the tab parameter for manage-products
+                    history.replaceState(null, null, '?tab=manage-products');
+                } else {
+                    // For add-product, remove the tab parameter
+                    history.replaceState(null, null, 'product.php');
+                }
+                
+                // Show/hide search box based on active tab
+                const searchContainer = document.getElementById('search-container');
+                if (tabName === 'manage-products') {
+                    searchContainer.style.display = 'block';
+                } else {
+                    searchContainer.style.display = 'none';
+                }
             });
         });
         
@@ -456,19 +521,32 @@ $conn->close();
                 fileChosen.textContent = 'No file chosen';
             }
         });
-// Function to edit product
- function editProduct(id) {
-    // Make sure we're using the correct path
-    window.location.href = "edit_product.php?id="+id;
-}
-
-// Function to delete product
-function deleteProduct(id) {
-    if (confirm("Are you sure you want to delete this product?")) {
-        // Redirect to delete product script with the product ID
-        window.location.href = "delete_product.php?id=" + id;
-}
-}   
+        
+        // Function to edit product
+        function editProduct(id) {
+            // Make sure we're using the correct path
+            window.location.href = "edit_product.php?id="+id;
+        }
+        
+        // Function to delete product
+        function deleteProduct(id) {
+            if (confirm("Are you sure you want to delete this product?")) {
+                // Redirect to delete product script with the product ID
+                window.location.href = "delete_product.php?id=" + id;
+            }
+        }
+        
+        // Hide or show search box based on active tab on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const activeTab = document.querySelector('.tab-btn.active').getAttribute('data-tab');
+            const searchContainer = document.getElementById('search-container');
+            
+            if (activeTab === 'manage-products') {
+                searchContainer.style.display = 'block';
+            } else {
+                searchContainer.style.display = 'none';
+            }
+        });
     </script>
 </body>
 </html>

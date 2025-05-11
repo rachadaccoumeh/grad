@@ -144,8 +144,11 @@ exit();
                 </div>
 
                 <div class="terms-conditions">
-                    <label><input type="checkbox" name="terms"> I agree to terms & conditions</label>
-                </div>
+    <label>
+        <input type="checkbox" name="terms" id="termsCheckbox"> I agree to 
+        <a href="#" id="openTerms">terms & conditions</a>
+    </label>
+</div>
 
                 <button type="submit" class="btn" value="signup" name="submit">Sign Up</button>
                 <div class="login-register">
@@ -156,6 +159,37 @@ exit();
         </form>
     </div>
 </div>
+
+<div id="termsModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Terms and Conditions</h2>
+    <div class="terms-content">
+      <h3>Welcome to RoomGenius!</h3>
+      <p>These terms and conditions outline the rules and regulations for the use of RoomGenius's Website.</p>
+      
+      <h4>1. Acceptance of Terms</h4>
+      <p>By accessing this website, you accept these terms and conditions in full. If you disagree with these terms and conditions or any part of them, you must not use this website.</p>
+      
+      <h4>2. User Accounts</h4>
+      <p>When you create an account with us, you guarantee that the information you provide is accurate, complete, and current at all times. Inaccurate, incomplete, or obsolete information may result in the immediate termination of your account on the Service.</p>
+      
+      <h4>3. Privacy Policy</h4>
+      <p>Your use of our service is also governed by our Privacy Policy, which is incorporated by reference into these Terms and Conditions.</p>
+      
+      <h4>4. Intellectual Property</h4>
+      <p>The Service and its original content, features, and functionality are and will remain the exclusive property of RoomGenius. The Service is protected by copyright, trademark, and other laws.</p>
+      
+      <h4>5. Termination</h4>
+      <p>We may terminate or suspend your account and bar access to the Service immediately, without prior notice or liability, under our sole discretion, for any reason whatsoever, including but not limited to a breach of the Terms.</p>
+    </div>
+    <button id="acceptTerms" class="btn">I Accept</button>
+  </div>
+</div>
+
+
+
+</body>
 
 <script>
 function checkPasswordStrength(password) {
@@ -181,7 +215,45 @@ function checkPasswordStrength(password) {
         strengthText.style.color = 'green';
     }
 }
-</script>
 
-</body>
-</html>
+
+
+// Get the modal
+const modal = document.getElementById("termsModal");
+
+// Get the button that opens the modal
+const termsLink = document.getElementById("openTerms");
+
+// Get the <span> element that closes the modal
+const closeBtn = document.getElementsByClassName("close")[0];
+
+// Get the accept button
+const acceptBtn = document.getElementById("acceptTerms");
+
+// Get the checkbox
+const termsCheckbox = document.getElementById("termsCheckbox");
+
+// When the user clicks on the terms link, open the modal
+termsLink.onclick = function(e) {
+    e.preventDefault();
+    modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+closeBtn.onclick = function() {
+    modal.style.display = "none";
+}
+
+// When the user clicks on accept button
+acceptBtn.onclick = function() {
+    termsCheckbox.checked = true;
+    modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>

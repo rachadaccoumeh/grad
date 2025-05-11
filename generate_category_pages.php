@@ -498,7 +498,7 @@ $product_counts = $config['verify_database'] ? getCategoryProductCounts() : [];
         
         <?php if (!empty($stats['missing_db'])): ?>
         <div class="warning">
-            <h3>⚠️ Categories found in database but missing in configuration:</h3>
+            <h3>⚠ Categories found in database but missing in configuration:</h3>
             <ul>
                 <?php foreach ($stats['missing_db'] as $missing): ?>
                 <li><?php echo htmlspecialchars($missing); ?></li>
@@ -522,7 +522,7 @@ $product_counts = $config['verify_database'] ? getCategoryProductCounts() : [];
             <h3><i class='bx <?php echo $icon; ?>'></i> <?php echo htmlspecialchars($category); ?></h3>
             <p><?php echo htmlspecialchars(substr($details['description'], 0, 100) . '...'); ?></p>
             <div class="status <?php echo $file_exists ? 'success' : 'warning'; ?>">
-                <?php echo $file_exists ? '✓ File created' : '⚠️ File not created'; ?>
+                <?php echo $file_exists ? '✓ File created' : '⚠ File not created'; ?>
             </div>
             <?php if (isset($product_counts[$category])): ?>
             <div class="product-count <?php echo $product_counts[$category] == 0 ? 'empty-count' : ''; ?>">

@@ -46,7 +46,7 @@ body {
 /* Main container */
 .wrapper {
     width: 600px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.2) !important;
     backdrop-filter: blur(10px);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     padding: 30px;
@@ -95,11 +95,15 @@ form h2 {
 .input-box input {
     width: 100%;
     padding: 10px;
-    background: transparent;
+    background: transparent !important; /* Force transparent background */
     border: none;
     outline: none;
     font-size: 16px;
     color: #e4e4e4;
+    box-shadow: none; /* Remove any default shadow */
+    -webkit-appearance: none; /* Remove default styling on some browsers */
+    -moz-appearance: none;
+    appearance: none;
 }
 
 .input-box input:focus {
@@ -133,22 +137,75 @@ form h2 {
 }
 
 /* Dropdown select */
+
 select {
     width: 100%;
     padding: 10px;
     font-size: 16px;
-    border: 2px solid #ccc;
+    border: 2px solid #e4e4e4;
     border-radius: 5px;
     outline: none;
-    background-color: transparent;
-    color: #e4e4e4;
+     background-color: #ffffff1a !important; /* Match wrapper background */
+    color: #e4e4e4; /* Light text color */
     transition: border-color 0.3s;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+/* Styling for dropdown options */
+select option {
+    background-color: #333; /* Dark background for options */
+    color: #e4e4e4; /* Light text for options */
+    padding: 10px;
+}
+/* Hover state for options */
+select option:hover {
+    background-color: #555;
+}
+/* Add this to ensure no browser default styles are applied */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px transparent inset !important;
+    -webkit-text-fill-color: #e4e4e4 !important;
+    transition: background-color 5000s ease-in-out 0s;
 }
 
 select:focus {
     border-color: #9b470f;
+     box-shadow: 0 0 5px rgba(155, 71, 15, 0.5);
+}
+/* Style for the dropdown arrow */
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='%23e4e4e4' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 10px top 50%;
+    padding-right: 30px;
 }
 
+/* Remove select's default arrow in IE */
+select::-ms-expand {
+    display: none;
+}
+
+/* Placeholder styling */
+select option[value=""][disabled] {
+    color: #999;
+}
+
+/* Add some animation on focus */
+@keyframes pulse {
+    0% { border-color: #e4e4e4; }
+    50% { border-color: #9b470f; }
+    100% { border-color: #e4e4e4; }
+}
+
+select:focus {
+    animation: pulse 1.5s infinite;
+}
 /* Terms and conditions */
 .terms-conditions label input {
     accent-color: #e4e4e4;
@@ -238,4 +295,151 @@ select:focus {
 /* Ensure password strength is hidden by default */
 #password-strength {
     display: none;
+}
+
+
+
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    position: relative;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(15px);
+    margin: 5% auto;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    width: 80%;
+    max-width: 800px;
+    max-height: 80vh;
+    color: #e4e4e4;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    animation: modalFadeIn 0.3s ease-in-out;
+}
+
+@keyframes modalFadeIn {
+    from {opacity: 0; transform: translateY(-20px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: #e4e4e4;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.close:hover {
+    color: #9b470f;
+}
+
+.terms-content {
+    max-height: 50vh;
+    overflow-y: auto;
+    padding: 15px 10px;
+    margin: 15px 0;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 5px;
+    line-height: 1.6;
+}
+
+.terms-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.terms-content::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+}
+
+.terms-content::-webkit-scrollbar-thumb {
+    background: rgba(155, 71, 15, 0.7);
+    border-radius: 4px;
+}
+
+.terms-content::-webkit-scrollbar-thumb:hover {
+    background: #9b470f;
+}
+
+.terms-content h3 {
+    margin-bottom: 15px;
+    color: #e4e4e4;
+    font-size: 20px;
+}
+
+.terms-content h4 {
+    margin: 20px 0 10px;
+    color: #e4e4e4;
+    font-size: 18px;
+}
+
+.terms-content p {
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+#acceptTerms {
+    display: block;
+    width: 200px;
+    margin: 20px auto 0;
+    padding: 10px;
+    background: #9b470f;
+    color: #e4e4e4;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#acceptTerms:hover {
+    background-color: #b5541a;
+    transform: translateY(-2px);
+}
+
+/* Style for the terms link in the form */
+#openTerms {
+    color: #e4e4e4;
+    text-decoration: underline;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+#openTerms:hover {
+    color: #9b470f;
+}
+
+/* Checkbox styling */
+input[type="checkbox"] {
+    cursor: pointer;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 90%;
+        margin: 10% auto;
+        padding: 20px;
+    }
+    
+    .terms-content {
+        max-height: 40vh;
+    }
 }

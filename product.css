@@ -22,6 +22,7 @@
     padding: 0 30px;
     background: #fff;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative; /* Important for absolute positioning */
 }
 
 .toggle {
@@ -34,35 +35,33 @@
     font-size: 2.5rem;
     cursor: pointer;
     color: #24424c;
+    z-index: 1; /* Ensure it stays above other elements */
 }
 
+/* Center the search container */
 .search {
-    position: relative;
-    width: 400px;
-    margin: 0 10px;
-}
-
-.search label {
-    position: relative;
-    width: 100%;
-}
-
-.search label input {
-    width: 100%;
-    height: 40px;
-    border-radius: 40px;
-    padding: 5px 20px;
-    padding-left: 40px;
-    font-size: 16px;
-    outline: none;
-    border: 1px solid #ccc;
-}
-
-.search label i {
     position: absolute;
-    top: 12px;
-    left: 15px;
-    color: #24424c;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+    max-width: calc(100% - 160px); /* Ensure it doesn't overlap with toggle and user */
+    z-index: 0; /* Place it behind other elements if they overlap */
+}
+
+/* Search input styling */
+.search input {
+    width: 100%;
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.search input:focus {
+    border-color: #24424c;
+    box-shadow: 0 0 5px rgba(36, 66, 76, 0.2);
+    outline: none;
 }
 
 .user {
@@ -72,6 +71,7 @@
     border-radius: 50%;
     overflow: hidden;
     cursor: pointer;
+    z-index: 1; /* Ensure it stays above other elements */
 }
 
 .user img {
@@ -81,6 +81,133 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+/* Responsive styling for search */
+@media (max-width: 991px) {
+    .search {
+        width: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .search {
+        width: 250px;
+    }
+}
+
+@media (max-width: 480px) {
+    .search {
+        width: 150px;
+    }
+    
+    .topbar {
+        padding: 0 15px;
+    }
+}
+
+/* Responsive styling for search container */
+@media (max-width: 768px) {
+    #search-container {
+        width: 250px;
+    }
+}
+
+@media (max-width: 480px) {
+    #search-container {
+        width: 150px;
+    }
+}
+
+/* Improved search results styling */
+.search-results {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f0f5ff;
+    border-radius: 5px;
+    border-left: 4px solid #24424c;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.search-results h3 {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+    font-weight: 500;
+}
+
+.clear-search {
+    background-color: #24424c;
+    color: white;
+    border: none;
+    padding: 6px 15px;
+    border-radius: 4px;
+    font-size: 13px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.clear-search:hover {
+    background-color: #1c343c;
+    transform: translateY(-1px);
+}
+
+/* Animation for search appearance/disappearance */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
+.search-show {
+    display: block;
+    animation: fadeIn 0.3s forwards;
+}
+
+.search-hide {
+    animation: fadeOut 0.3s forwards;
+}
+
+/* Highlight search results */
+.highlight-row {
+    background-color: #f0f7ff !important;
+    transition: background-color 0.3s ease;
+}
+
+.highlight-row:hover {
+    background-color: #e0efff !important;
+}
+
+/* Improved no results found styling */
+.no-data {
+    text-align: center;
+    padding: 30px 20px;
+    color: #666;
+    font-style: italic;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    margin: 20px 0;
 }
 
 /* Product Content Styles */
@@ -321,6 +448,7 @@ tbody tr:hover {
 .actions {
     display: flex;
     gap: 8px;
+    justify-content: center;
 }
 
 button.edit,
@@ -382,8 +510,8 @@ button.delete:hover {
     color: #721c24;
     border: 1px solid #f5c6cb;
 }
-/* Add these styles to your product.css file */
 
+/* Action links styling */
 .actions {
     display: flex;
     gap: 10px;
@@ -423,7 +551,19 @@ button.delete:hover {
     font-size: 1.2rem;
 }
 
-/* Responsive styling */
+/* Responsive styling for search results */
+@media (max-width: 768px) {
+    .search-results {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .search-results h3 {
+        margin-bottom: 10px;
+    }
+}
+
+/* Responsive styling for overall layout */
 @media (max-width: 991px) {
     .navigation {
         left: -300px;
@@ -446,9 +586,6 @@ button.delete:hover {
 }
 
 @media (max-width: 768px) {
-    .search {
-        width: 250px;
-    }
     .product-header {
         flex-direction: column;
         align-items: flex-start;
@@ -464,12 +601,6 @@ button.delete:hover {
 }
 
 @media (max-width: 480px) {
-    .topbar {
-        padding: 0 15px;
-    }
-    .search {
-        width: 150px;
-    }
     .form-card {
         padding: 20px 15px;
     }
@@ -478,6 +609,6 @@ button.delete:hover {
     }
     th, td {
         padding: 10px;
-        font-size:14px;
+        font-size: 14px;
+    }
 }
-                }

@@ -2,29 +2,14 @@
 session_start();
 include('db.php');
 
-// Enable error reporting for debugging
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 if (isset($_POST['reset_request'])) {
     $email = $_POST['email'];
     
     // Check if email exists in the database
     $sql = "SELECT * FROM users WHERE email = ?";
     $stmt = $conn->prepare($sql);
-    
-    if (!$stmt) {
-        echo "Prepare failed: (" . $conn->errno . ") " . $conn->error;
-        exit;
-    }
-    
     $stmt->bind_param("s", $email);
-    
-    if (!$stmt->execute()) {
-        echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-        exit;
-    }
-    
+    $stmt->execute();
     $result = $stmt->get_result();
     
     if ($result->num_rows > 0) {
@@ -39,47 +24,17 @@ if (isset($_POST['reset_request'])) {
         // Delete any existing tokens for this user
         $delete_sql = "DELETE FROM password_reset WHERE user_id = ?";
         $delete_stmt = $conn->prepare($delete_sql);
-        
-        if (!$delete_stmt) {
-            echo "Prepare failed for delete: (" . $conn->errno . ") " . $conn->error;
-            exit;
-        }
-        
         $delete_stmt->bind_param("i", $user_id);
-        
-        if (!$delete_stmt->execute()) {
-            echo "Delete execute failed: (" . $delete_stmt->errno . ") " . $delete_stmt->error;
-            exit;
-        }
+        $delete_stmt->execute();
         
         // Store token in database
         $insert_sql = "INSERT INTO password_reset (user_id, token, expiry) VALUES (?, ?, ?)";
         $insert_stmt = $conn->prepare($insert_sql);
-        
-        if (!$insert_stmt) {
-            echo "Prepare failed for insert: (" . $conn->errno . ") " . $conn->error;
-            exit;
-        }
-        
         $insert_stmt->bind_param("iss", $user_id, $token, $expiry);
         
-        if (!$insert_stmt->execute()) {
-            echo "Insert execute failed: (" . $insert_stmt->errno . ") " . $insert_stmt->error;
-            exit;
-        }
-        
-        // For debugging: Let's confirm the record was inserted
-        echo "<div style='background-color: #f5f5f5; padding: 10px; margin-bottom: 15px; border-left: 5px solid #0070f3;'>
-            <p><strong>DEBUG:</strong> Record inserted into password_reset table with:</p>
-            <ul>
-                <li>user_id: {$user_id}</li>
-                <li>token: {$token}</li>
-                <li>expiry: {$expiry}</li>
-            </ul>
-        </div>";
-        
-        // Create reset link
-        $reset_link = "http://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . "/reset_password.php?token=" . $token;
+        if ($insert_stmt->execute()) {
+            // Create reset link
+            $reset_link = "http://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . "/reset_password.php?token=" . $token;
             
             // DEVELOPMENT MODE: Display link on screen instead of sending email
             // In production, you would use a proper email sending service
@@ -113,7 +68,7 @@ if (isset($_POST['reset_request'])) {
         // Don't reveal if email exists or not (security best practice)
         $success_message = "If your email is registered, you will receive a password reset link.";
     }
-
+}
 ?>
 
 <!DOCTYPE html>
@@ -213,7 +168,7 @@ if (isset($_POST['reset_request'])) {
                     </div>
                 </form>
                 
-                
+
             </div>
         </div>
     </div>

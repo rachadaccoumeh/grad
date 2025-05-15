@@ -130,7 +130,12 @@ if (isset($_POST['reset_password'])) {
             <div class="text-sci">
                 <h2>Reset Password<br><span>Create a new password</span></h2>
                 <p>Choose a strong password to secure your RoomGenius account.</p>
-               
+                <div class="social-icons">
+                    <a href="#"><i class='bx bxl-linkedin'></i></a>
+                    <a href="#"><i class='bx bxl-facebook'></i></a>
+                    <a href="#"><i class='bx bxl-instagram'></i></a>
+                    <a href="#"><i class='bx bxl-tiktok'></i></a>
+                </div>
             </div>
         </div>
 

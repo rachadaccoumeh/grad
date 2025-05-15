@@ -1,3 +1,15 @@
+<?php
+session_start();
+require_once('category_template.php');
+
+// Define category specific variables
+$category_name = "Game Room";
+$page_title = "Game Room Collection";
+$category_description = "Create the ultimate entertainment space with our gaming furniture, media centers, and recreational accessories for hours of fun and relaxation.";
+
+// Display the kitchen category page
+displayCategoryPage($category_name, $page_title, $category_description);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -809,24 +821,7 @@ body.showCart .products {
           </div>
         </div>
       </div>
-      <div class="product-card" data-style="Modern" data-price="1950" data-size="Medium" data-date="2025-03-10">
-        <div class="gallery-image">
-          <img src="grphoto/G11.JPG" alt="Esports Battle Station">
-        </div>
-        <div class="gallery-info">
-          <div class="gallery-title">
-            <h4>Esports Battle Station</h4>
-          </div>
-          <div class="gallery-description">Competition-ready gaming setup with high-performance desk featuring mousepad surface, adjustable monitor arms, premium gaming chair with team color accents, and dedicated stream control deck mount.</div>
-          <div class="gallery-meta">
-            <div class="price">$1,950</div>
-            <div class="action-buttons">
-              <button class="favorite-btn">♡</button>
-              <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
-            </div>
-          </div>
-        </div>
-      </div>
+      
       <div class="product-card" data-style="Sporty" data-price="1400" data-size="Medium" data-date="2025-02-15">
         <div class="gallery-image">
           <img src="grphoto/G12.JPG" alt="Flight Sim Cockpit">

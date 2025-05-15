@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -757,13 +758,126 @@
       
       // Place order button click handler
       placeOrderBtn.addEventListener('click', function() {
-        const fullName = document.getElementById('fullName').value;
-        const email = document.getElementById('email').value;
-        const address = document.getElementById('address').value;
-        const city = document.getElementById('city').value;
-        const zipCode = document.getElementById('zipCode').value;
-        const country = document.getElementById('country').value;
-        const phone = document.getElementById('phone').value;
+        placeOrderBtn.addEventListener('click', function() {
+  const fullName = document.getElementById('fullName').value;
+  const email = document.getElementById('email').value;
+  const address = document.getElementById('address').value;
+  const city = document.getElementById('city').value;
+  const zipCode = document.getElementById('zipCode').value;
+  const country = document.getElementById('country').value;
+  const phone = document.getElementById('phone').value;
+
+
+   // Get location coordinates
+  const locationCoords = marker.getLatLng();
+  const latitude = locationCoords.lat;
+  const longitude = locationCoords.lng;
+  
+  // Check if card payment is selected
+  const isCardPayment = document.getElementById('cardPayment').checked;
+  const paymentMethod = isCardPayment ? 'Credit Card' : 'Cash on Delivery';
+  
+  // Basic validation for all fields
+  if (!fullName || !email || !address || !city || !zipCode || !country || !phone) {
+    alert('Please fill in all required shipping information fields.');
+    return;
+  }
+  
+  // Validate card details only if card payment is selected
+  if (isCardPayment) {
+    const cardName = document.getElementById('cardName').value;
+    const cardNumber = document.getElementById('cardNumber').value;
+    const expiry = document.getElementById('expiry').value;
+    const cvv = document.getElementById('cvv').value;
+    
+    if (!cardName || !cardNumber || !expiry || !cvv) {
+      alert('Please fill in all card details.');
+      return;
+    }
+  }
+  
+ 
+  
+  // Check if location is selected
+  if (!locationCoords) {
+    alert('Please share or select your location on the map.');
+    return;
+  }
+  
+  // Generate random order ID
+  const orderId = 'RG' + Math.floor(100000 + Math.random() * 900000);
+  document.getElementById('orderId').textContent = orderId;
+  
+  // Get cart items and totals
+  let cart = [];
+  try {
+    const savedCart = localStorage.getItem('roomGeniusCart');
+    if (savedCart) {
+      cart = JSON.parse(savedCart);
+    }
+  } catch (e) {
+    console.error("Error parsing cart:", e);
+  }
+  
+  // Calculate totals
+  let subtotal = 0;
+  cart.forEach(item => {
+    subtotal += item.price * item.quantity;
+  });
+  
+  const shipping = 0.00; // Free shipping
+  const tax = subtotal * 0.08; // 8% tax
+  const total = subtotal + shipping + tax;
+  
+  // Prepare order data
+  const orderData = {
+    orderId: orderId,
+    fullName: fullName,
+    email: email,
+    address: address,
+    city: city,
+    zipCode: zipCode,
+    governorate: country,
+    phone: phone,
+    latitude: latitude,
+    longitude: longitude,
+    paymentMethod: paymentMethod,
+    subtotal: subtotal.toFixed(2),
+    tax: tax.toFixed(2),
+    shipping: shipping.toFixed(2),
+    total: total.toFixed(2),
+    items: cart,
+    orderStatus: 'Pending',
+    paymentStatus: isCardPayment ? 'Paid' : 'Unpaid'
+  };
+  
+  // Send order data to the server
+  fetch('save_order.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(orderData)
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      // Clear the cart in localStorage
+      localStorage.removeItem('roomGeniusCart');
+      
+      // Show order confirmation
+      checkoutContainer.style.display = 'none';
+      orderConfirmation.style.display = 'block';
+    } else {
+      alert('There was an error processing your order. Please try again.');
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    alert('There was an error processing your order. Please try again.');
+  });
+});
+
         
         // Check if card payment is selected
         const isCardPayment = document.getElementById('cardPayment').checked;
@@ -787,12 +901,7 @@
           }
         }
         
-        // Email validation
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-          alert('Please enter a valid email address.');
-          return;
-        }
+        
         
         // Check if location is selected
         const locationStatus = document.getElementById('locationStatus').textContent;

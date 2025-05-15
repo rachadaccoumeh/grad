@@ -1,3 +1,15 @@
+<?php
+session_start();
+require_once('category_template.php');
+
+// Define category specific variables
+$category_name = "Prayer Room";
+$page_title = "Prayer Room Collection";
+$category_description = "Design a peaceful and reverent prayer space with our carefully selected furniture, storage options, and spiritual decor elements.";
+
+// Display the kitchen category page
+displayCategoryPage($category_name, $page_title, $category_description);
+?>
 <!DOCTYPE html>
 <html lang="en">
 

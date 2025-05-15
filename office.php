@@ -629,60 +629,9 @@ body.showCart .products {
 
   <section class="products">
     <div class="product-grid" id="productGrid">
-      <div class="product-card" data-style="Modern" data-price="6800" data-size="Medium" data-date="2025-03-15" data-id="O2">
-        <div class="gallery-image">
-          <img src="ophoto/O1.JPG" alt="Modern Office Desk">
-        </div>
-        <div class="gallery-info">
-          <div class="gallery-title">
-            <h4>Ergonomic Executive Workspace</h4>
-          </div>
-          <div class="gallery-description">Contemporary office setup featuring an electric standing desk with memory settings, ergonomic chair with lumbar support, and modular storage solutions with cable management system.</div>
-          <div class="gallery-meta">
-            <div class="price">$6,800</div>
-            <div class="action-buttons">
-              <button class="favorite-btn">♡</button>
-              <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="product-card" data-style="Traditional" data-price="9200" data-size="Large" data-date="2024-12-10" data-id="O3">
-        <div class="gallery-image">
-          <img src="ophoto/O2.JPG" alt="Traditional Office Suite">
-        </div>
-        <div class="gallery-info">
-          <div class="gallery-title">
-            <h4>Heritage Mahogany Office Suite</h4>
-          </div>
-          <div class="gallery-description">Classic office collection featuring solid mahogany executive desk with leather inlay, matching credenza with file drawers, and traditional bookcase with tempered glass doors.</div>
-          <div class="gallery-meta">
-            <div class="price">$9,200</div>
-            <div class="action-buttons">
-              <button class="favorite-btn">♡</button>
-              <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="product-card" data-style="Industrial" data-price="4500" data-size="Medium" data-date="2025-02-20" data-id="O4">
-        <div class="gallery-image">
-          <img src="ophoto/O3.JPG" alt="Industrial Office Space">
-        </div>
-        <div class="gallery-info">
-          <div class="gallery-title">
-            <h4>Urban Loft Office Collection</h4>
-          </div>
-          <div class="gallery-description">Industrial workspace featuring reclaimed wood and steel desk with built-in power outlets, pipe-frame bookshelves, and adjustable task lighting with exposed bulbs.</div>
-          <div class="gallery-meta">
-            <div class="price">$4,500</div>
-            <div class="action-buttons">
-              <button class="favorite-btn">♡</button>
-              <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
-            </div>
-          </div>
-        </div>
-      </div>
+      
+      
+      
       <div class="product-card" data-style="Minimalist" data-price="3900" data-size="Small" data-date="2025-04-01" data-id="O5">
         <div class="gallery-image">
           <img src="ophoto/O4.JPG" alt="Minimalist Office Setup">
@@ -719,42 +668,8 @@ body.showCart .products {
           </div>
         </div>
       </div>
-      <div class="product-card" data-style="Modern" data-price="7900" data-size="Medium" data-date="2025-03-05" data-id="O7">
-        <div class="gallery-image">
-          <img src="ophoto/O6.JPG" alt="Collaborative Workspace">
-        </div>
-        <div class="gallery-info">
-          <div class="gallery-title">
-            <h4>Collaborative Hub Workstation</h4>
-          </div>
-          <div class="gallery-description">Modern collaborative workspace with height-adjustable desks, acoustic privacy panels, ergonomic seating for four, and integrated technology hub with wireless charging stations.</div>
-          <div class="gallery-meta">
-            <div class="price">$7,900</div>
-            <div class="action-buttons">
-              <button class="favorite-btn">♡</button>
-              <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="product-card" data-style="Executive" data-price="12300" data-size="Large" data-date="2024-12-20" data-id="O8">
-        <div class="gallery-image">
-          <img src="ophoto/O7.JPG" alt="Executive Corner Office">
-        </div>
-        <div class="gallery-info">
-          <div class="gallery-title">
-            <h4>Corner Executive Office Package</h4>
-          </div>
-          <div class="gallery-description">Complete corner office solution with L-shaped executive desk, premium ergonomic chair, visitor seating area, custom storage wall, and integrated meeting space with presentation capabilities.</div>
-          <div class="gallery-meta">
-            <div class="price">$12,300</div>
-            <div class="action-buttons">
-              <button class="favorite-btn">♡</button>
-              <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
-            </div>
-          </div>
-        </div>
-      </div>
+      
+      
       <div class="product-card" data-style="Industrial" data-price="5600" data-size="Medium" data-date="2025-02-10" data-id="O9">
         <div class="gallery-image">
           <img src="ophoto/O8.JPG" alt="Industrial Team Space">
@@ -773,24 +688,7 @@ body.showCart .products {
           </div>
         </div>
       </div>
-      <div class="product-card" data-style="Minimalist" data-price="4200" data-size="Small" data-date="2025-01-25" data-id="O10">
-        <div class="gallery-image">
-          <img src="ophoto/O9.JPG" alt="Minimalist Creative Office">
-        </div>
-        <div class="gallery-info">
-          <div class="gallery-title">
-            <h4>Creative Minimalist Studio</h4>
-          </div>
-          <div class="gallery-description">Clean, distraction-free creative space with streamlined desk, ergonomic mesh chair, floating shelves, and modular storage cubes in white and natural wood finishes.</div>
-          <div class="gallery-meta">
-            <div class="price">$4,200</div>
-            <div class="action-buttons">
-              <button class="favorite-btn">♡</button>
-              <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
-            </div>
-          </div>
-        </div>
-      </div>
+      
       <div class="product-card" data-style="Traditional" data-price="8500" data-size="Medium" data-date="2025-01-05" data-id="O11">
         <div class="gallery-image">
           <img src="ophoto/O10.JPG" alt="Classic Home Office">
@@ -827,25 +725,7 @@ body.showCart .products {
           </div>
         </div>
       </div>
-      <div class="product-card" data-style="Minimalist" data-price="3600" data-size="Small" data-date="2025-02-15" data-id="O13">
-        <div class="gallery-image">
-          <img src="ophoto/O12.JPG" alt="Minimalist Office Nook">
-        </div>
-        <div class="gallery-info">
-          <div class="gallery-title">
-            <h4>Scandinavian Office Nook</h4>
-          </div>
-          <div class="gallery-description">Scandinavian-inspired workspace featuring light wood desk with hairpin legs, ergonomic bent plywood chair, minimalist wall shelving, and functional task lighting in matte white finish.</div>
-          <div class="gallery-meta">
-            <div class="price">$3,600</div>
-            <div class="action-buttons">
-              <button class="favorite-btn">♡</button>
-              <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+      
   </section>
 
   <script>

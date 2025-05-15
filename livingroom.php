@@ -643,24 +643,7 @@ body.showCart .products {
   <section class="products">
 
     <div class="product-grid" id="productGrid">
-      <div class="product-card" data-style="Industrial" data-price="10000" data-size="Medium" data-date="2025-01-15" data-id="L2">
-        <div class="gallery-image">
-          <img src="lrphoto/Industrial1.JPG" alt="industrial lr">
-        </div>
-        <div class="gallery-info">
-          <div class="gallery-title">
-            <h4>industrial living room </h4>
-          </div>
-          <div class="gallery-description">Industrial-style living room with a large gray sofa, wooden crate coffee tables, open shelving, and lush green plants.</div>
-          <div class="gallery-meta">
-            <div class="price">$10,000</div>
-            <div class="action-buttons">
-              <button class="favorite-btn">♡</button>
-              <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
-            </div>
-          </div>
-        </div>
-      </div>
+      
       <div class="product-card" data-style="Industrial" data-price="4880" data-size="Medium" data-date="2024-12-10" data-id="L3">
         <div class="gallery-image">
           <img src="lrphoto/Industrial2.JPG" alt="industrial lr">
@@ -751,24 +734,7 @@ body.showCart .products {
           </div>
         </div>
       </div>
-      <div class="product-card" data-style="Modern" data-price="6500" data-size="Large" data-date="2025-03-01" data-id="L8">
-        <div class="gallery-image">
-          <img src="lrphoto/Modern3.JPG" alt="Modern blue livingroom">
-        </div>
-        <div class="gallery-info">
-          <div class="gallery-title">
-            <h4>Modern blue LR</h4>
-          </div>
-          <div class="gallery-description">blue living room with goldern view and green plants and with a small table and a painting with colors blue and white </div>
-          <div class="gallery-meta">
-            <div class="price">$6,500</div>
-            <div class="action-buttons">
-              <button class="favorite-btn">♡</button>
-              <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
-            </div>
-          </div>
-        </div>
-      </div>
+      
       
 
       <div class="product-card" data-style="Modern" data-price="6500" data-size="Large" data-date="2025-03-01" data-id="L9">

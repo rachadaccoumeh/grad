@@ -179,17 +179,7 @@ if (isset($_POST["submit"])) {
                 <div class="toggle">
                     <i class='bx bx-menu'></i>
                 </div>
-                <div class="search">
-                    <label>
-                        <input type="text" placeholder="Search here">
-                        <i class='bx bx-search'></i>
-                    </label>
-                </div>
-                <div class="user">
-                    <img src="images/admin.png" alt="Admin">
-                </div>
             </div>
-
             <div class="delete-container">
                 <h2>Delete Product</h2>
                 

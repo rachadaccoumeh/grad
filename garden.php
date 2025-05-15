@@ -1,3 +1,15 @@
+<?php
+session_start();
+require_once('category_template.php');
+
+// Define category specific variables
+$category_name = "Garden";
+$page_title = "Garden Collection";
+$category_description = "Transform your outdoor space with our weather-resistant furniture, planters, and decorative elements for a beautiful and functional garden.";
+
+// Display the kitchen category page
+displayCategoryPage($category_name, $page_title, $category_description);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -627,151 +639,13 @@ body.showCart .products {
 
   <section class="products">
     <div class="product-grid" id="productGrid">
-      <div class="product-card" data-style="Modern" data-price="899" data-size="Medium" data-date="2025-03-15">
-        <div class="gallery-image">
-          <img src="garden/Ga1.JPG" alt="Modular Outdoor Sofa Set">
-        </div>
-        <div class="gallery-info">
-          <div class="gallery-title">
-            <h4>Modular Outdoor Sofa Set</h4>
-          </div>
-          <div class="gallery-description">Contemporary modular outdoor seating featuring weather-resistant fabric, powder-coated aluminum frame, and easy rearrangement options for flexible layouts. Includes 3 corner pieces and 2 center pieces.</div>
-          <div class="gallery-meta">
-            <div class="price">$899</div>
-            <div class="action-buttons">
-              <button class="favorite-btn">♡</button>
-              <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="product-card" data-style="Rustic" data-price="1499" data-size="Large" data-date="2025-02-10">
-        <div class="gallery-image">
-          <img src="garden/Ga2.JPG" alt="Acacia Wood Dining Set">
-        </div>
-        <div class="gallery-info">
-          <div class="gallery-title">
-            <h4>Acacia Wood Dining Set</h4>
-          </div>
-          <div class="gallery-description">Rustic farmhouse-style dining set crafted from sustainable acacia hardwood with natural grain patterns. Features extendable table (seats 6-8) and matching bench with built-in storage compartment.</div>
-          <div class="gallery-meta">
-            <div class="price">$1,499</div>
-            <div class="action-buttons">
-              <button class="favorite-btn">♡</button>
-              <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="product-card" data-style="Minimalist" data-price="349" data-size="Small" data-date="2025-04-01">
-        <div class="gallery-image">
-          <img src="garden/Ga3.JPG" alt="Foldable Bistro Set">
-        </div>
-        <div class="gallery-info">
-          <div class="gallery-title">
-            <h4>Foldable Bistro Set</h4>
-          </div>
-          <div class="gallery-description">Space-saving bistro set perfect for balconies or small patios. Includes two foldable chairs and a compact round table, all made from powder-coated steel with sleek minimalist design and quick-dry materials.</div>
-          <div class="gallery-meta">
-            <div class="price">$349</div>
-            <div class="action-buttons">
-              <button class="favorite-btn">♡</button>
-              <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="product-card" data-style="Bohemian" data-price="799" data-size="Medium" data-date="2025-01-20">
-        <div class="gallery-image">
-          <img src="garden/Ga4.JPG" alt="Hanging Egg Chair">
-        </div>
-        <div class="gallery-info">
-          <div class="gallery-title">
-            <h4>Bohemian Hanging Egg Chair</h4>
-          </div>
-          <div class="gallery-description">Statement hanging chair with bohemian-inspired woven design, sturdy powder-coated frame, plush weather-resistant cushions, and adjustable height. Perfect for creating a cozy reading nook in your garden.</div>
-          <div class="gallery-meta">
-            <div class="price">$799</div>
-            <div class="action-buttons">
-              <button class="favorite-btn">♡</button>
-              <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="product-card" data-style="Classic" data-price="2499" data-size="Large" data-date="2025-03-05">
-        <div class="gallery-image">
-          <img src="garden/Ga5.JPG" alt="Cast Aluminum Gazebo Set">
-        </div>
-        <div class="gallery-info">
-          <div class="gallery-title">
-            <h4>Cast Aluminum Gazebo Set</h4>
-          </div>
-          <div class="gallery-description">Elegant Victorian-inspired gazebo seating set featuring ornate cast aluminum construction, tempered glass tabletop, UV-resistant canopy, and comfortable cushioned seating for 6 people. Perfect for garden entertaining.</div>
-          <div class="gallery-meta">
-            <div class="price">$2,499</div>
-            <div class="action-buttons">
-              <button class="favorite-btn">♡</button>
-              <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="product-card" data-style="Modern" data-price="599" data-size="Small" data-date="2025-04-10">
-        <div class="gallery-image">
-          <img src="garden/Ga6.JPG" alt="Adjustable Sunlounger">
-        </div>
-        <div class="gallery-info">
-          <div class="gallery-title">
-            <h4>Adjustable Sunlounger Set</h4>
-          </div>
-          <div class="gallery-description">Set of two adjustable loungers with modern silhouette, five reclining positions, all-weather mesh fabric, rust-resistant aluminum frame, and built-in wheels for easy repositioning to follow the sun.</div>
-          <div class="gallery-meta">
-            <div class="price">$599</div>
-            <div class="action-buttons">
-              <button class="favorite-btn">♡</button>
-              <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="product-card" data-style="Rustic" data-price="1299" data-size="Large" data-date="2025-02-25">
-        <div class="gallery-image">
-          <img src="garden/Ga7.jpg" alt="Fire Pit Conversation Set">
-        </div>
-        <div class="gallery-info">
-          <div class="gallery-title">
-            <h4>Fire Pit Conversation Set</h4>
-          </div>
-          <div class="gallery-description">Rustic outdoor living set featuring propane fire pit table with lava rocks, four deep-seated armchairs with weather-resistant cushions, and reclaimed wood accents. Perfect for evening gatherings year-round.</div>
-          <div class="gallery-meta">
-            <div class="price">$1,299</div>
-            <div class="action-buttons">
-              <button class="favorite-btn">♡</button>
-              <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="product-card" data-style="Classic" data-price="429" data-size="Medium" data-date="2025-01-15">
-        <div class="gallery-image">
-          <img src="garden/Ga8.JPG" alt="Teak Garden Bench">
-        </div>
-        <div class="gallery-info">
-          <div class="gallery-title">
-            <h4>Teak Garden Bench</h4>
-          </div>
-          <div class="gallery-description">Traditional English garden bench crafted from premium grade A teak wood with naturally high oil content for exceptional weather resistance. Features classic slatted design, curved backrest, and arms that develop a beautiful silver patina over time.</div>
-          <div class="gallery-meta">
-            <div class="price">$429</div>
-            <div class="action-buttons">
-              <button class="favorite-btn">♡</button>
-              <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+      
+      
+      
+      
+      
+      
+      
   </section>
 
   <script>

@@ -272,14 +272,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_product'])) {
                 <div class="toggle">
                     <i class='bx bx-menu'></i>
                 </div>
-                <div class="search">
-                    <label>
-                        <input type="text" placeholder="Search here">
-                        <i class='bx bx-search'></i>
-                    </label>
-                </div>
+               
                 <div class="user">
-                    <img src="images/admin.png" alt="Admin">
+                    <img src="photos/adminphoto.JPG" alt="Admin">
                 </div>
             </div>
 
@@ -339,6 +334,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_product'])) {
                                     <option value="Rustic" <?php echo $style == 'Rustic' ? 'selected' : ''; ?>>Rustic</option>
                                     <option value="Minimalist" <?php echo $style == 'Minimalist' ? 'selected' : ''; ?>>Minimalist</option>
                                     <option value="Industrial" <?php echo $style == 'Industrial' ? 'selected' : ''; ?>>Industrial</option>
+                                    <option value="Luxury" <?php echo $style == 'Luxury' ? 'selected' : ''; ?>>Luxury</option>
+                                     <option value="Classic" <?php echo $style == 'Classic' ? 'selected' : ''; ?>>Classic</option>
+                                     <option value="Scandinavian" <?php echo $style == 'Scandinavian' ? 'selected' : ''; ?>>Scandinavian</option>
+                                      <option value="Bohemian" <?php echo $style == 'Bohemian' ? 'selected' : ''; ?>>Bohemian</option>
+                                      <option value="Executive" <?php echo $style == 'Executive' ? 'selected' : ''; ?>>Executive</option>
                                 </select>
                             </div>
 

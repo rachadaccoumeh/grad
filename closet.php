@@ -1,3 +1,15 @@
+<?php
+session_start();
+require_once('category_template.php');
+
+// Define category specific variables
+$category_name = "Closet";
+$page_title = "Closet Collection";
+$category_description = "Maximize your storage space with our innovative closet systems, organizers, and accessories for a tidy and efficient wardrobe.";
+
+// Display the kitchen category page
+displayCategoryPage($category_name, $page_title, $category_description);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -628,7 +640,7 @@ body.showCart .products {
 
   <section class="products">
     <div class="product-grid" id="productGrid">
-      <div class="product-card" data-style="Modern" data-price="899" data-size="Medium" data-date="2025-03-15">
+      <div class="product-card" data-style="Modern" data-price="899" data-size="Medium" data-date="2025-03-15" >
         <div class="gallery-image">
           <img src="closet/C1.JPG" alt="Modular Walk-in Closet System">
         </div>
@@ -646,24 +658,7 @@ body.showCart .products {
           </div>
         </div>
       </div>
-      <div class="product-card" data-style="Rustic" data-price="1299" data-size="Large" data-date="2025-02-10">
-        <div class="gallery-image">
-          <img src="closet/C2.JPG" alt="Farmhouse Armoire Closet">
-        </div>
-        <div class="gallery-info">
-          <div class="gallery-title">
-            <h4>Farmhouse Armoire Closet</h4>
-          </div>
-          <div class="gallery-description">Rustic freestanding armoire crafted from reclaimed barn wood with natural grain patterns. Features full-length hanging space, adjustable shelves, and two deep drawers with vintage-inspired hardware for a charming countryside aesthetic.</div>
-          <div class="gallery-meta">
-            <div class="price">$1,299</div>
-            <div class="action-buttons">
-              <button class="favorite-btn">♡</button>
-              <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
-            </div>
-          </div>
-        </div>
-      </div>
+      
       <div class="product-card" data-style="Minimalist" data-price="349" data-size="Small" data-date="2025-04-01">
         <div class="gallery-image">
           <img src="closet/C3.JPG" alt="Compact Closet Organizer">

@@ -640,7 +640,7 @@ document.addEventListener('DOMContentLoaded', function() {
       id: 'custom-' + Date.now(),
       name: `Custom ${productTypeText}`,
       price: finalPrice,
-      img: productImage,
+      image: productImage,
       quantity: 1,
       description: productDescription
     };

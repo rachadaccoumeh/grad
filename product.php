@@ -291,12 +291,12 @@ $conn->close();
                         <label>
                             <input type="text" name="search" placeholder="Search products..." value="<?php echo htmlspecialchars($search_query); ?>">
                             <input type="hidden" name="tab" value="manage-products">
-                            <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
+                            
                         </label>
                     </form>
                 </div>
                 <div class="user">
-                    <img src="images/admin.png" alt="Admin">
+                    <img src="photos/adminphoto.JPG" alt="Admin">
                 </div>
             </div>
 
@@ -370,6 +370,11 @@ $conn->close();
                                         <option value="Rustic" <?php echo $style == 'Rustic' ? 'selected' : ''; ?>>Rustic</option>
                                         <option value="Minimalist" <?php echo $style == 'Minimalist' ? 'selected' : ''; ?>>Minimalist</option>
                                         <option value="Industrial" <?php echo $style == 'Industrial' ? 'selected' : ''; ?>>Industrial</option>
+                                        <option value="Classic" <?php echo $style == 'Classic' ? 'selected' : ''; ?>>Classic</option>
+                                        <option value="Luxury" <?php echo $style == 'Luxury' ? 'selected' : ''; ?>>Luxury</option>
+                                        <option value="Bohemian" <?php echo $style == 'Bohemina' ? 'selected' : ''; ?>>Bohemian</option>
+                                        <option value="Scandinavian" <?php echo $style == 'Scandinavian' ? 'selected' : ''; ?>>Scandinavian</option>
+                                         <option value="Executive" <?php echo $style == 'Executive' ? 'selected' : ''; ?>>Executive</option>
                                     </select>
                                     <span class="error"><?php echo $style_err; ?></span>
                                 </div>

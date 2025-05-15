@@ -1,3 +1,15 @@
+<?php
+session_start();
+require_once('category_template.php');
+
+// Define category specific variables
+$category_name = "Gym";
+$page_title = "Home Gym Collection";
+$category_description = "Build your personal fitness space with our quality exercise equipment, storage solutions, and accessories designed for effective home workouts.";
+
+// Display the kitchen category page
+displayCategoryPage($category_name, $page_title, $category_description);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -647,24 +659,8 @@ body.showCart .products {
           </div>
         </div>
       </div>
-      <div class="product-card" data-style="Luxury" data-price="7899" data-size="Large" data-date="2024-12-10">
-        <div class="gallery-image">
-          <img src="gyphoto/Gy2.JPG" alt="Premium Gym Suite">
-        </div>
-        <div class="gallery-info">
-          <div class="gallery-title">
-            <h4>Premium Home Gym Suite</h4>
-          </div>
-          <div class="gallery-description">Luxury all-in-one gym setup with power rack, Smith machine, functional trainer cables, leg press attachment, adjustable benches, dumbbell rack, weight plate storage, and integrated touchscreen for workout guidance.</div>
-          <div class="gallery-meta">
-            <div class="price">$7,899</div>
-            <div class="action-buttons">
-              <button class="favorite-btn">♡</button>
-              <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
-            </div>
-          </div>
-        </div>
-      </div>
+      
+       
       <div class="product-card" data-style="Industrial" data-price="3450" data-size="Small" data-date="2025-02-20">
         <div class="gallery-image">
           <img src="gyphoto/Gy3.JPG" alt="Olympic Weightlifting Platform">

@@ -627,122 +627,12 @@ body.showCart .products {
 
   <section class="products">
     <div class="product-grid" id="productGrid">
-      <div class="product-card" data-style="Modern" data-price="12500" data-size="Medium" data-date="2025-01-15" data-id="K2">
-        <div class="gallery-image">
-          <img src="kitchenphotos/IMG_4754.JPG" alt="Modern yellow and blue Kitchen">
-        </div>
-        <div class="gallery-info">
-          <div class="gallery-title">
-            <h4>Yellow and blue kitchen</h4>
-          </div>
-          <div class="gallery-description">Clean lines and minimalist design with high-end appliances and ample storage space.</div>
-          <div class="gallery-meta">
-            <div class="price">$12,500</div>
-            <div class="action-buttons">
-              <button class="favorite-btn">❤</button>
-              <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="product-card" data-style="Rustic" data-price="10000" data-size="Medium" data-date="2024-12-10" data-id="K3">
-        <div class="gallery-image">
-          <img src="photos/Rustick.JPG" alt="rustic kitchen green">
-        </div>
-        <div class="gallery-info">
-          <div class="gallery-title">
-            <h4>Orange and green kitchen</h4>
-          </div>
-          <div class="gallery-description">Warm rustic design with natural materials and earthy tones for a cozy atmosphere.</div>
-          <div class="gallery-meta">
-            <div class="price">$10,000</div>
-            <div class="action-buttons">
-              <button class="favorite-btn">❤</button>
-              <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="product-card" data-style="Minimalist" data-price="8500" data-size="Small" data-date="2025-02-20" data-id="K4">
-        <div class="gallery-image">
-          <img src="photos/Minimalist1.JPG" alt="Modern White Kitchen">
-        </div>
-        <div class="gallery-info">
-          <div class="gallery-title">
-            <h4>Orange and blue Kitchen</h4>
-          </div>
-          <div class="gallery-description">Sleek minimalist aesthetic with clean surfaces and smart storage solutions.</div>
-          <div class="gallery-meta">
-            <div class="price">$8,500</div>
-            <div class="action-buttons">
-              <button class="favorite-btn">❤</button>
-              <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="product-card" data-style="Modern" data-price="15200" data-size="Small" data-date="2025-01-05" data-id="K5">
-        <div class="gallery-image">
-          <img src="kitchenphotos/IMG_4753.JPG" alt="Modern White Kitchen">
-        </div>
-        <div class="gallery-info">
-          <div class="gallery-title">
-            <h4>White and blue kitchen</h4>
-          </div>
-          <div class="gallery-description">Contemporary design with high-tech features and ergonomic layout.</div>
-          <div class="gallery-meta">
-            <div class="price">$15,200</div>
-            <div class="action-buttons">
-              <button class="favorite-btn">❤</button>
-              <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="product-card" data-style="Traditional" data-price="22500" data-size="Medium" data-date="2024-11-15" data-id="K6">
-        <div class="gallery-image">
-          <img src="kitchenphotos/IMG_4752.JPG" alt="Modern White Kitchen">
-        </div>
-        <div class="gallery-info">
-          <div class="gallery-title">
-            <h4>White/yellow/blue kitchen</h4>
-          </div>
-          <div class="gallery-description">Classic traditional style with elegant details and timeless appeal.</div>
-          <div class="gallery-meta">
-            <div class="price">$22,500</div>
-            <div class="action-buttons">
-              <button class="favorite-btn">❤</button>
-              <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="product-card" data-style="Minimalist" data-price="7800" data-size="Small" data-date="2025-03-01" data-id="K7">
-        <div class="gallery-image">
-          <img src="kitchenphotos/IMG_4750.JPG" alt="Modern White Kitchen">
-        </div>
-        <div class="gallery-info">
-          <div class="gallery-title">
-            <h4>Green and orange kitchen</h4>
-          </div>
-          <div class="gallery-description">Efficient space usage with clean lines and bold color accents.</div>
-          <div class="gallery-meta">
-            <div class="price">$7,800</div>
-            <div class="action-buttons">
-              <button class="favorite-btn">❤</button>
-              <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="pagination">
-      <button>«</button>
-      <button class="active">1</button>
-      <button onclick="window.location.href='kitchen2.php'">2</button>
-      <button onclick="window.location.href='kitchen3.php'">3</button>
-      <button onclick="window.location.href='kitchen2.php'">»</button>
-    </div>
+      
+      
+     
+      
+      
+    
   </section>
 
   <script>

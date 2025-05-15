@@ -1,3 +1,15 @@
+<?php
+session_start();
+require_once('category_template.php');
+
+// Define category specific variables
+$category_name = "Bedroom";
+$page_title = "Bedroom Collection";
+$category_description = "Design your perfect sleep sanctuary with our range of beds, mattresses, nightstands, and bedroom accessories for ultimate comfort and relaxation.";
+
+// Display the kitchen category page
+displayCategoryPage($category_name, $page_title, $category_description);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -635,24 +647,7 @@ body.showCart .products {
           </div>
         </div>
       </div>
-      <div class="product-card" data-style="Industrial" data-price="5200" data-size="Large" data-date="2025-03-20" data-id="B4">
-        <div class="gallery-image">
-          <img src="brphoto/Br3.JPG" alt="Industrial Bedroom">
-        </div>
-        <div class="gallery-info">
-          <div class="gallery-title">
-            <h4>Urban Loft Bedroom Suite</h4>
-          </div>
-          <div class="gallery-description">Industrial bedroom collection featuring a metal frame queen bed with wooden slats, pipe-inspired nightstands, and a factory-style wardrobe with exposed hardware.</div>
-          <div class="gallery-meta">
-            <div class="price">$5,200</div>
-            <div class="action-buttons">
-              <button class="favorite-btn">♡</button>
-              <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
-            </div>
-          </div>
-        </div>
-      </div>
+      
       <div class="product-card" data-style="Minimalist" data-price="3900" data-size="Small" data-date="2025-01-05" data-id="B5">
         <div class="gallery-image">
           <img src="brphoto/Br4.JPG" alt="Minimalist Bedroom">

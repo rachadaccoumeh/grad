@@ -23,8 +23,8 @@ html, body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-                url("background/IMG-7228.jpg");
+    background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)),
+                url("background/IMG-7228.jpg") !important;
     background-size: cover;
     background-position: center;
     width: 100%; 

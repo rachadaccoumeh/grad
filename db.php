@@ -3,7 +3,7 @@
 
 $servername = "localhost"; // Your MySQL server (localhost for local development)
 $username = "root";        // Your MySQL username (default is root for local development)
-$password = "";            // Your MySQL password (empty for local development)
+$password = "root123";            // Your MySQL password (empty for local development)
 $dbname = "roomgenius_db"; // Your database name
 
 // Create connection

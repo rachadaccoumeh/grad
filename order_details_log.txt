@@ -1,0 +1,253 @@
+2025-05-18 02:11:55 - Request received
+2025-05-18 02:11:55 - Connecting to database: roomgenius_db
+2025-05-18 02:11:55 - Connected to database
+2025-05-18 02:11:55 - Looking for order ID: 2
+2025-05-18 02:11:55 - SQL: SELECT * FROM orders WHERE id = 2
+2025-05-18 02:11:55 - Order found: {"id":"2","order_id":"RG724085","customer_name":"asfk","email":"kljlk@fdf.sdf","address":"jl","city":"jl","zip_code":"234","governorate":"ar","phone":"234324","latitude":"33.846966","longitude":"35.871627","payment_method":"cash_on_delivery","subtotal":"2133.00","shipping":"0.00","tax":"170.64","total":"2303.64","card_name":"","card_number":"","card_expiry":"","created_at":"2025-05-18 05:00:16","status":"pending"}
+2025-05-18 02:11:55 - Items SQL: SELECT oi.*, p.name as product_name, p.image_url as image 
+            FROM order_items oi 
+            LEFT JOIN products p ON oi.product_id = p.id 
+            WHERE oi.order_id = 'RG724085'
+2025-05-18 02:11:55 - Error: Unknown column 'p.image_url' in 'field list'
+2025-05-18 02:11:55 - Database connection closed
+2025-05-18 02:12:42 - Request received
+2025-05-18 02:12:42 - Connecting to database: roomgenius_db
+2025-05-18 02:12:42 - Connected to database
+2025-05-18 02:12:42 - Looking for order ID: 2
+2025-05-18 02:12:42 - SQL: SELECT * FROM orders WHERE id = 2
+2025-05-18 02:12:42 - Order found: {"id":"2","order_id":"RG724085","customer_name":"asfk","email":"kljlk@fdf.sdf","address":"jl","city":"jl","zip_code":"234","governorate":"ar","phone":"234324","latitude":"33.846966","longitude":"35.871627","payment_method":"cash_on_delivery","subtotal":"2133.00","shipping":"0.00","tax":"170.64","total":"2303.64","card_name":"","card_number":"","card_expiry":"","created_at":"2025-05-18 05:00:16","status":"pending"}
+2025-05-18 02:12:42 - Items SQL: SELECT oi.*, p.name as product_name, p.image_path as image 
+            FROM order_items oi 
+            LEFT JOIN products p ON oi.product_id = p.id 
+            WHERE oi.order_id = 'RG724085'
+2025-05-18 02:12:42 - Found 0 items
+2025-05-18 02:12:42 - Returning successful response
+2025-05-18 02:12:42 - Database connection closed
+2025-05-18 02:12:50 - Request received
+2025-05-18 02:12:50 - Connecting to database: roomgenius_db
+2025-05-18 02:12:50 - Connected to database
+2025-05-18 02:12:50 - Looking for order ID: 2
+2025-05-18 02:12:50 - SQL: SELECT * FROM orders WHERE id = 2
+2025-05-18 02:12:50 - Order found: {"id":"2","order_id":"RG724085","customer_name":"asfk","email":"kljlk@fdf.sdf","address":"jl","city":"jl","zip_code":"234","governorate":"ar","phone":"234324","latitude":"33.846966","longitude":"35.871627","payment_method":"cash_on_delivery","subtotal":"2133.00","shipping":"0.00","tax":"170.64","total":"2303.64","card_name":"","card_number":"","card_expiry":"","created_at":"2025-05-18 05:00:16","status":"pending"}
+2025-05-18 02:12:50 - Items SQL: SELECT oi.*, p.name as product_name, p.image_path as image 
+            FROM order_items oi 
+            LEFT JOIN products p ON oi.product_id = p.id 
+            WHERE oi.order_id = 'RG724085'
+2025-05-18 02:12:50 - Found 0 items
+2025-05-18 02:12:50 - Returning successful response
+2025-05-18 02:12:50 - Database connection closed
+2025-05-18 02:12:59 - Request received
+2025-05-18 02:12:59 - Connecting to database: roomgenius_db
+2025-05-18 02:12:59 - Connected to database
+2025-05-18 02:12:59 - Looking for order ID: 2
+2025-05-18 02:12:59 - SQL: SELECT * FROM orders WHERE id = 2
+2025-05-18 02:12:59 - Order found: {"id":"2","order_id":"RG724085","customer_name":"asfk","email":"kljlk@fdf.sdf","address":"jl","city":"jl","zip_code":"234","governorate":"ar","phone":"234324","latitude":"33.846966","longitude":"35.871627","payment_method":"cash_on_delivery","subtotal":"2133.00","shipping":"0.00","tax":"170.64","total":"2303.64","card_name":"","card_number":"","card_expiry":"","created_at":"2025-05-18 05:00:16","status":"pending"}
+2025-05-18 02:12:59 - Items SQL: SELECT oi.*, p.name as product_name, p.image_path as image 
+            FROM order_items oi 
+            LEFT JOIN products p ON oi.product_id = p.id 
+            WHERE oi.order_id = 'RG724085'
+2025-05-18 02:12:59 - Found 0 items
+2025-05-18 02:12:59 - Returning successful response
+2025-05-18 02:12:59 - Database connection closed
+2025-05-18 02:13:08 - Request received
+2025-05-18 02:13:08 - Connecting to database: roomgenius_db
+2025-05-18 02:13:08 - Connected to database
+2025-05-18 02:13:08 - Looking for order ID: 2
+2025-05-18 02:13:08 - SQL: SELECT * FROM orders WHERE id = 2
+2025-05-18 02:13:08 - Order found: {"id":"2","order_id":"RG724085","customer_name":"asfk","email":"kljlk@fdf.sdf","address":"jl","city":"jl","zip_code":"234","governorate":"ar","phone":"234324","latitude":"33.846966","longitude":"35.871627","payment_method":"cash_on_delivery","subtotal":"2133.00","shipping":"0.00","tax":"170.64","total":"2303.64","card_name":"","card_number":"","card_expiry":"","created_at":"2025-05-18 05:00:16","status":"pending"}
+2025-05-18 02:13:08 - Items SQL: SELECT oi.*, p.name as product_name, p.image_path as image 
+            FROM order_items oi 
+            LEFT JOIN products p ON oi.product_id = p.id 
+            WHERE oi.order_id = 'RG724085'
+2025-05-18 02:13:08 - Found 0 items
+2025-05-18 02:13:08 - Returning successful response
+2025-05-18 02:13:08 - Database connection closed
+2025-05-18 02:17:11 - Request received
+2025-05-18 02:17:11 - Connecting to database: roomgenius_db
+2025-05-18 02:17:11 - Connected to database
+2025-05-18 02:17:11 - Looking for order ID: 3
+2025-05-18 02:17:11 - SQL: SELECT * FROM orders WHERE id = 3
+2025-05-18 02:17:11 - Order found: {"id":"3","order_id":"RG752702","customer_name":"aSAFDSAF","email":"faf@fasdf.csdf","address":"afasdf","city":"sfsdf","zip_code":"1233","governorate":"uk","phone":"122222","latitude":"30.107118","longitude":"30.959473","payment_method":"credit_card","subtotal":"20300.00","shipping":"0.00","tax":"1624.00","total":"21924.00","card_name":"ertyuioo","card_number":"1234 5678 9345 6782","card_expiry":"22\/22","created_at":"2025-05-18 05:16:54","status":"pending"}
+2025-05-18 02:17:11 - Items SQL: SELECT oi.*, p.name as product_name, p.image_path as image 
+            FROM order_items oi 
+            LEFT JOIN products p ON oi.product_id = p.id 
+            WHERE oi.order_id = 'RG752702'
+2025-05-18 02:17:11 - Found 2 items
+2025-05-18 02:17:11 - Returning successful response
+2025-05-18 02:17:11 - Database connection closed
+2025-05-18 02:18:51 - Request received
+2025-05-18 02:18:51 - Connecting to database: roomgenius_db
+2025-05-18 02:18:51 - Connected to database
+2025-05-18 02:18:51 - Looking for order ID: 3
+2025-05-18 02:18:51 - SQL: SELECT * FROM orders WHERE id = 3
+2025-05-18 02:18:51 - Order found: {"id":"3","order_id":"RG752702","customer_name":"aSAFDSAF","email":"faf@fasdf.csdf","address":"afasdf","city":"sfsdf","zip_code":"1233","governorate":"uk","phone":"122222","latitude":"30.107118","longitude":"30.959473","payment_method":"credit_card","subtotal":"20300.00","shipping":"0.00","tax":"1624.00","total":"21924.00","card_name":"ertyuioo","card_number":"1234 5678 9345 6782","card_expiry":"22\/22","created_at":"2025-05-18 05:16:54","status":"pending"}
+2025-05-18 02:18:51 - Items SQL: SELECT 
+                oi.id, 
+                oi.order_id, 
+                oi.product_id, 
+                oi.quantity, 
+                oi.price_at_purchase as price, 
+                oi.total_price, 
+                p.name as product_name, 
+                p.image_path as image,
+                p.price as product_price
+            FROM order_items oi 
+            LEFT JOIN products p ON oi.product_id = p.id 
+            WHERE oi.order_id = 'RG752702'
+2025-05-18 02:18:51 - Found 2 items
+2025-05-18 02:18:51 - Returning successful response
+2025-05-18 02:18:51 - Database connection closed
+2025-05-18 02:20:39 - Request received
+2025-05-18 02:20:39 - Connecting to database: roomgenius_db
+2025-05-18 02:20:39 - Connected to database
+2025-05-18 02:20:39 - Looking for order ID: 3
+2025-05-18 02:20:39 - SQL: SELECT * FROM orders WHERE id = 3
+2025-05-18 02:20:39 - Order found: {"id":"3","order_id":"RG752702","customer_name":"aSAFDSAF","email":"faf@fasdf.csdf","address":"afasdf","city":"sfsdf","zip_code":"1233","governorate":"uk","phone":"122222","latitude":"30.107118","longitude":"30.959473","payment_method":"credit_card","subtotal":"20300.00","shipping":"0.00","tax":"1624.00","total":"21924.00","card_name":"ertyuioo","card_number":"1234 5678 9345 6782","card_expiry":"22\/22","created_at":"2025-05-18 05:16:54","status":"pending"}
+2025-05-18 02:20:39 - Items SQL: SELECT 
+                oi.id, 
+                oi.order_id, 
+                oi.product_id, 
+                oi.quantity, 
+                oi.price_at_purchase as price, 
+                oi.total_price, 
+                p.name as product_name, 
+                p.image_path as image,
+                p.price as product_price
+            FROM order_items oi 
+            LEFT JOIN products p ON oi.product_id = p.id 
+            WHERE oi.order_id = 'RG752702'
+2025-05-18 02:20:39 - Found 2 items
+2025-05-18 02:20:39 - Returning successful response
+2025-05-18 02:20:39 - Database connection closed
+2025-05-18 08:23:58 - Request received
+2025-05-18 08:23:58 - Connecting to database: roomgenius_db
+2025-05-18 08:23:58 - Connected to database
+2025-05-18 08:23:58 - Looking for order ID: 3
+2025-05-18 08:23:58 - SQL: SELECT * FROM orders WHERE id = 3
+2025-05-18 08:23:58 - Order found: {"id":"3","order_id":"RG752702","customer_name":"aSAFDSAF","email":"faf@fasdf.csdf","address":"afasdf","city":"sfsdf","zip_code":"1233","governorate":"uk","phone":"122222","latitude":"30.107118","longitude":"30.959473","payment_method":"credit_card","subtotal":"20300.00","shipping":"0.00","tax":"1624.00","total":"21924.00","card_name":"ertyuioo","card_number":"1234 5678 9345 6782","card_expiry":"22\/22","created_at":"2025-05-18 05:16:54","status":"delivered"}
+2025-05-18 08:23:58 - Items SQL: SELECT 
+                oi.id, 
+                oi.order_id, 
+                oi.product_id, 
+                oi.quantity, 
+                oi.price_at_purchase as price, 
+                oi.total_price, 
+                p.name as product_name, 
+                p.image_path as image,
+                p.price as product_price
+            FROM order_items oi 
+            LEFT JOIN products p ON oi.product_id = p.id 
+            WHERE oi.order_id = 'RG752702'
+2025-05-18 08:23:58 - Found 2 items
+2025-05-18 08:23:58 - Returning successful response
+2025-05-18 08:23:58 - Database connection closed
+2025-05-18 08:24:29 - Request received
+2025-05-18 08:24:29 - Connecting to database: roomgenius_db
+2025-05-18 08:24:29 - Connected to database
+2025-05-18 08:24:29 - Looking for order ID: 3
+2025-05-18 08:24:29 - SQL: SELECT * FROM orders WHERE id = 3
+2025-05-18 08:24:29 - Order found: {"id":"3","order_id":"RG752702","customer_name":"aSAFDSAF","email":"faf@fasdf.csdf","address":"afasdf","city":"sfsdf","zip_code":"1233","governorate":"uk","phone":"122222","latitude":"30.107118","longitude":"30.959473","payment_method":"credit_card","subtotal":"20300.00","shipping":"0.00","tax":"1624.00","total":"21924.00","card_name":"ertyuioo","card_number":"1234 5678 9345 6782","card_expiry":"22\/22","created_at":"2025-05-18 05:16:54","status":"delivered"}
+2025-05-18 08:24:29 - Items SQL: SELECT 
+                oi.id, 
+                oi.order_id, 
+                oi.product_id, 
+                oi.quantity, 
+                oi.price_at_purchase as price, 
+                oi.total_price, 
+                p.name as product_name, 
+                p.image_path as image,
+                p.price as product_price
+            FROM order_items oi 
+            LEFT JOIN products p ON oi.product_id = p.id 
+            WHERE oi.order_id = 'RG752702'
+2025-05-18 08:24:29 - Found 2 items
+2025-05-18 08:24:29 - Returning successful response
+2025-05-18 08:24:29 - Database connection closed
+2025-05-18 08:26:06 - Request received
+2025-05-18 08:26:06 - Connecting to database: roomgenius_db
+2025-05-18 08:26:06 - Connected to database
+2025-05-18 08:26:06 - Looking for order ID: 2
+2025-05-18 08:26:06 - SQL: SELECT * FROM orders WHERE id = 2
+2025-05-18 08:26:06 - Order found: {"id":"2","order_id":"RG724085","customer_name":"asfk","email":"kljlk@fdf.sdf","address":"jl","city":"jl","zip_code":"234","governorate":"ar","phone":"234324","latitude":"33.846966","longitude":"35.871627","payment_method":"cash_on_delivery","subtotal":"2133.00","shipping":"0.00","tax":"170.64","total":"2303.64","card_name":"","card_number":"","card_expiry":"","created_at":"2025-05-18 05:00:16","status":"pending"}
+2025-05-18 08:26:06 - Items SQL: SELECT 
+                oi.id, 
+                oi.order_id, 
+                oi.product_id, 
+                oi.quantity, 
+                oi.price_at_purchase as price, 
+                oi.total_price, 
+                p.name as product_name, 
+                p.image_path as image,
+                p.price as product_price
+            FROM order_items oi 
+            LEFT JOIN products p ON oi.product_id = p.id 
+            WHERE oi.order_id = 'RG724085'
+2025-05-18 08:26:06 - Found 0 items
+2025-05-18 08:26:06 - Returning successful response
+2025-05-18 08:26:06 - Database connection closed
+2025-05-18 08:27:47 - Request received
+2025-05-18 08:27:47 - Connecting to database: roomgenius_db
+2025-05-18 08:27:47 - Connected to database
+2025-05-18 08:27:47 - Looking for order ID: 3
+2025-05-18 08:27:47 - SQL: SELECT * FROM orders WHERE id = 3
+2025-05-18 08:27:47 - Order found: {"id":"3","order_id":"RG752702","customer_name":"aSAFDSAF","email":"faf@fasdf.csdf","address":"afasdf","city":"sfsdf","zip_code":"1233","governorate":"uk","phone":"122222","latitude":"30.107118","longitude":"30.959473","payment_method":"credit_card","subtotal":"20300.00","shipping":"0.00","tax":"1624.00","total":"21924.00","card_name":"ertyuioo","card_number":"1234 5678 9345 6782","card_expiry":"22\/22","created_at":"2025-05-18 05:16:54","status":"delivered"}
+2025-05-18 08:27:47 - Items SQL: SELECT 
+                oi.id, 
+                oi.order_id, 
+                oi.product_id, 
+                oi.quantity, 
+                oi.price_at_purchase as price, 
+                oi.total_price, 
+                p.name as product_name, 
+                p.image_path as image,
+                p.price as product_price
+            FROM order_items oi 
+            LEFT JOIN products p ON oi.product_id = p.id 
+            WHERE oi.order_id = 'RG752702'
+2025-05-18 08:27:47 - Found 2 items
+2025-05-18 08:27:47 - Returning successful response
+2025-05-18 08:27:47 - Database connection closed
+2025-05-18 08:28:27 - Request received
+2025-05-18 08:28:27 - Connecting to database: roomgenius_db
+2025-05-18 08:28:27 - Connected to database
+2025-05-18 08:28:27 - Looking for order ID: 2
+2025-05-18 08:28:27 - SQL: SELECT * FROM orders WHERE id = 2
+2025-05-18 08:28:27 - Order found: {"id":"2","order_id":"RG724085","customer_name":"asfk","email":"kljlk@fdf.sdf","address":"jl","city":"jl","zip_code":"234","governorate":"ar","phone":"234324","latitude":"33.846966","longitude":"35.871627","payment_method":"cash_on_delivery","subtotal":"2133.00","shipping":"0.00","tax":"170.64","total":"2303.64","card_name":"","card_number":"","card_expiry":"","created_at":"2025-05-18 05:00:16","status":"pending"}
+2025-05-18 08:28:27 - Items SQL: SELECT 
+                oi.id, 
+                oi.order_id, 
+                oi.product_id, 
+                oi.quantity, 
+                oi.price_at_purchase as price, 
+                oi.total_price, 
+                p.name as product_name, 
+                p.image_path as image,
+                p.price as product_price
+            FROM order_items oi 
+            LEFT JOIN products p ON oi.product_id = p.id 
+            WHERE oi.order_id = 'RG724085'
+2025-05-18 08:28:27 - Found 0 items
+2025-05-18 08:28:27 - Returning successful response
+2025-05-18 08:28:27 - Database connection closed
+2025-05-18 08:28:36 - Request received
+2025-05-18 08:28:36 - Connecting to database: roomgenius_db
+2025-05-18 08:28:36 - Connected to database
+2025-05-18 08:28:36 - Looking for order ID: 3
+2025-05-18 08:28:36 - SQL: SELECT * FROM orders WHERE id = 3
+2025-05-18 08:28:36 - Order found: {"id":"3","order_id":"RG752702","customer_name":"aSAFDSAF","email":"faf@fasdf.csdf","address":"afasdf","city":"sfsdf","zip_code":"1233","governorate":"uk","phone":"122222","latitude":"30.107118","longitude":"30.959473","payment_method":"credit_card","subtotal":"20300.00","shipping":"0.00","tax":"1624.00","total":"21924.00","card_name":"ertyuioo","card_number":"1234 5678 9345 6782","card_expiry":"22\/22","created_at":"2025-05-18 05:16:54","status":"delivered"}
+2025-05-18 08:28:36 - Items SQL: SELECT 
+                oi.id, 
+                oi.order_id, 
+                oi.product_id, 
+                oi.quantity, 
+                oi.price_at_purchase as price, 
+                oi.total_price, 
+                p.name as product_name, 
+                p.image_path as image,
+                p.price as product_price
+            FROM order_items oi 
+            LEFT JOIN products p ON oi.product_id = p.id 
+            WHERE oi.order_id = 'RG752702'
+2025-05-18 08:28:36 - Found 2 items
+2025-05-18 08:28:36 - Returning successful response
+2025-05-18 08:28:36 - Database connection closed

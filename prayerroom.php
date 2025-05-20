@@ -560,7 +560,7 @@ body.showCart .products {
         </span>
       </div>
       <div class="ai-button-container">
-        <button class="ai-button" onclick="window.location.href='ai-page.html'">
+        <button class="ai-button" onclick="window.location.href='ai-page.php'">
           <i class="fas fa-robot"></i> Ai room genie
         </button>
       </div>

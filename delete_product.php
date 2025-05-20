@@ -10,7 +10,7 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 'admin') {
 // Database connection
 $servername = "localhost";
 $username = "root"; // Replace with your database username
-$password = ""; // Replace with your database password
+$password = "root123"; // Replace with your database password
 $dbname = "roomgenius_db"; // Replace with your database name
 
 // Create connection

@@ -5,6 +5,28 @@
   font-family: Arial, sans-serif;
 }
 
+/* Animation keyframes */
+@keyframes carousel-slide {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
 
 body {
   background-color: #c9b99e;
@@ -20,6 +42,8 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  gap: 10px; /* Add gap between elements */
 }
 
 .logo {
@@ -27,7 +51,12 @@ header {
   font-size: 24px;
   color: #24424c;
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
-  
+  animation: pulse 2s infinite ease-in-out;
+  transition: transform 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.05);
 }
 
 
@@ -39,40 +68,87 @@ header {
 
 }
 
+/* Enhanced search bar styles */
 .search-bar {
   display: flex;
   align-items: center;
-  
+  transition: all 0.3s ease;
+  flex: 0 0 auto; /* Don't grow or shrink */
+  width: 300px; /* Fixed width */
+  margin: 0 20px; /* Add margin on sides */
 }
 
 .search-bar input {
-  padding: 8px 12px;
-  border: 1px solid #24424c;
-  border-radius: 20px 0 0 20px;
+  padding: 12px 16px; /* Larger padding */
+  border: 2px solid #24424c; /* Thicker border */
+  border-radius: 25px 0 0 25px; /* Larger border radius */
   outline: none;
+  transition: all 0.3s ease;
+  font-size: 16px; /* Larger font size */
+  width: 100%; /* Take full width of parent */
+  background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent background */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.search-bar input::placeholder {
+  color: #888;
+  font-style: italic;
+}
+
+.search-bar input:focus {
+  box-shadow: 0 0 10px rgba(36, 66, 76, 0.4);
+  border-color: #906e2b; /* Match gold accent color */
+  background-color: #fff;
 }
 
 .search-bar button {
-  padding: 8px 12px;
-  border: 1px solid #24424c;
+  padding: 12px 20px; /* Larger padding */
+  border: 2px solid #24424c; /* Match input border */
   background-color: #24424c;
-  border-radius: 0 20px 20px 0;
+  border-radius: 0 25px 25px 0; /* Match input border radius */
   cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 16px; /* Larger font size */
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-bar button i {
+  font-size: 18px; /* Larger icon */
+}
+
+.search-bar button:hover {
+  background-color: #906e2b; /* Gold accent on hover */
+  border-color: #906e2b;
+  transform: translateX(2px); /* Slight movement on hover */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .search-bar {
+    order: 3; /* Move search below on mobile */
+    margin: 10px 0;
+    max-width: 100%;
+    width: 100%;
+  }
 }
 
 
-.cart-container, .user-container {
+.cart-container, .user-container, .wishlist-container {
   position: relative;
   display: inline-block;
   cursor: pointer;
+  margin-right: 15px; /* Add spacing between icons */
 }
-.cart-container i, .user-container i {
-  font-size: 18px;
+.cart-container i, .user-container i, .wishlist-container i {
+  font-size: 20px; /* Increased font size for all icons */
   color: #24424c;
 }
 
 
-.cart-count {
+.cart-count, .wishlist-count {
   position: absolute;
   top: -8px;
   right: -8px;
@@ -99,6 +175,17 @@ header {
   display: flex;
   width: 100%;
   height: 100%;
+  transition: transform 0.5s ease;
+}
+
+/* Removed continuous animation from carousel to fix the issue with moving images */
+#animated-carousel {
+  animation: none; /* Removing the automatic animation */
+  transition: transform 0.5s ease;
+}
+
+#animated-carousel:hover {
+  animation-play-state: paused;
 }
 body.showCart .carousel-container {
   /* Keep carousel in place */
@@ -133,6 +220,13 @@ body.showCart .carousel-container {
 .carousel-overlay h1 {
   font-size: 36px;
   margin-bottom: 10px;
+  transition: all 0.5s ease;
+  animation: fadeIn 1.5s ease-out;
+}
+
+.carousel-overlay h1:hover {
+  transform: scale(1.1);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
 }
 
 .breadcrumb {
@@ -169,21 +263,38 @@ body.showCart .carousel-container {
   border-radius: 12px;
   text-align: center;
   flex: 1 0 120px;
-  transition: transform 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 .category-item p{
   color:#24424c;
 }
 
 .category-item:hover {
-  transform: scale(1.05);
+  transform: scale(1.08);
   cursor: pointer;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  background-color: #f8f0d8;
+}
+
+.category-item:hover img {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.category-item:hover p {
+  font-weight: bold;
+  color: #24424c;
 }
 
 .category-item span {
   font-size: 30px;
   display: block;
   margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.category-item span img {
+  transition: transform 0.4s ease;
 }
 
 .product-grid {
@@ -199,24 +310,69 @@ body.showCart .carousel-container {
   padding: 15px;
   text-align: center;
   width: 180px;
-  transition: transform 0.2s, box-shadow 0.2s;
+  height: 350px; /* Fixed height for all cards */
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  opacity: 1;
+  transform: translateY(0);
+  /* Adding spacing between card elements */
+  justify-content: space-between;
+}
+
+/* Animation for product cards when they appear - faster transition */
+.product-card[data-aos] {
+  opacity: 0;
+  transform: translateY(10px); /* Reduced distance for faster appearance */
+  transition-duration: 400ms !important; /* Faster transition */
 }
 
 .product-card img {
   width: 100%;
+  height: 150px; /* Fixed height for images */
+  object-fit: cover; /* Maintain aspect ratio while covering area */
   border-radius: 5px;
+  transition: transform 0.3s ease; /* Add transition for hover effect */
 }
 
 .product-card h4 {
   margin: 10px 0 5px;
+  height: 40px; /* Fixed height for title */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* Ensure text doesn't overflow */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .product-card p {
   color: #906e2b;
   font-weight: bold;
+  margin: 5px 0;
 }
 
 /* Click animation */
+/* Enhanced hover effect for product cards */
+.product-card:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+}
+
+.product-card:hover img {
+  transform: scale(1.08);
+  transition: transform 0.5s ease;
+}
+
+.product-card:hover h4 {
+  color: #24424c;
+  font-weight: bold;
+}
+
 .product-card:active {
   transform: scale(0.95);
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
@@ -275,6 +431,7 @@ body.showCart .carousel-container {
   color: #24424c;
   border: 1px solid #24424c;
   transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 .ai-button:active {
   transform: scale(0.95);
@@ -337,6 +494,34 @@ body.showCart .carousel-container {
   border: 1px solid #ddd;
   border-radius: 5px;
   cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.favorite-btn:hover {
+  background-color: #f0f0f0;
+  transform: scale(1.1);
+}
+
+.favorite-btn:hover::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100px;
+  height: 100px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  animation: ripple 0.6s ease-out;
+}
+
+@keyframes ripple {
+  to {
+    transform: translate(-50%, -50%) scale(2);
+    opacity: 0;
+  }
 }
 
 .add-to-cart {
@@ -347,11 +532,58 @@ body.showCart .carousel-container {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.add-to-cart:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+}
+
+.add-to-cart::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.7s ease;
+  z-index: -1;
+}
+
+.add-to-cart:hover::before {
+  left: 100%;
 }
 
 .product-card:active {
   transform: scale(0.95);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Gallery meta section for consistent card layout */
+.gallery-meta {
+  margin-top: auto; /* Push to bottom of card */
+  width: 100%;
+}
+
+/* Action buttons container */
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  padding-top: 5px;
+}
+
+/* Price styling */
+.price {
+  font-weight: bold;
+  color: #906e2b;
+  margin-bottom: 5px;
+  font-size: 16px;
 }
 
 .view-all-btn {
@@ -412,6 +644,15 @@ body.showCart .carousel-container {
   margin-bottom: 10px;
   color: #666;
   text-align: left;
+  height: 60px; /* Fixed height for description */
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 4; /* Limit to 4 lines */
+  line-clamp: 4; /* Standard property for compatibility */
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  /* Adding padding to ensure consistent spacing */
+  padding: 5px 0;
 }
 
 /* Shopping cart styles fixes */
@@ -425,9 +666,22 @@ body.showCart .carousel-container {
   bottom: 0;
   display: grid;
   grid-template-rows: 70px 1fr 70px;
-  transition: right 0.5s ease;
+  transition: right 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   z-index: 1000;
   box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Cart overlay for background dimming */
+.cart-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 999;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
   
@@ -454,7 +708,27 @@ body.showCart .cartTab {
   cursor: pointer;
   color: #fff8e3;
   padding: 15px 0;
-  transition: background-color 0.3s;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.cartTab .btn button:before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background-color: rgba(255,255,255,0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+}
+
+.cartTab .btn button:hover:before {
+  width: 300px;
+  height: 300px;
 }
 .cartTab .btn button:hover {
   background-color: #7b5c23;
@@ -548,4 +822,36 @@ body.showCart .categories,
 body.showCart .products {
   /* Prevent any accidental transforms */
   transform: none;
+}
+
+/* Animation classes for interactive elements */
+.animate-on-hover {
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.animate-on-hover:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  animation: pulse-once 0.5s ease;
+}
+
+@keyframes pulse-once {
+  0% { transform: translateY(-3px) scale(1); }
+  50% { transform: translateY(-3px) scale(1.05); }
+  100% { transform: translateY(-3px) scale(1); }
+}
+
+/* Animation for notification */
+.notification {
+  animation: slideUp 0.5s ease forwards;
+}
+
+/* Fade in animation for elements */
+.fade-in {
+  animation: fadeIn 0.8s ease forwards;
+}
+
+/* Pulse animation for important elements */
+.pulse-animation {
+  animation: pulse 2s infinite ease-in-out;
 }

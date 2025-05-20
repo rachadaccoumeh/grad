@@ -82,7 +82,12 @@ function initWishlistButtons() {
   const favoriteButtons = document.querySelectorAll('.favorite-btn');
   
   favoriteButtons.forEach(button => {
+    // Check if button is inside a product card (could be in modal)
     const product = button.closest('.product-card');
+    
+    // Skip buttons that aren't in product cards (like those in the modal)
+    if (!product) return;
+    
     const productId = product.getAttribute('data-id');
     
     // Check if this product is in the wishlist
@@ -112,22 +117,41 @@ function favoriteButtonClickHandler(e) {
 }
 
 // Add to cart functionality
-function addToCart(button) {
-  const product = button.closest('.product-card');
-  const productId = product.getAttribute('data-id');
-  const productTitle = product.querySelector('h4').textContent;
-  const productPrice = product.querySelector('.price').textContent;
-  const productDescription = product.querySelector('.gallery-description').textContent;
-  const productImage = product.querySelector('img').src;
+function addToCart(button, event) {
+  // Prevent default to avoid any default button behavior
+  if (event) event.preventDefault();
   
-  // Add item to cart array
-  cart.push({
-    id: productId,
-    title: productTitle,
-    price: productPrice,
-    description: productDescription,
-    image: productImage
-  });
+  // Prevent multiple clicks
+  if (button.getAttribute('data-adding') === 'true') return;
+  button.setAttribute('data-adding', 'true');
+  
+  console.log('Adding to cart:', button);
+  
+  const product = button.closest('.product-card');
+  const productId = button.getAttribute('data-id') || product.getAttribute('data-id');
+  const productTitle = button.getAttribute('data-name') || product.getAttribute('data-name');
+  const priceString = button.getAttribute('data-price') || product.getAttribute('data-price');
+  const productPrice = parseFloat(priceString.replace(/[^0-9.-]+/g,""));
+  const productImage = button.getAttribute('data-image') || product.querySelector('img')?.src;
+  
+  // Check if item already exists in cart
+  const existingItemIndex = cart.findIndex(item => item.id === productId);
+  
+  if (existingItemIndex > -1) {
+    // Update quantity if item exists
+    cart[existingItemIndex].quantity = (parseInt(cart[existingItemIndex].quantity) || 1) + 1;
+  } else {
+    // Add new item to cart
+    cart.push({
+      id: productId,
+      name: productTitle,
+      price: productPrice,
+      image: productImage,
+      quantity: 1
+    });
+  }
+  
+  console.log('Updated cart:', cart);
   
   // Save to localStorage
   localStorage.setItem('cart', JSON.stringify(cart));
@@ -135,17 +159,27 @@ function addToCart(button) {
   // Update cart count
   const cartCount = document.getElementById('cartCount');
   if (cartCount) {
-    cartCount.textContent = cart.length;
+    const totalItems = cart.reduce((total, item) => total + (parseInt(item.quantity) || 1), 0);
+    cartCount.textContent = totalItems;
+    console.log('Updated cart count:', totalItems);
   }
   
   // Visual feedback for adding to cart
+  const originalText = button.textContent;
   button.textContent = "Added!";
+  button.disabled = true;
+  
   setTimeout(() => {
-    button.textContent = "Add to cart";
+    button.textContent = originalText;
+    button.disabled = false;
+    button.removeAttribute('data-adding');
   }, 1500);
   
   // Show notification
   showNotification(`${productTitle} added to cart!`);
+  
+  // Prevent any further execution
+  return false;
 }
 
 // Function to toggle cart visibility

@@ -93,7 +93,7 @@
         </span>
       </div>
       <div class="ai-button-container">
-        <button class="ai-button" onclick="window.location.href='ai-page.html'">
+        <button class="ai-button" onclick="window.location.href='ai-page.php'">
           <i class="fas fa-robot"></i> Ai room genie
         </button>
       </div>
@@ -110,7 +110,9 @@
       <button class="checkOut">CHECK OUT</button>
     </div>
   </div>
+  <!-- Load cart.js first to ensure cart functionality is available -->
   <script src="cart.js"></script>
+  <!-- Load other scripts after cart.js -->
   <script src="wishlist.js"></script>
   <script src="gallery.js"></script>
 
@@ -202,7 +204,12 @@
               <button class="remove-from-wishlist" onclick="removeFromWishlist('${item.id}')">
                 <i class="fas fa-trash"></i> Remove
               </button>
-              <button class="add-to-cart" onclick="addToCart(this, '${item.id}')">Add to cart</button>
+              <button class="add-to-cart" 
+                data-id="${item.id}" 
+                data-name="${item.title}" 
+                data-price="${item.price}" 
+                data-image="${item.image}"
+                onclick="addToCart(this, '${item.id}')">Add to cart</button>
             </div>
           </div>
         `;
@@ -250,47 +257,71 @@
     
     // Function to add item to cart from wishlist
     function addToCart(button, id) {
-      // Get cart count and update it
-      const cartCount = document.getElementById('cartCount');
-      let currentCount = parseInt(cartCount.textContent);
-      cartCount.textContent = currentCount + 1;
-      
-      // Get wishlist item details
-      let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
-      const item = wishlist.find(item => item.id === id);
-      
-      // Add to cart (in a real implementation, you would add to cart array/object)
-      let cart = JSON.parse(localStorage.getItem('cart')) || [];
-      cart.push(item);
-      localStorage.setItem('cart', JSON.stringify(cart));
-      
-      // Visual feedback for adding to cart
-      button.textContent = "Added!";
-      setTimeout(() => {
-        button.textContent = "Add to cart";
-      }, 1500);
-      
-      // Show notification
-      const notification = document.createElement('div');
-      notification.textContent = `${item.title} added to cart!`;
-      notification.style.position = 'fixed';
-      notification.style.bottom = '20px';
-      notification.style.right = '20px';
-      notification.style.backgroundColor = '#24424c';
-      notification.style.color = '#fff8e3';
-      notification.style.padding = '10px 20px';
-      notification.style.borderRadius = '5px';
-      notification.style.zIndex = '1000';
-      notification.style.transition = 'opacity 0.5s';
-      
-      document.body.appendChild(notification);
-      
-      setTimeout(() => {
-        notification.style.opacity = '0';
+      // Check if cartManager exists and use it if available
+      if (window.cartManager && typeof window.cartManager.addToCart === 'function') {
+        // Use the cart manager to add the item
+        window.cartManager.addToCart(button);
+      } else {
+        // Fallback implementation if cartManager is not available
+        // Get cart count and update it
+        const cartCount = document.getElementById('cartCount');
+        let currentCount = parseInt(cartCount.textContent);
+        cartCount.textContent = currentCount + 1;
+        
+        // Get wishlist item details
+        let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+        const item = wishlist.find(item => item.id === id);
+        
+        // Check if the item already exists in the cart
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const existingItemIndex = cart.findIndex(cartItem => cartItem.id === id);
+        
+        if (existingItemIndex > -1) {
+          // Increment quantity if item already exists
+          cart[existingItemIndex].quantity = (cart[existingItemIndex].quantity || 1) + 1;
+        } else {
+          // Add new item to cart with quantity 1
+          const cartItem = {
+            id: item.id,
+            name: item.title,
+            price: item.price,
+            image: item.image,
+            quantity: 1
+          };
+          cart.push(cartItem);
+        }
+        
+        // Save updated cart to localStorage
+        localStorage.setItem('cart', JSON.stringify(cart));
+        
+        // Visual feedback for adding to cart
+        button.textContent = "Added!";
         setTimeout(() => {
-          document.body.removeChild(notification);
-        }, 500);
-      }, 2000);
+          button.textContent = "Add to cart";
+        }, 1500);
+        
+        // Show notification
+        const notification = document.createElement('div');
+        notification.textContent = `${item.title} added to cart!`;
+        notification.style.position = 'fixed';
+        notification.style.bottom = '20px';
+        notification.style.right = '20px';
+        notification.style.backgroundColor = '#24424c';
+        notification.style.color = '#fff8e3';
+        notification.style.padding = '10px 20px';
+        notification.style.borderRadius = '5px';
+        notification.style.zIndex = '1000';
+        notification.style.transition = 'opacity 0.5s';
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+          notification.style.opacity = '0';
+          setTimeout(() => {
+            document.body.removeChild(notification);
+          }, 500);
+        }, 2000);
+      }
     }
     
     // Load wishlist when page loads

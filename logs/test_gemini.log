@@ -1,0 +1,16 @@
+[2025-05-18 06:03:28] Starting Gemini API test
+[2025-05-18 06:03:28] Created test image at: uploads/test_gemini_image.png
+[2025-05-18 06:03:28] Sending request to Gemini API with prompt: 'Describe this image in detail'
+[2025-05-18 06:03:28] Sending request to Gemini API...
+[2025-05-18 06:03:29] API Response (HTTP 404)
+[2025-05-18 06:03:29] Error in testGeminiAPI: API Error: Gemini 1.0 Pro Vision has been deprecated on July 12, 2024. Consider switching to different model, for example gemini-1.5-flash.
+[2025-05-18 06:03:51] Starting Gemini API test
+[2025-05-18 06:03:51] Created test image at: uploads/test_gemini_image.png
+[2025-05-18 06:03:51] Sending request to Gemini API with prompt: 'Describe this image in detail'
+[2025-05-18 06:03:51] Sending request to Gemini API...
+[2025-05-18 06:03:53] API Response (HTTP 200)
+[2025-05-18 06:09:37] Starting Gemini API test
+[2025-05-18 06:09:37] Created test image at: uploads/test_gemini_image.png
+[2025-05-18 06:09:37] Sending request to Gemini API with prompt: 'Describe this image in detail'
+[2025-05-18 06:09:37] Sending request to Gemini API...
+[2025-05-18 06:09:39] API Response (HTTP 200)

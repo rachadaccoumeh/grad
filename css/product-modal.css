@@ -1,0 +1,254 @@
+/* Product Modal Styles */
+.product-modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.7);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.product-modal-content {
+  position: relative;
+  background-color: #fff;
+  margin: 5% auto;
+  padding: 0;
+  width: 90%;
+  max-width: 1000px;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  animation: slideIn 0.3s ease-in-out;
+}
+
+@keyframes slideIn {
+  from { transform: translateY(-50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.close-modal {
+  position: absolute;
+  right: 20px;
+  top: 15px;
+  color: #333;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 10;
+  transition: color 0.2s;
+}
+
+.close-modal:hover {
+  color: #906e2b;
+}
+
+.product-modal-body {
+  display: flex;
+  flex-direction: row;
+  padding: 20px;
+}
+
+@media (max-width: 768px) {
+  .product-modal-body {
+    flex-direction: column;
+  }
+}
+
+/* Image zoom container styles */
+.product-modal-image {
+  flex: 1;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-zoom-container {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+  border-radius: 4px;
+  cursor: zoom-in;
+}
+
+.image-zoom-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.image-zoom-container:hover img {
+  transform: scale(1.5);
+}
+
+.zoom-hint {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.image-zoom-container:hover .zoom-hint {
+  opacity: 0;
+}
+
+.product-modal-details {
+  flex: 1;
+  padding: 20px;
+}
+
+.product-modal-details h2 {
+  margin-top: 0;
+  color: #24424c;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.product-modal-price {
+  font-size: 22px;
+  color: #906e2b;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Product description styles */
+
+.product-modal-description {
+  margin-bottom: 20px;
+  line-height: 1.6;
+  color: #555;
+}
+
+.product-modal-meta {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+}
+
+.product-modal-meta p {
+  margin: 8px 0;
+  color: #666;
+}
+
+.in-stock {
+  color: #28a745;
+  font-weight: bold;
+}
+
+/* Quantity selector styles */
+.product-modal-quantity {
+  margin-bottom: 20px;
+}
+
+.product-modal-quantity label {
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+  font-weight: 500;
+}
+
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  max-width: 120px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.quantity-btn {
+  background-color: #f5f5f5;
+  border: none;
+  color: #333;
+  font-size: 16px;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.quantity-btn:hover {
+  background-color: #e0e0e0;
+}
+
+.quantity-selector input {
+  width: 48px;
+  height: 36px;
+  text-align: center;
+  border: none;
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  font-size: 14px;
+}
+
+.quantity-selector input:focus {
+  outline: none;
+}
+
+/* Remove arrows from number input */
+.quantity-selector input::-webkit-outer-spin-button,
+.quantity-selector input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.quantity-selector input[type=number] {
+  /* Fix for compatibility across browsers */
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.product-modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.modal-favorite-btn {
+  background-color: #fff;
+  color: #906e2b;
+  border: 1px solid #906e2b;
+  padding: 10px 15px;
+  font-size: 18px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.modal-favorite-btn:hover {
+  background-color: #f9f2e3;
+}
+
+.modal-add-to-cart {
+  flex: 1;
+  background-color: #906e2b;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.modal-add-to-cart:hover {
+  background-color: #7a5c24;
+}

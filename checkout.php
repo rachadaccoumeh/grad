@@ -141,6 +141,67 @@
       border-top: 1px solid rgba(36, 66, 76, 0.2);
     }
 
+    .order-totals {
+      margin-top: 30px;
+      padding: 25px;
+      background-color: #f9f9f9;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+    
+    .order-totals h3 {
+      margin-bottom: 20px;
+      color: #24424c;
+      font-size: 18px;
+      font-weight: 600;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #f0f0f0;
+    }
+    
+    .order-totals > div {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      font-size: 15px;
+      color: #555;
+    }
+    
+    .order-totals .subtotal {
+      font-weight: 500;
+    }
+    
+    .order-totals .shipping {
+      padding-bottom: 12px;
+      margin-bottom: 15px;
+      border-bottom: 1px dashed #e0e0e0;
+    }
+    
+    .order-totals .total {
+      font-size: 18px;
+      font-weight: 700;
+      color: #24424c;
+      margin: 20px 0 0;
+      padding-top: 15px;
+      border-top: 2px solid #f0f0f0;
+    }
+    
+    .order-totals .price-amount {
+      font-weight: 600;
+      color: #24424c;
+    }
+    
+    .free-shipping {
+      display: flex;
+      align-items: center;
+      color: #2e7d32;
+      font-weight: 500;
+    }
+    
+    .free-shipping i {
+      margin-right: 8px;
+      font-size: 18px;
+    }
+
     /* Form Styles */
     .form-group {
       margin-bottom: 20px;
@@ -565,13 +626,19 @@
         // Update location when marker is dragged
         marker.on('dragend', function() {
           const position = marker.getLatLng();
-          document.getElementById("locationStatus").textContent = `Selected: ${position.lat.toFixed(6)}, ${position.lng.toFixed(6)}`;
+          const locationStatus = document.getElementById("locationStatus");
+          if (locationStatus) {
+            locationStatus.textContent = `Selected: ${position.lat.toFixed(6)}, ${position.lng.toFixed(6)}`;
+          }
         });
         
         // Allow clicking on map to move marker
         map.on('click', function(e) {
           marker.setLatLng(e.latlng);
-          document.getElementById("locationStatus").textContent = `Selected: ${e.latlng.lat.toFixed(6)}, ${e.latlng.lng.toFixed(6)}`;
+          const locationStatus = document.getElementById("locationStatus");
+          if (locationStatus) {
+            locationStatus.textContent = `Selected: ${e.latlng.lat.toFixed(6)}, ${e.latlng.lng.toFixed(6)}`;
+          }
         });
         
         // Force map to refresh by triggering a resize event
@@ -585,6 +652,111 @@
       }
     }
     
+    // Function to display cart items in the order summary
+    function displayCartItems() {
+      // Get the order summary element
+      const orderSummary = document.getElementById('orderSummary');
+      
+      // If orderSummary element doesn't exist, exit the function
+      if (!orderSummary) {
+        console.error("Order summary element not found");
+        return;
+      }
+      
+      // HTML for empty cart message
+      const emptyCartMessage = `
+        <div class="empty-cart-message">
+          <i class="fas fa-shopping-cart" style="font-size: 48px; margin-bottom: 20px; color: #999;"></i>
+          <h3>Your cart is empty</h3>
+          <p>Looks like you haven't added any items to your cart yet.</p>
+          <button onclick="window.location.href='gallery.php'" class="continue-shopping-btn">Continue Shopping</button>
+        </div>
+      `;
+
+      // Get cart from localStorage
+      let cart = [];
+      try {
+        const savedCart = localStorage.getItem('cart');
+        if (savedCart) {
+          cart = JSON.parse(savedCart);
+        }
+      } catch (e) {
+        console.error("Error parsing cart from localStorage:", e);
+      }
+
+      // If cart is empty, show empty cart message
+      if (!cart || cart.length === 0) {
+        orderSummary.innerHTML = emptyCartMessage;
+        
+        // Disable place order button if it exists
+        const placeOrderBtn = document.getElementById('placeOrderBtn');
+        if (placeOrderBtn) {
+          placeOrderBtn.disabled = true;
+        }
+        return;
+      }
+
+      let html = '';
+      let subtotal = 0;
+      let totalItems = 0;
+      
+      // Process each item in the cart
+      cart.forEach(item => {
+        // Ensure price is a number
+        const price = typeof item.price === 'string' ? parseFloat(item.price.replace(/[^0-9.-]+/g,"")) : Number(item.price);
+        const quantity = item.quantity || 1;
+        const itemTotal = price * quantity;
+        
+        subtotal += itemTotal;
+        totalItems += quantity;
+
+        // Get image source - handle different property names
+        const imageSrc = item.image || item.img || 'images/placeholder.jpg';
+        
+        // Add item to HTML
+        html += `
+          <div class="cart-item">
+            <div class="item-image">
+              <img src="${imageSrc}" alt="${item.name || 'Product'}">
+            </div>
+            <div class="item-details">
+              <h4>${item.name || 'Product'}</h4>
+              <p>Qty: ${quantity}</p>
+            </div>
+            <div class="item-price">$${price.toFixed(2)}</div>
+          </div>
+        `;
+      });
+
+      // Add order summary
+      html += `
+        <div class="order-totals">
+          <h3>Order Summary</h3>
+          <div class="subtotal">
+            <span>Subtotal (<span id="itemCount">${totalItems}</span> items)</span>
+            <span class="price-amount" id="subtotal">$${subtotal.toFixed(2)}</span>
+          </div>
+          <div class="shipping">
+            <span>Shipping</span>
+            <span class="free-shipping">
+              <i class="fas fa-check-circle"></i>
+              <span>Free Shipping</span>
+            </span>
+          </div>
+          <div class="total">
+            <span>Total</span>
+            <span class="price-amount" id="total">$${subtotal.toFixed(2)}</span>
+          </div>
+          <p style="margin-top: 20px; font-size: 14px; color: #666; text-align: center;">
+            <i class="fas fa-lock"></i> Secure Checkout
+          </p>
+        </div>
+      `;
+
+      // Update the order summary with the generated HTML
+      orderSummary.innerHTML = html;
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
       // Initialize map when document is loaded
       try {
@@ -593,13 +765,10 @@
       } catch (e) {
         console.error("Error during map initialization:", e);
       }
-
-
-
       
       // Load cart from localStorage
       let cart = [];
-      const savedCart = localStorage.getItem('roomGeniusCart');
+      const savedCart = localStorage.getItem('cart');
       if (savedCart) {
         try {
           cart = JSON.parse(savedCart);
@@ -608,11 +777,15 @@
         }
       }
       
+      // Get DOM elements - with null checks
       const orderSummary = document.getElementById('orderSummary');
       const emptyCartMessage = document.getElementById('emptyCartMessage');
       const checkoutContainer = document.getElementById('checkoutContainer');
       const orderConfirmation = document.getElementById('orderConfirmation');
       const placeOrderBtn = document.getElementById('placeOrderBtn');
+      
+      // Display cart items
+      displayCartItems();
       
       // Payment method selection
       const paymentMethods = document.querySelectorAll('.payment-method');
@@ -671,61 +844,13 @@
       
       // If cart is empty, show message
       if (cart.length === 0) {
-        emptyCartMessage.style.display = 'block';
-        placeOrderBtn.disabled = true;
-      } else {
-        // Display cart items
-        let subtotal = 0;
-        let totalItems = 0;
-        
-        cart.forEach(item => {
-          const itemTotal = item.price * item.quantity;
-          subtotal += itemTotal;
-          totalItems += item.quantity;
-          
-          const cartItemElement = document.createElement('div');
-          cartItemElement.className = 'cart-item';
-          cartItemElement.innerHTML = `
-            <div class="item-image">
-              <img src="${item.img}" alt="${item.name}">
-            </div>
-            <div class="item-details">
-              <div class="item-name">${item.name}</div>
-              <div class="item-quantity">Quantity: ${item.quantity}</div>
-            </div>
-            <div class="item-price">$${itemTotal.toFixed(2)}</div>
-          `;
-          
-          orderSummary.appendChild(cartItemElement);
-        });
-        
-        // Add price breakdown
-        const shipping = 0.00; // Free shipping
-        const tax = subtotal * 0.08; // 8% tax rate
-        const total = subtotal + shipping + tax;
-        
-        const priceDetailsElement = document.createElement('div');
-        priceDetailsElement.className = 'price-details';
-        priceDetailsElement.innerHTML = `
-          <div class="price-row">
-            <div>Subtotal (${totalItems} items)</div>
-            <div>$${subtotal.toFixed(2)}</div>
-          </div>
-          <div class="price-row">
-            <div>Shipping<span class="free-shipping-badge">FREE</span></div>
-            <div>$${shipping.toFixed(2)}</div>
-          </div>
-          <div class="price-row">
-            <div>Tax (8%)</div>
-            <div>$${tax.toFixed(2)}</div>
-          </div>
-          <div class="price-row total">
-            <div>Total</div>
-            <div>$${total.toFixed(2)}</div>
-          </div>
-        `;
-        
-        orderSummary.appendChild(priceDetailsElement);
+        // Check if elements exist before accessing their properties
+        if (emptyCartMessage) {
+          emptyCartMessage.style.display = 'block';
+        }
+        if (placeOrderBtn) {
+          placeOrderBtn.disabled = true;
+        }
       }
       
       // Card number formatting
@@ -758,133 +883,40 @@
       
       // Place order button click handler
       placeOrderBtn.addEventListener('click', function() {
-        placeOrderBtn.addEventListener('click', function() {
-  const fullName = document.getElementById('fullName').value;
-  const email = document.getElementById('email').value;
-  const address = document.getElementById('address').value;
-  const city = document.getElementById('city').value;
-  const zipCode = document.getElementById('zipCode').value;
-  const country = document.getElementById('country').value;
-  const phone = document.getElementById('phone').value;
+        // Get form field values
+        const fullName = document.getElementById('fullName').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const address = document.getElementById('address').value.trim();
+        const city = document.getElementById('city').value.trim();
+        const zipCode = document.getElementById('zipCode').value.trim();
+        const country = document.getElementById('country').value.trim();
+        const phone = document.getElementById('phone').value.trim();
 
-
-   // Get location coordinates
-  const locationCoords = marker.getLatLng();
-  const latitude = locationCoords.lat;
-  const longitude = locationCoords.lng;
-  
-  // Check if card payment is selected
-  const isCardPayment = document.getElementById('cardPayment').checked;
-  const paymentMethod = isCardPayment ? 'Credit Card' : 'Cash on Delivery';
-  
-  // Basic validation for all fields
-  if (!fullName || !email || !address || !city || !zipCode || !country || !phone) {
-    alert('Please fill in all required shipping information fields.');
-    return;
-  }
-  
-  // Validate card details only if card payment is selected
-  if (isCardPayment) {
-    const cardName = document.getElementById('cardName').value;
-    const cardNumber = document.getElementById('cardNumber').value;
-    const expiry = document.getElementById('expiry').value;
-    const cvv = document.getElementById('cvv').value;
-    
-    if (!cardName || !cardNumber || !expiry || !cvv) {
-      alert('Please fill in all card details.');
-      return;
-    }
-  }
-  
- 
-  
-  // Check if location is selected
-  if (!locationCoords) {
-    alert('Please share or select your location on the map.');
-    return;
-  }
-  
-  // Generate random order ID
-  const orderId = 'RG' + Math.floor(100000 + Math.random() * 900000);
-  document.getElementById('orderId').textContent = orderId;
-  
-  // Get cart items and totals
-  let cart = [];
-  try {
-    const savedCart = localStorage.getItem('roomGeniusCart');
-    if (savedCart) {
-      cart = JSON.parse(savedCart);
-    }
-  } catch (e) {
-    console.error("Error parsing cart:", e);
-  }
-  
-  // Calculate totals
-  let subtotal = 0;
-  cart.forEach(item => {
-    subtotal += item.price * item.quantity;
-  });
-  
-  const shipping = 0.00; // Free shipping
-  const tax = subtotal * 0.08; // 8% tax
-  const total = subtotal + shipping + tax;
-  
-  // Prepare order data
-  const orderData = {
-    orderId: orderId,
-    fullName: fullName,
-    email: email,
-    address: address,
-    city: city,
-    zipCode: zipCode,
-    governorate: country,
-    phone: phone,
-    latitude: latitude,
-    longitude: longitude,
-    paymentMethod: paymentMethod,
-    subtotal: subtotal.toFixed(2),
-    tax: tax.toFixed(2),
-    shipping: shipping.toFixed(2),
-    total: total.toFixed(2),
-    items: cart,
-    orderStatus: 'Pending',
-    paymentStatus: isCardPayment ? 'Paid' : 'Unpaid'
-  };
-  
-  // Send order data to the server
-  fetch('save_order.php', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(orderData)
-  })
-  .then(response => response.json())
-  .then(data => {
-    if (data.success) {
-      // Clear the cart in localStorage
-      localStorage.removeItem('roomGeniusCart');
-      
-      // Show order confirmation
-      checkoutContainer.style.display = 'none';
-      orderConfirmation.style.display = 'block';
-    } else {
-      alert('There was an error processing your order. Please try again.');
-    }
-  })
-  .catch(error => {
-    console.error('Error:', error);
-    alert('There was an error processing your order. Please try again.');
-  });
-});
-
+        // Get location coordinates
+        const locationCoords = marker ? marker.getLatLng() : null;
+        const latitude = locationCoords ? locationCoords.lat : null;
+        const longitude = locationCoords ? locationCoords.lng : null;
         
         // Check if card payment is selected
         const isCardPayment = document.getElementById('cardPayment').checked;
+        const paymentMethod = isCardPayment ? 'credit_card' : 'cash_on_delivery';
         
-        // Basic validation for all fields
-        if (!fullName || !email || !address || !city || !zipCode || !country || !phone) {
-          alert('Please fill in all required shipping information fields.');
+        // Add debugging to see what values we're getting
+        console.log('Form values:', { fullName, email, address, city, zipCode, country, phone });
+        console.log('Location:', { locationCoords, latitude, longitude });
+        
+        // Improved validation with specific messages
+        let missingFields = [];
+        if (!fullName) missingFields.push('Full Name');
+        if (!email) missingFields.push('Email Address');
+        if (!address) missingFields.push('Street Address');
+        if (!city) missingFields.push('City');
+        if (!zipCode) missingFields.push('ZIP Code');
+        if (!country) missingFields.push('Governorate');
+        if (!phone) missingFields.push('Phone Number');
+        
+        if (missingFields.length > 0) {
+          alert('Please fill in the following required fields:\n- ' + missingFields.join('\n- '));
           return;
         }
         
@@ -901,11 +933,8 @@
           }
         }
         
-        
-        
         // Check if location is selected
-        const locationStatus = document.getElementById('locationStatus').textContent;
-        if (!locationStatus.includes('Selected:')) {
+        if (!locationCoords) {
           alert('Please share or select your location on the map.');
           return;
         }
@@ -913,13 +942,112 @@
         // Generate random order ID
         const orderId = 'RG' + Math.floor(100000 + Math.random() * 900000);
         document.getElementById('orderId').textContent = orderId;
+        // Calculate totals
+        let subtotal = 0;
+        cart.forEach(item => {
+          subtotal += item.price * item.quantity;
+        });
         
-        // Clear the cart in localStorage
-        localStorage.removeItem('roomGeniusCart');
+        const shipping = 0.00; // Free shipping
+        const tax = subtotal * 0.08; // 8% tax
+        const total = subtotal + shipping + tax;
         
-        // Show order confirmation
-        checkoutContainer.style.display = 'none';
-        orderConfirmation.style.display = 'block';
+        // Prepare order data
+        // Create a clean cart array with only the necessary data
+        const cleanCart = cart.map(item => ({
+          id: item.id,
+          quantity: item.quantity,
+          price: parseFloat(item.price)
+        }));
+        
+        // Format the order data according to what save_order.php expects
+        // This ensures all fields match the database structure
+        const orderData = {
+          orderId: orderId,
+          fullName: fullName,
+          email: email,
+          address: address,
+          city: city,
+          zipCode: zipCode,
+          governorate: country,
+          phone: phone,
+          latitude: latitude,
+          longitude: longitude,
+          paymentMethod: paymentMethod,
+          subtotal: parseFloat(subtotal.toFixed(2)),
+          tax: parseFloat(tax.toFixed(2)),
+          shipping: parseFloat(shipping.toFixed(2)),
+          total: parseFloat(total.toFixed(2)),
+          items: cleanCart
+        };
+        
+        // Add card details if payment method is credit card
+        if (isCardPayment) {
+          orderData.cardName = document.getElementById('cardName').value;
+          orderData.cardNumber = document.getElementById('cardNumber').value;
+          orderData.cardExpiry = document.getElementById('expiry').value;
+        }
+        
+        // Log the final order data for debugging
+        console.log('Order data being sent:', orderData);
+        
+        // Send order data to the server
+        fetch('save_order.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(orderData)
+        })
+        .then(response => {
+          // Log the raw response for debugging
+          console.log('Response status:', response.status);
+          return response.text().then(text => {
+            try {
+              // Try to parse as JSON
+              return JSON.parse(text);
+            } catch (e) {
+              // If not valid JSON, log the raw response and throw error
+              console.error('Invalid JSON response:', text);
+              throw new Error('Server returned invalid JSON: ' + text);
+            }
+          });
+        })
+        .then(data => {
+          console.log('Server response:', data);
+          if (data.success) {
+            // Clear the cart in localStorage
+            localStorage.removeItem('cart');
+            
+            // Update the order confirmation message with the order ID
+            document.getElementById('orderId').textContent = data.order_id;
+            
+            // Add additional information if some items couldn't be added
+            if (data.items_skipped > 0) {
+              // Create a note about skipped items
+              const noteElement = document.createElement('div');
+              noteElement.className = 'alert alert-warning mt-3';
+              noteElement.innerHTML = '<strong>Note:</strong> ' + data.items_skipped + ' out of ' + 
+                data.items_attempted + ' items could not be added to your order due to product availability issues.';
+              
+              // Add the note to the order confirmation
+              const confirmationContent = document.querySelector('.order-confirmation-content');
+              if (confirmationContent) {
+                confirmationContent.appendChild(noteElement);
+              }
+            }
+            
+            // Show order confirmation
+            checkoutContainer.style.display = 'none';
+            orderConfirmation.style.display = 'block';
+          } else {
+            alert('Error: ' + (data.message || 'Unknown error occurred'));
+          }
+        })
+        .catch(error => {
+          console.error('Fetch error:', error);
+          alert('There was an error processing your order: ' + error.message);
+        });
       });
       
       // Force map to render correctly by triggering window resize

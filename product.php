@@ -3,27 +3,25 @@ session_start();
 
 // Check if user is logged in and is an admin
 if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 'admin') { 
-  header("Location: index.php");
-  exit; 
+    header("Location: index.php");
+    exit; 
 } 
 
-// Database connection
-$servername = "localhost";
-$username = "root"; // Replace with your database username
-$password = ""; // Replace with your database password
-$dbname = "roomgenius_db"; // Replace with your database name
+// Set the current page for the sidebar
+$current_page = 'product';
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+// Database connection
+require_once 'db_connect.php';
+$conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 
 // Check connection
 if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
+    die("Connection failed: " . $conn->connect_error);
 }
 
 // Initialize variables for form data and error messages
-$product_id = $name = $description = $price = $style = $category = $stock_quantity = $is_featured = "";
-$product_id_err = $name_err = $description_err = $price_err = $style_err = $category_err = $stock_err = $image_err = "";
+$product_id = $name = $description = $price = $style = $category = $size = $stock_quantity = $is_featured = "";
+$product_id_err = $name_err = $description_err = $price_err = $style_err = $category_err = $size_err = $stock_err = $image_err = "";
 $success_message = $error_message = "";
 
 // Set active tab - default to add-product unless manage-products is specifically requested
@@ -97,6 +95,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $category = $_POST["category"];
   }
   
+  // Validate size
+  if (empty($_POST["size"])) {
+    $size_err = "Please select a size.";
+  } else {
+    $size = $_POST["size"];
+  }
+  
   // Validate stock quantity
   if (empty(trim($_POST["stock_quantity"]))) {
     $stock_err = "Please enter stock quantity.";
@@ -135,17 +140,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   
   // Check input errors before inserting in database
   if (empty($product_id_err) && empty($name_err) && empty($description_err) && empty($price_err) && 
-      empty($style_err) && empty($category_err) && empty($stock_err) && empty($image_err)) {
+      empty($style_err) && empty($category_err) && empty($size_err) && empty($stock_err) && empty($image_err)) {
     
-    // Prepare an insert statement
-    $sql = "INSERT INTO products (product_id, name, description, price, style, category, image_path, date_added, stock_quantity, is_featured) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?)";
+    // Prepare an insert statement with current timestamp
+    $sql = "INSERT INTO products (product_id, name, description, price, style, category, size, image_path, stock_quantity, is_featured, date_added) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())";
     
     if ($stmt = $conn->prepare($sql)) {
-      // Bind variables to the prepared statement as parameters
-      $stmt->bind_param("sssdsssii", $param_product_id, $param_name, $param_description, $param_price, 
-                        $param_style, $param_category, $param_image_path, $param_stock_quantity, $param_is_featured);
-      
       // Set parameters
       $param_product_id = $product_id;
       $param_name = $name;
@@ -153,9 +154,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $param_price = $price;
       $param_style = $style;
       $param_category = $category;
+      $param_size = $size;
       $param_image_path = $image_path;
       $param_stock_quantity = $stock_quantity;
       $param_is_featured = $is_featured;
+      
+      // Bind variables to the prepared statement as parameters
+      $stmt->bind_param("sssdssssii", 
+          $param_product_id, 
+          $param_name, 
+          $param_description, 
+          $param_price,
+          $param_style, 
+          $param_category, 
+          $param_size, 
+          $param_image_path, 
+          $param_stock_quantity, 
+          $param_is_featured
+      );
       
       // Attempt to execute the prepared statement
       if ($stmt->execute()) {
@@ -212,76 +228,43 @@ if (!empty($search_query)) {
 // Close connection
 $conn->close();
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Management - Admin Panel</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="admin.css">
     <link rel="stylesheet" href="product.css">
-    <title>Product Management</title>
+    <style>
+        /* Ensure icons are properly sized and aligned */
+        .navigation ul li a .icon {
+            min-width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+        }
+        .navigation ul li a .icon i {
+            font-size: 1.25em;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <div class="navigation">
-            <ul>
-                <li>
-                    <a href="">
-                        <span class="icon"><i class="fas fa-brain"></i> <i class="fas fa-couch"></i></span>
-                        <span class="title">RoomGenius</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="users.php">
-                        <span class="icon"><i class='bx bx-group'></i></span>
-                        <span class="title">Users</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <span class="icon"><i class='bx bx-buildings'></i></span>
-                        <span class="title">Companies</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="message.php">
-                        <span class="icon"><i class='bx bx-message'></i></span>
-                        <span class="title">Messages</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="category_item.php">
-                        <span class="icon"><i class='bx bx-basket'></i></span>
-                        <span class="title">Category items</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="product.php" class="active">
-                        <span class="icon"><i class='bx bx-box'></i></span>
-                        <span class="title">Product</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="orders.php">
-                        <span class="icon"><i class='bx bx-receipt'></i></span>
-                        <span class="title">Orders</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="adminLogout.php">
-                        <span class="icon"><i class='bx bx-log-out'></i></span>
-                        <span class="title">Sign out</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-
-        <div class="main">
+    <!-- Custom wrapper structure with original elements -->
+    <div id="admin-wrapper">
+        <!-- Include the original sidebar -->
+        <?php include 'admin_sidebar.php'; ?>
+        
+        <!-- Custom content container -->
+        <div id="admin-content">
+            <!-- Original main div for compatibility -->
+            <div class="main">
             <div class="topbar">
                 <div class="toggle">
                     <i class='bx bx-menu'></i>
@@ -291,7 +274,6 @@ $conn->close();
                         <label>
                             <input type="text" name="search" placeholder="Search products..." value="<?php echo htmlspecialchars($search_query); ?>">
                             <input type="hidden" name="tab" value="manage-products">
-                            
                         </label>
                     </form>
                 </div>
@@ -381,7 +363,7 @@ $conn->close();
                                 
                                 <div class="form-group">
                                     <label for="category">Category</label>
-                                    <select id="category" name="category">
+                                    <select id="category" name="category" onchange="updateSizeOptions()">
                                         <option value="" <?php echo empty($category) ? 'selected' : ''; ?>>Select Category</option>
                                         <option value="Kitchen" <?php echo $category == 'Kitchen' ? 'selected' : ''; ?>>Kitchen</option>
                                         <option value="Living Room" <?php echo $category == 'Living Room' ? 'selected' : ''; ?>>Living Room</option>
@@ -401,9 +383,24 @@ $conn->close();
                             </div>
                             
                             <div class="form-group">
+                                <label for="size">Size</label>
+                                <select id="size" name="size">
+                                    <option value="">Select a category first</option>
+                                </select>
+                                <span class="error"><?php echo $size_err; ?></span>
+                            </div>
+                            </div>
+                            
+                            <div class="form-group">
                                 <label for="product_image">Product Image</label>
+                                <div id="image-preview" style="margin-bottom: 10px; display: none; position: relative; display: inline-block;">
+                                    <img id="preview" src="#" alt="Preview" style="max-width: 200px; max-height: 200px; display: none;">
+                                    <button type="button" class="remove-image-btn" style="display: none;" onclick="removeImage()">
+                                        <i class='bx bx-x'></i>
+                                    </button>
+                                </div>
                                 <div class="file-upload">
-                                    <input type="file" id="product_image" name="product_image" accept="image/*">
+                                    <input type="file" id="product_image" name="product_image" accept="image/*" onchange="previewImage(this)">
                                     <label for="product_image"><i class='bx bx-upload'></i> Choose File</label>
                                     <span id="file-chosen">No file chosen</span>
                                 </div>
@@ -467,19 +464,329 @@ $conn->close();
                     </div>
                 </div>
             </div>
+            <!-- Close the main div -->
+            </div>
         </div>
     </div>
 
-    <script>
-        // Toggle sidebar
-        let toggle = document.querySelector('.toggle');
-        let navigation = document.querySelector('.navigation');
-        let main = document.querySelector('.main');
-        
-        toggle.onclick = function() {
-            navigation.classList.toggle('active');
-            main.classList.toggle('active');
+    <style>
+        /* Fix spacing issues while preserving admin styles */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            overflow-x: hidden;
         }
+        
+        /* Custom layout structure */
+        #admin-wrapper {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        /* Preserve navigation styles from admin.css but fix positioning */
+        .navigation {
+            position: fixed !important;
+            width: 250px !important;
+            height: 100% !important;
+            z-index: 1000 !important;
+            transition: 0.5s !important;
+            left: 0 !important;
+        }
+        
+        /* Fix the main content area */
+        #admin-content {
+            margin-left: 250px !important;
+            width: calc(100% - 250px) !important;
+            min-height: 100vh !important;
+            transition: margin-left 0.3s ease, width 0.3s ease !important;
+            position: relative !important;
+            overflow-x: hidden !important;
+        }
+        
+        /* Handle sidebar toggle states */
+        .navigation.active {
+            width: 70px !important;
+        }
+        
+        #admin-content.expanded {
+            margin-left: 70px !important;
+            width: calc(100% - 70px) !important;
+        }
+        
+        /* Fix topbar styling */
+        .topbar {
+            width: 100% !important;
+            padding: 10px 20px !important;
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
+        }
+        
+        /* Override any existing styles */
+        .main, .container {
+            all: unset !important;
+            display: contents !important;
+        }
+        
+        /* Make sure the toggle button works */
+        .toggle {
+            cursor: pointer !important;
+            font-size: 24px !important;
+        }
+        
+        /* Content container */
+        .product-content {
+            padding: 20px !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+        }
+        
+        .navigation.active ~ .main,
+        .navigation.active + .main {
+            left: 70px;
+            width: calc(100% - 70px);
+        }
+        
+        .product-content {
+            width: 100%;
+            padding: 20px;
+            margin: 0;
+        }
+        
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+        
+        .table-container table {
+            width: 100%;
+            margin: 0;
+            border-collapse: collapse;
+        }
+        
+        .remove-image-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 24px;
+            height: 24px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            padding: 0;
+            font-size: 14px;
+            line-height: 1;
+            opacity: 0.9;
+            transition: opacity 0.2s;
+        }
+        .remove-image-btn:hover {
+            opacity: 1;
+            background: #ff4757;
+        }
+        #image-preview {
+            margin-bottom: 10px;
+            display: inline-block;
+            position: relative;
+        }
+        #preview {
+            max-width: 200px;
+            max-height: 200px;
+            display: none;
+            border-radius: 4px;
+        }
+    </style>
+    <script>
+        // Image preview and removal functions
+        function previewImage(input) {
+            const preview = document.getElementById('preview');
+            const fileChosen = document.getElementById('file-chosen');
+            const removeBtn = document.querySelector('.remove-image-btn');
+            const imagePreview = document.getElementById('image-preview');
+            
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                    fileChosen.textContent = input.files[0].name;
+                    removeBtn.style.display = 'block';
+                    imagePreview.style.display = 'inline-block';
+                }
+                
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        
+        function removeImage() {
+            const input = document.getElementById('product_image');
+            const preview = document.getElementById('preview');
+            const fileChosen = document.getElementById('file-chosen');
+            const removeBtn = document.querySelector('.remove-image-btn');
+            const imagePreview = document.getElementById('image-preview');
+            
+            // Reset the file input
+            input.value = '';
+            
+            // Hide preview and reset UI
+            preview.style.display = 'none';
+            fileChosen.textContent = 'No file chosen';
+            removeBtn.style.display = 'none';
+            imagePreview.style.display = 'none';
+        }
+        
+        // Size options mapping
+        const sizeOptions = {
+            'Kitchen': ['Small', 'Medium', 'Large'],
+            'Living Room': ['Compact', 'Standard', 'Spacious'],
+            'Bedroom': ['Single', 'Double', 'Queen', 'King'],
+            'Office': ['Small', 'Medium', 'Large', 'Executive'],
+            'Dining Room': ['2-4 Seating', '4-6 Seating', '6-8 Seating', '8+ Seating'],
+            'Bathroom': ['Small', 'Medium', 'Large', 'Master'],
+            'Game Room': ['Compact', 'Standard', 'Deluxe'],
+            'Gym': ['Home', 'Professional', 'Commercial'],
+            'Prayer Room': ['Individual', 'Family', 'Community'],
+            'Garden': ['Small', 'Medium', 'Large'],
+            'Workshop': ['Basic', 'Standard', 'Professional'],
+            'Closet': ['Walk-in', 'Reach-in', 'Wardrobe']
+        };
+
+        // Update size options based on selected category
+        function updateSizeOptions() {
+            const categorySelect = document.getElementById('category');
+            const sizeSelect = document.getElementById('size');
+            const selectedCategory = categorySelect.value;
+            
+            // Clear existing options
+            sizeSelect.innerHTML = '<option value="">Select size</option>';
+            
+            if (selectedCategory && sizeOptions[selectedCategory]) {
+                // Add size options for the selected category
+                sizeOptions[selectedCategory].forEach(size => {
+                    const option = document.createElement('option');
+                    option.value = size;
+                    option.textContent = size;
+                    sizeSelect.appendChild(option);
+                });
+            } else {
+                sizeSelect.innerHTML = '<option value="">Select a category first</option>';
+            }
+        }
+        
+        // Initialize size options if category is already selected
+        document.addEventListener('DOMContentLoaded', function() {
+            const categorySelect = document.getElementById('category');
+            if (categorySelect.value) {
+                updateSizeOptions();
+                // Set the previously selected size if it exists
+                const sizeSelect = document.getElementById('size');
+                if ('<?php echo $size; ?>') {
+                    sizeSelect.value = '<?php echo $size; ?>';
+                }
+            }
+        });
+
+        // Sidebar toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get DOM elements
+            const toggle = document.querySelector('.toggle');
+            const navigation = document.querySelector('.navigation');
+            const main = document.querySelector('.main');
+            const icon = toggle ? toggle.querySelector('i') : null;
+            
+            // Toggle sidebar function
+            function toggleSidebar() {
+                // Toggle active class on navigation
+                navigation.classList.toggle('active');
+                
+                // Toggle expanded class on content container
+                const content = document.getElementById('admin-content');
+                if (content) {
+                    content.classList.toggle('expanded');
+                }
+                
+                // Toggle the menu icon between menu and x
+                if (icon) {
+                    if (navigation.classList.contains('active')) {
+                        icon.classList.remove('bx-menu');
+                        icon.classList.add('bx-x');
+                        // Hide text in navigation items
+                        document.querySelectorAll('.navigation .title').forEach(title => {
+                            title.style.display = 'none';
+                        });
+                    } else {
+                        icon.classList.remove('bx-x');
+                        icon.classList.add('bx-menu');
+                        // Show text in navigation items
+                        document.querySelectorAll('.navigation .title').forEach(title => {
+                            title.style.display = 'block';
+                        });
+                    }
+                }
+            }
+            
+            // Add click event to toggle button
+            if (toggle) {
+                toggle.addEventListener('click', toggleSidebar);
+            }
+            
+            // Add hovered class to selected list item
+            const list = document.querySelectorAll('.navigation li:not(:first-child)');
+            
+            function activeLink() {
+                list.forEach((item) => {
+                    item.classList.remove('hovered');
+                });
+                this.classList.add('hovered');
+            }
+            
+            // Handle list item interactions
+            list.forEach((item) => {
+                item.addEventListener('mouseover', activeLink);
+                
+                // Handle click on mobile
+                item.addEventListener('click', function() {
+                    if (window.innerWidth <= 992) {
+                        toggleSidebar();
+                    }
+                });
+            });
+            
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth <= 992 && 
+                    !navigation.contains(event.target) && 
+                    !toggle.contains(event.target) &&
+                    navigation.classList.contains('collapsed')) {
+                    toggleSidebar();
+                }
+            });
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 992) {
+                    // Reset styles on desktop
+                    navigation.classList.remove('collapsed');
+                    main.classList.remove('expanded');
+                    if (icon) {
+                        icon.classList.remove('bx-x');
+                        icon.classList.add('bx-menu');
+                        document.querySelectorAll('.navigation .title').forEach(title => {
+                            title.style.display = 'block';
+                        });
+                    }
+                }
+            });
+        });
         
         // Tab functionality
         const tabBtns = document.querySelectorAll('.tab-btn');

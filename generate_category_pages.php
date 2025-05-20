@@ -225,7 +225,7 @@ function syncCategoriesWithDatabase() {
     // Database connection details
     $servername = "localhost";
     $username = "root";
-    $password = "";
+    $password = "root123";
     $dbname = "roomgenius_db";
     
     // Create connection
@@ -268,7 +268,7 @@ function getCategoryProductCounts() {
     // Database connection details
     $servername = "localhost";
     $username = "root";
-    $password = "";
+    $password = "root123";
     $dbname = "roomgenius_db";
     
     // Create connection

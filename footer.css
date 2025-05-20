@@ -1,0 +1,341 @@
+/* 
+ * Footer styles for RoomGenius website
+ * This file contains all styles related to the footer component
+ */
+
+.site-footer {
+  background-color: #24424c;
+  color: #fff8e3;
+  padding: 60px 0 20px;
+  margin-top: 50px;
+  position: relative;
+  /* Adding a subtle pattern overlay for texture */
+  background-image: linear-gradient(rgba(36, 66, 76, 0.97), rgba(36, 66, 76, 0.97)), 
+                    url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Footer top section with columns */
+.footer-top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+
+.footer-column {
+  flex: 1;
+  min-width: 200px;
+  margin-bottom: 30px;
+  padding-right: 20px;
+  /* Adding animation for hover state */
+  transition: transform 0.3s ease;
+}
+
+.footer-column:hover {
+  transform: translateY(-5px);
+}
+
+/* Company info styling */
+.footer-logo {
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.footer-logo i {
+  margin-right: 5px;
+  /* Adding subtle animation */
+  animation: pulse 3s infinite ease-in-out;
+}
+
+.footer-description {
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  opacity: 0.9;
+}
+
+/* Social icons styling */
+.social-icons {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background-color: rgba(255, 248, 227, 0.1);
+  border-radius: 50%;
+  color: #fff8e3;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+  background-color: #c9b99e;
+  color: #24424c;
+  transform: translateY(-3px);
+}
+
+/* Footer headings */
+.footer-column h3 {
+  font-size: 18px;
+  margin-bottom: 20px;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.footer-column h3::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 40px;
+  height: 2px;
+  background-color: #c9b99e;
+  transition: width 0.3s ease;
+}
+
+.footer-column:hover h3::after {
+  width: 60px;
+}
+
+/* Footer links styling */
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 12px;
+}
+
+.footer-links a {
+  color: #fff8e3;
+  text-decoration: none;
+  opacity: 0.8;
+  transition: all 0.3s ease;
+  position: relative;
+  padding-left: 15px;
+}
+
+.footer-links a::before {
+  content: '›';
+  position: absolute;
+  left: 0;
+  transition: transform 0.3s ease;
+}
+
+.footer-links a:hover {
+  opacity: 1;
+  padding-left: 20px;
+}
+
+.footer-links a:hover::before {
+  transform: translateX(5px);
+}
+
+/* Contact info styling */
+.contact-info {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.contact-info li {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.contact-info i {
+  margin-right: 10px;
+  color: #c9b99e;
+  transition: transform 0.3s ease;
+}
+
+.contact-info li:hover i {
+  transform: scale(1.2);
+}
+
+/* Newsletter section */
+.newsletter {
+  background-color: rgba(201, 185, 158, 0.1);
+  padding: 30px;
+  border-radius: 8px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.newsletter h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.newsletter p {
+  margin-bottom: 20px;
+  opacity: 0.9;
+}
+
+.newsletter-form {
+  display: flex;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.newsletter-form input {
+  flex: 1;
+  padding: 12px 15px;
+  border: none;
+  border-radius: 4px 0 0 4px;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #24424c;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.newsletter-form input:focus {
+  background-color: #fff;
+  box-shadow: 0 0 0 2px rgba(201, 185, 158, 0.5);
+}
+
+.subscribe-btn {
+  padding: 12px 20px;
+  background-color: #c9b99e;
+  color: #24424c;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.subscribe-btn:hover {
+  background-color: #b8a88d;
+  transform: translateX(3px);
+}
+
+/* Footer bottom section */
+.footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 248, 227, 0.1);
+}
+
+.copyright {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.footer-bottom-links {
+  display: flex;
+  gap: 20px;
+}
+
+.footer-bottom-links a {
+  color: #fff8e3;
+  text-decoration: none;
+  font-size: 14px;
+  opacity: 0.8;
+  transition: all 0.3s ease;
+}
+
+.footer-bottom-links a:hover {
+  opacity: 1;
+  color: #c9b99e;
+}
+
+/* Back to top button */
+#back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 40px;
+  height: 40px;
+  background-color: #c9b99e;
+  color: #24424c;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+  z-index: 999;
+}
+
+#back-to-top.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+#back-to-top:hover {
+  background-color: #b8a88d;
+  transform: translateY(-5px);
+}
+
+/* Animation keyframes */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .footer-top {
+    flex-direction: column;
+  }
+  
+  .footer-column {
+    width: 100%;
+    margin-bottom: 30px;
+  }
+  
+  .newsletter-form {
+    flex-direction: column;
+  }
+  
+  .newsletter-form input {
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  
+  .subscribe-btn {
+    border-radius: 4px;
+    width: 100%;
+  }
+  
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .copyright {
+    margin-bottom: 15px;
+  }
+  
+  .footer-bottom-links {
+    justify-content: center;
+  }
+}

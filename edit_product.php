@@ -10,7 +10,7 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 'admin') {
 // Database connection
 $servername = "localhost";
 $username = "root"; // Replace with your database username
-$password = ""; // Replace with your database password
+$password = "root123"; // Replace with your database password
 $dbname = "roomgenius_db"; // Replace with your database name
 
 // Create connection
@@ -28,6 +28,7 @@ $description = "";
 $price = "";
 $style = "";
 $category = "";
+$size = "";
 $image_path = "";
 $stock_quantity = "";
 $is_featured = 0;
@@ -59,6 +60,7 @@ if ($result->num_rows > 0) {
     $style = $product['style'];
     $category = $product['category'];
     $image_path = $product['image_path'];
+    $size = $product['size'];
     $stock_quantity = $product['stock_quantity'];
     $is_featured = $product['is_featured'];
     $current_image = $image_path;
@@ -76,11 +78,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_product'])) {
     $price = $_POST['price'];
     $style = $_POST['style'];
     $category = $_POST['category'];
+    $size = $_POST['size'];
     $stock_quantity = $_POST['stock_quantity'];
     $is_featured = isset($_POST['is_featured']) ? 1 : 0;
     
-    // Handle image upload if a new image is provided
-    if (isset($_FILES['product_image']) && $_FILES['product_image']['error'] == 0) {
+    // Handle image operations
+    $remove_image = isset($_POST['remove_image']) && $_POST['remove_image'] == 1;
+    $new_image_uploaded = isset($_FILES['product_image']) && $_FILES['product_image']['error'] == 0;
+    
+    // If remove image is checked or a new image is uploaded
+    if ($remove_image || $new_image_uploaded) {
+        // Remove the current image if it exists and is not a default image
+        if (!empty($current_image) && file_exists($current_image) && strpos($current_image, 'default') === false) {
+            unlink($current_image);
+        }
+        $image_path = ''; // Clear the current image path
+    }
+    
+    // Handle new image upload if provided
+    if ($new_image_uploaded) {
         $upload_dir = "photos/";
         
         // Create directory if it doesn't exist
@@ -122,7 +138,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_product'])) {
                 description = ?, 
                 price = ?, 
                 style = ?, 
-                category = ?, 
+                category = ?,
+                size = ?,
                 image_path = ?, 
                 stock_quantity = ?, 
                 is_featured = ?,
@@ -131,13 +148,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_product'])) {
         
         $stmt = $conn->prepare($sql);
         $stmt->bind_param(
-            "sssdsssiii", 
+            "sssdssssiii", 
             $product_id, 
             $name, 
             $description, 
             $price, 
             $style, 
-            $category, 
+            $category,
+            $size,
             $image_path, 
             $stock_quantity, 
             $is_featured,
@@ -167,6 +185,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_product'])) {
     <link rel="stylesheet" href="admin.css">
     <link rel="stylesheet" href="product.css">
     <title>Edit Product - RoomGenius Admin</title>
+    <style>
+        .remove-image-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 24px;
+            height: 24px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            padding: 0;
+            font-size: 14px;
+            line-height: 1;
+            opacity: 0.9;
+            transition: opacity 0.2s;
+        }
+        .remove-image-btn:hover {
+            opacity: 1;
+            background: #ff4757;
+        }
+        .preview-image {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 4px;
+        }
+    </style>
     <style>
         .preview-image {
             max-width: 150px;
@@ -344,7 +393,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_product'])) {
 
                             <div class="form-group">
                                 <label for="category">Category</label>
-                                <select id="category" name="category" required>
+                                <select id="category" name="category" onchange="updateSizeOptions()" required>
                                     <option value="">Select Category</option>
                                     <option value="Kitchen" <?php echo $category == 'Kitchen' ? 'selected' : ''; ?>>Kitchen</option>
                                     <option value="Living Room" <?php echo $category == 'Living Room' ? 'selected' : ''; ?>>Living Room</option>
@@ -362,23 +411,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_product'])) {
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="product_image">Current Image</label>
-                            <?php if (!empty($image_path)): ?>
-                                <div>
-                                    <img src="<?php echo $image_path; ?>" alt="Current Product Image" class="preview-image">
-                                </div>
-                            <?php endif; ?>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="size">Size</label>
+                                <select id="size" name="size" required>
+                                    <option value="">Select a category first</option>
+                                </select>
+                            </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="product_image">Product Image</label>
+                            <label>Current Image</label>
+                            <div id="current-image-container" style="margin-bottom: 10px;<?php echo empty($image_path) ? ' display: none;' : ''; ?>">
+                                <div style="position: relative; display: inline-block;">
+                                    <img id="current-image" src="<?php echo !empty($image_path) ? $image_path : ''; ?>" alt="Current Product Image" class="preview-image" style="max-width: 200px; max-height: 200px;">
+                                    <button type="button" class="remove-image-btn" onclick="removeCurrentImage()">
+                                        <i class='bx bx-x'></i>
+                                    </button>
+                                </div>
+                                <input type="hidden" id="remove_image" name="remove_image" value="0">
+                            </div>
+                            <div id="no-image-message" style="display: <?php echo empty($image_path) ? 'block' : 'none'; ?>; color: #666; margin-bottom: 10px;">
+                                No image selected
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="product_image">Upload New Image</label>
                             <div class="file-upload">
-                                <input type="file" id="product_image" name="product_image" accept="image/*">
+                                <input type="file" id="product_image" name="product_image" accept="image/*" onchange="previewNewImage(this)">
                                 <label for="product_image"><i class='bx bx-upload'></i> Choose File</label>
                                 <span id="file-chosen">No file chosen</span>
                             </div>
-                            <small>Leave empty to keep the current image</small>
+                            <div id="new-image-preview" style="margin-top: 10px; display: none;">
+                                <div style="position: relative; display: inline-block;">
+                                    <img id="preview" src="#" alt="New Image Preview" style="max-width: 200px; max-height: 200px; border-radius: 4px;">
+                                    <button type="button" class="remove-image-btn" style="top: 5px; right: 5px;" onclick="removeNewImage()">
+                                        <i class='bx bx-x'></i>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="form-group checkbox">
@@ -397,6 +469,99 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_product'])) {
     </div>
 
     <script>
+        // Image handling functions
+        function removeCurrentImage() {
+            document.getElementById('remove_image').value = '1';
+            document.getElementById('current-image-container').style.display = 'none';
+            document.getElementById('no-image-message').style.display = 'block';
+            // Clear the file input if it has a value
+            document.getElementById('product_image').value = '';
+            // Hide new image preview if shown
+            document.getElementById('new-image-preview').style.display = 'none';
+        }
+        
+        function previewNewImage(input) {
+            const preview = document.getElementById('preview');
+            const fileChosen = document.getElementById('file-chosen');
+            const newImagePreview = document.getElementById('new-image-preview');
+            
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    newImagePreview.style.display = 'block';
+                    fileChosen.textContent = input.files[0].name;
+                }
+                
+                reader.readAsDataURL(input.files[0]);
+                
+                // Uncheck remove image if a new image is selected
+                document.getElementById('remove_image').value = '0';
+            }
+        }
+        
+        function removeNewImage() {
+            const input = document.getElementById('product_image');
+            input.value = '';
+            document.getElementById('new-image-preview').style.display = 'none';
+            document.getElementById('file-chosen').textContent = 'No file chosen';
+        }
+        
+        // Size options mapping
+        const sizeOptions = {
+            'Kitchen': ['Small', 'Medium', 'Large'],
+            'Living Room': ['Compact', 'Standard', 'Spacious'],
+            'Bedroom': ['Single', 'Double', 'Queen', 'King'],
+            'Office': ['Small', 'Medium', 'Large', 'Executive'],
+            'Dining Room': ['2-4 Seating', '4-6 Seating', '6-8 Seating', '8+ Seating'],
+            'Bathroom': ['Small', 'Medium', 'Large', 'Master'],
+            'Game Room': ['Compact', 'Standard', 'Deluxe'],
+            'Gym': ['Home', 'Professional', 'Commercial'],
+            'Prayer Room': ['Individual', 'Family', 'Community'],
+            'Garden': ['Small', 'Medium', 'Large'],
+            'Workshop': ['Basic', 'Standard', 'Professional'],
+            'Closet': ['Walk-in', 'Reach-in', 'Wardrobe']
+        };
+
+        // Update size options based on selected category
+        function updateSizeOptions() {
+            const categorySelect = document.getElementById('category');
+            const sizeSelect = document.getElementById('size');
+            const selectedCategory = categorySelect.value;
+            
+            // Clear existing options
+            sizeSelect.innerHTML = '<option value="">Select size</option>';
+            
+            if (selectedCategory && sizeOptions[selectedCategory]) {
+                // Add size options for the selected category
+                sizeOptions[selectedCategory].forEach(size => {
+                    const option = document.createElement('option');
+                    option.value = size;
+                    option.textContent = size;
+                    sizeSelect.appendChild(option);
+                });
+            } else {
+                sizeSelect.innerHTML = '<option value="">Select a category first</option>';
+            }
+        }
+        
+        // Initialize size options if category is already selected
+        document.addEventListener('DOMContentLoaded', function() {
+            const categorySelect = document.getElementById('category');
+            if (categorySelect.value) {
+                updateSizeOptions();
+                // Set the previously selected size if it exists
+                const sizeSelect = document.getElementById('size');
+                if ('<?php echo $size; ?>') {
+                    // Small delay to ensure options are populated
+                    setTimeout(() => {
+                        sizeSelect.value = '<?php echo $size; ?>';
+                    }, 100);
+                }
+            }
+        });
+
         // Toggle sidebar
         let toggle = document.querySelector('.toggle');
         let navigation = document.querySelector('.navigation');

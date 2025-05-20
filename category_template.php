@@ -15,7 +15,7 @@ function displayCategoryProducts($category_name) {
   // Database connection
   $servername = "localhost";
   $username = "root"; 
-  $password = ""; 
+  $password = "root123"; 
   $dbname = "roomgenius_db";
 
   // Create connection
@@ -98,7 +98,7 @@ function displayCategoryPage($category_name, $title, $description) {
           </span>
         </div>
         <div class="ai-button-container">
-          <button class="ai-button" onclick="window.location.href=\'ai-page.html\'">
+          <button class="ai-button" onclick="window.location.href=\'ai-page.php\'">
             <i class="fas fa-robot"></i> Ai room genie
           </button>
         </div>

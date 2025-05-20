@@ -1,0 +1,9 @@
+[2025-05-18 06:01:57] Starting upload test
+[2025-05-18 06:01:57] Test image created at: uploads/test_image.png
+[2025-05-18 06:01:57] Validation result: Array
+(
+    [success] => 1
+    [mimeType] => image/png
+)
+
+[2025-05-18 06:01:57] Generated unique filename: img_68294da54c4ef_1747537317.png

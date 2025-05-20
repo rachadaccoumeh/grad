@@ -1,0 +1,255 @@
+[2025-05-18 14:48:55] Testing with image: /Users/rachadaccoumeh/Desktop/grad/brphoto/Br1.JPG
+[2025-05-18 14:48:55] Starting Gemini API test...
+[2025-05-18 14:48:55] Using model: gemini-2.0-flash-preview-image-generation
+[2025-05-18 14:48:55] Using prompt: This is a photo of a room. Please redesign it in a modern style with a blue color scheme. Keep the same layout and perspective but change the furniture, colors, and decorations to create a modern look.
+[2025-05-18 14:48:55] Image loaded successfully. MIME type: image/jpeg
+[2025-05-18 14:48:55] Sending request to: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-preview-image-generation:generateContent?key=AIzaSyAPB6CszZY_ubYIdffHw_tN66dhL6t5v6E
+[2025-05-18 14:49:01] cURL Info: Array
+(
+    [url] => https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-preview-image-generation:generateContent?key=AIzaSyAPB6CszZY_ubYIdffHw_tN66dhL6t5v6E
+    [content_type] => application/json; charset=UTF-8
+    [http_code] => 200
+    [header_size] => 391
+    [request_size] => 187846
+    [filetime] => -1
+    [ssl_verify_result] => 0
+    [redirect_count] => 0
+    [total_time] => 5.943673
+    [namelookup_time] => 0.444038
+    [connect_time] => 0.54106
+    [pretransfer_time] => 0.65133
+    [size_upload] => 187591
+    [size_download] => 1680253
+    [speed_download] => 282696
+    [speed_upload] => 31561
+    [download_content_length] => -1
+    [upload_content_length] => 187591
+    [starttransfer_time] => 4.694372
+    [redirect_time] => 0
+    [redirect_url] => 
+    [primary_ip] => 172.217.19.138
+    [certinfo] => Array
+        (
+        )
+
+    [primary_port] => 443
+    [local_ip] => 192.168.43.165
+    [local_port] => 61161
+    [http_version] => 3
+    [protocol] => 2
+    [ssl_verifyresult] => 0
+    [scheme] => https
+    [appconnect_time_us] => 649345
+    [connect_time_us] => 541060
+    [namelookup_time_us] => 444038
+    [pretransfer_time_us] => 651330
+    [redirect_time_us] => 0
+    [starttransfer_time_us] => 4694372
+    [posttransfer_time_us] => 725994
+    [total_time_us] => 5943673
+    [effective_method] => POST
+    [capath] => 
+    [cainfo] => 
+)
+
+[2025-05-18 14:49:01] API Response (HTTP 200): {
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "I will redesign the room in the photo to have a modern style with a blue color scheme, maintaining the original layout and perspective. The new design will feature modern furniture, updated colors, and contemporary decorations to create a fresh, modern aesthetic.\n\n"
+          },
+          {
+            "inlineData": {
+              "mimeType": "image/png",
+              "data": "iVBORw0KGgoAAAANSUh...
+[2025-05-18 14:49:01] Response structure: Array
+(
+    [0] => candidates
+    [1] => usageMetadata
+    [2] => modelVersion
+)
+
+[2025-05-18 14:49:01] Raw response saved to /Users/rachadaccoumeh/Desktop/grad/logs/last_api_response.json
+[2025-05-18 14:49:01] Found 2 parts in the response
+[2025-05-18 14:49:01] Part 0 type: ["text"]
+[2025-05-18 14:49:01] Found text in part 0: I will redesign the room in the photo to have a modern style with a blue color scheme, maintaining t...
+[2025-05-18 14:49:01] Part 1 type: ["inlineData"]
+[2025-05-18 14:49:01] Found image data in part 1
+[2025-05-18 14:49:01] Saved test image to: /Users/rachadaccoumeh/Desktop/grad/test_output_1747568941_1.jpg
+[2025-05-18 14:49:01] Test completed. Found 1 images in the response.
+[2025-05-18 14:51:47] Testing with image: /Users/rachadaccoumeh/Desktop/grad/lrphoto/LR1.JPG
+[2025-05-18 14:51:47] Starting Gemini API test...
+[2025-05-18 14:51:47] Using model: gemini-2.0-flash-preview-image-generation
+[2025-05-18 14:51:47] Using prompt: This is a photo of a room. Please redesign it in a modern style with a blue color scheme. Keep the same layout and perspective but change the furniture, colors, and decorations to create a modern look.
+[2025-05-18 14:51:47] ERROR: Image file not found or not readable: /Users/rachadaccoumeh/Desktop/grad/lrphoto/LR1.JPG
+[2025-05-18 14:51:47] Stack trace: #0 /Users/rachadaccoumeh/Desktop/grad/test_gemini_api.php(249): testGeminiApi('/Users/rachadac...', 'This is a photo...')
+#1 {main}
+[2025-05-18 14:52:01] Testing with image: /Users/rachadaccoumeh/Desktop/grad/kphoto/K1.JPG
+[2025-05-18 14:52:01] Starting Gemini API test...
+[2025-05-18 14:52:01] Using model: gemini-2.0-flash-preview-image-generation
+[2025-05-18 14:52:01] Using prompt: This is a photo of a room. Please redesign it in a modern style with a blue color scheme. Keep the same layout and perspective but change the furniture, colors, and decorations to create a modern look.
+[2025-05-18 14:52:01] ERROR: Image file not found or not readable: /Users/rachadaccoumeh/Desktop/grad/kphoto/K1.JPG
+[2025-05-18 14:52:01] Stack trace: #0 /Users/rachadaccoumeh/Desktop/grad/test_gemini_api.php(249): testGeminiApi('/Users/rachadac...', 'This is a photo...')
+#1 {main}
+[2025-05-18 14:52:30] Testing with image: /Users/rachadaccoumeh/Desktop/grad/uploads/test_room.jpg
+[2025-05-18 14:52:30] Starting Gemini API test...
+[2025-05-18 14:52:30] Using model: gemini-2.0-flash-preview-image-generation
+[2025-05-18 14:52:30] Using prompt: This is a photo of a room. Please redesign it in a modern style with a blue color scheme. Keep the same layout and perspective but change the furniture, colors, and decorations to create a modern look.
+[2025-05-18 14:52:30] Image loaded successfully. MIME type: image/jpeg
+[2025-05-18 14:52:30] Sending request to: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-preview-image-generation:generateContent?key=AIzaSyAPB6CszZY_ubYIdffHw_tN66dhL6t5v6E
+[2025-05-18 14:52:37] cURL Info: Array
+(
+    [url] => https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-preview-image-generation:generateContent?key=AIzaSyAPB6CszZY_ubYIdffHw_tN66dhL6t5v6E
+    [content_type] => application/json; charset=UTF-8
+    [http_code] => 200
+    [header_size] => 391
+    [request_size] => 187846
+    [filetime] => -1
+    [ssl_verify_result] => 0
+    [redirect_count] => 0
+    [total_time] => 7.254893
+    [namelookup_time] => 0.003137
+    [connect_time] => 0.080216
+    [pretransfer_time] => 0.192031
+    [size_upload] => 187591
+    [size_download] => 1896952
+    [speed_download] => 261472
+    [speed_upload] => 25857
+    [download_content_length] => -1
+    [upload_content_length] => 187591
+    [starttransfer_time] => 5.407839
+    [redirect_time] => 0
+    [redirect_url] => 
+    [primary_ip] => 172.217.19.138
+    [certinfo] => Array
+        (
+        )
+
+    [primary_port] => 443
+    [local_ip] => 192.168.43.165
+    [local_port] => 62282
+    [http_version] => 3
+    [protocol] => 2
+    [ssl_verifyresult] => 0
+    [scheme] => https
+    [appconnect_time_us] => 190410
+    [connect_time_us] => 80216
+    [namelookup_time_us] => 3137
+    [pretransfer_time_us] => 192031
+    [redirect_time_us] => 0
+    [starttransfer_time_us] => 5407839
+    [posttransfer_time_us] => 281864
+    [total_time_us] => 7254893
+    [effective_method] => POST
+    [capath] => 
+    [cainfo] => 
+)
+
+[2025-05-18 14:52:37] API Response (HTTP 200): {
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "I will redesign the bedroom shown in the photo to have a modern style with a blue color scheme, maintaining the current layout and perspective. This will involve changing the bed to a modern platform bed with blue accents, adding a sleek blue dresser and nightstands, and incorporating modern art and decorations with shades of blue and complementary colors.\n\n"
+          },
+          {
+            "i...
+[2025-05-18 14:52:37] Response structure: Array
+(
+    [0] => candidates
+    [1] => usageMetadata
+    [2] => modelVersion
+)
+
+[2025-05-18 14:52:37] Raw response saved to /Users/rachadaccoumeh/Desktop/grad/logs/last_api_response.json
+[2025-05-18 14:52:37] Found 2 parts in the response
+[2025-05-18 14:52:37] Part 0 type: ["text"]
+[2025-05-18 14:52:37] Found text in part 0: I will redesign the bedroom shown in the photo to have a modern style with a blue color scheme, main...
+[2025-05-18 14:52:37] Part 1 type: ["inlineData"]
+[2025-05-18 14:52:37] Found image data in part 1
+[2025-05-18 14:52:37] Saved test image to: /Users/rachadaccoumeh/Desktop/grad/test_output_1747569157_1.jpg
+[2025-05-18 14:52:37] Test completed. Found 1 images in the response.
+[2025-05-18 14:56:32] Testing with image: /Users/rachadaccoumeh/Desktop/grad/uploads/test_room.jpg
+[2025-05-18 14:56:32] Starting Gemini API test...
+[2025-05-18 14:56:32] Using model: gemini-2.0-flash-preview-image-generation
+[2025-05-18 14:56:32] Using prompt: This is a photo of a room. Please redesign it in a modern style with a blue color scheme. Keep the same layout and perspective but change the furniture, colors, and decorations to create a modern look.
+[2025-05-18 14:56:32] Image loaded successfully. MIME type: image/jpeg
+[2025-05-18 14:56:32] Sending request to: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-preview-image-generation:generateContent?key=AIzaSyAPB6CszZY_ubYIdffHw_tN66dhL6t5v6E
+[2025-05-18 14:56:39] cURL Info: Array
+(
+    [url] => https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-preview-image-generation:generateContent?key=AIzaSyAPB6CszZY_ubYIdffHw_tN66dhL6t5v6E
+    [content_type] => application/json; charset=UTF-8
+    [http_code] => 200
+    [header_size] => 391
+    [request_size] => 187846
+    [filetime] => -1
+    [ssl_verify_result] => 0
+    [redirect_count] => 0
+    [total_time] => 6.420635
+    [namelookup_time] => 0.380212
+    [connect_time] => 0.463657
+    [pretransfer_time] => 0.585474
+    [size_upload] => 187591
+    [size_download] => 2107151
+    [speed_download] => 328184
+    [speed_upload] => 29216
+    [download_content_length] => -1
+    [upload_content_length] => 187591
+    [starttransfer_time] => 5.468581
+    [redirect_time] => 0
+    [redirect_url] => 
+    [primary_ip] => 172.217.19.42
+    [certinfo] => Array
+        (
+        )
+
+    [primary_port] => 443
+    [local_ip] => 192.168.43.165
+    [local_port] => 63558
+    [http_version] => 3
+    [protocol] => 2
+    [ssl_verifyresult] => 0
+    [scheme] => https
+    [appconnect_time_us] => 583395
+    [connect_time_us] => 463657
+    [namelookup_time_us] => 380212
+    [pretransfer_time_us] => 585474
+    [redirect_time_us] => 0
+    [starttransfer_time_us] => 5468581
+    [posttransfer_time_us] => 674992
+    [total_time_us] => 6420635
+    [effective_method] => POST
+    [capath] => 
+    [cainfo] => 
+)
+
+[2025-05-18 14:56:39] API Response (HTTP 200): {
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "I will redesign the room in the photo to have a modern style with a blue color scheme, maintaining the current layout and perspective. The furniture will be updated with modern pieces, the colors will be shifted to various shades of blue, and the decorations will reflect a contemporary aesthetic.\n\n"
+          },
+          {
+            "inlineData": {
+              "mimeType": "image/png",
+        ...
+[2025-05-18 14:56:39] Response structure: Array
+(
+    [0] => candidates
+    [1] => usageMetadata
+    [2] => modelVersion
+)
+
+[2025-05-18 14:56:39] Raw response saved to /Users/rachadaccoumeh/Desktop/grad/logs/last_api_response.json
+[2025-05-18 14:56:39] Found 2 parts in the response
+[2025-05-18 14:56:39] Part 0 type: ["text"]
+[2025-05-18 14:56:39] Found text in part 0: I will redesign the room in the photo to have a modern style with a blue color scheme, maintaining t...
+[2025-05-18 14:56:39] Part 1 type: ["inlineData"]
+[2025-05-18 14:56:39] Found image data in part 1
+[2025-05-18 14:56:39] Saved test image to: /Users/rachadaccoumeh/Desktop/grad/test_output_1747569399_1.jpg
+[2025-05-18 14:56:39] Test completed. Found 1 images in the response.

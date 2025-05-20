@@ -1,41 +1,96 @@
 <?php
 session_start();
 
+// Check if user is logged in and is an admin
 if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 'admin') {
     header("Location: index.php");
     exit;
 }
 
-// Database connection
-$servername = "localhost";
-$username = "root"; // Change as needed
-$password = ""; // Change as needed
-$dbname = "roomgenius_db"; // Change as needed
+// Set the current page for the sidebar
+$current_page = 'orders';
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+// Database connection
+require_once 'db_connect.php';
+$conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// Log database connection for debugging
+error_log('Connected to database: ' . DB_NAME);
+
 // Update order status if requested
 if (isset($_POST['order_id']) && isset($_POST['status'])) {
-    $orderId = $_POST['order_id'];
-    $status = $_POST['status'];
+    $orderId = intval($_POST['order_id']); // Ensure it's an integer
+    $status = $conn->real_escape_string($_POST['status']); // Sanitize input
     
-    $sql = "UPDATE orders SET order_status = '$status' WHERE id = $orderId";
-    $conn->query($sql);
+    // Update the status field
+    $sql = "UPDATE orders SET status = '$status' WHERE id = $orderId";
+    
+    // Log the SQL for debugging
+    error_log("Updating order status: $sql");
+    
+    // Execute the query and check for errors
+    if ($conn->query($sql)) {
+        // Success message
+        $statusMessage = "Order status updated to $status";
+    } else {
+        error_log("Error updating order status: " . $conn->error);
+    }
 }
 
 // Update payment status if requested
+// Since there's no dedicated payment_status field, we'll update the payment_method field
+// to indicate whether the payment has been received
 if (isset($_POST['order_id']) && isset($_POST['payment_status'])) {
-    $orderId = $_POST['order_id'];
-    $paymentStatus = $_POST['payment_status'];
+    $orderId = intval($_POST['order_id']); // Ensure it's an integer
+    $paymentStatus = $conn->real_escape_string($_POST['payment_status']); // Sanitize input
     
-    $sql = "UPDATE orders SET payment_status = '$paymentStatus' WHERE id = $orderId";
-    $conn->query($sql);
+    // Get the current payment method
+    $getMethodSql = "SELECT payment_method FROM orders WHERE id = $orderId";
+    $methodResult = $conn->query($getMethodSql);
+    
+    if ($methodResult && $methodResult->num_rows > 0) {
+        $row = $methodResult->fetch_assoc();
+        $currentMethod = $row['payment_method'];
+        
+        // Determine the new payment method based on the current one and the requested status
+        $newMethod = $currentMethod;
+        
+        // If it's cash on delivery, we can mark it as paid or unpaid
+        if (strpos($currentMethod, 'cash_on_delivery') !== false) {
+            if ($paymentStatus === 'Paid') {
+                $newMethod = 'cash_on_delivery_paid';
+            } else {
+                $newMethod = 'cash_on_delivery';
+            }
+        }
+        // For credit card payments, they're already marked as paid
+        else if (strpos($currentMethod, 'credit_card') !== false) {
+            if ($paymentStatus === 'Unpaid') {
+                $newMethod = 'credit_card_refunded';
+            } else {
+                $newMethod = 'credit_card';
+            }
+        }
+        
+        // Update the payment method to reflect the payment status
+        $updateSql = "UPDATE orders SET payment_method = '$newMethod' WHERE id = $orderId";
+        
+        // Log the SQL for debugging
+        error_log("Updating payment status: $updateSql");
+        
+        // Execute the query and check for errors
+        if ($conn->query($updateSql)) {
+            // Success message
+            $paymentMessage = "Payment status updated to $paymentStatus";
+        } else {
+            error_log("Error updating payment status: " . $conn->error);
+        }
+    }
 }
 
 // Get all orders
@@ -48,17 +103,142 @@ $result = $conn->query($sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders - Admin Panel</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="admin.css">
-    <title>Admin Orders Dashboard</title>
+    <link rel="stylesheet" href="orders.css">
     <style>
+        /* Fix spacing issues while preserving admin styles */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            overflow-x: hidden;
+        }
+        
+        /* Custom layout structure */
+        #admin-wrapper {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        /* Preserve navigation styles from admin.css but fix positioning */
+        .navigation {
+            position: fixed !important;
+            width: 250px !important;
+            height: 100% !important;
+            z-index: 1000 !important;
+            transition: 0.5s !important;
+            left: 0 !important;
+        }
+        
+        /* Fix the main content area */
+        #admin-content {
+            margin-left: 250px !important;
+            width: calc(100% - 250px) !important;
+            min-height: 100vh !important;
+            transition: margin-left 0.3s ease, width 0.3s ease !important;
+            position: relative !important;
+            overflow-x: hidden !important;
+        }
+        
+        /* Handle sidebar toggle states */
+        .navigation.active {
+            width: 70px !important;
+        }
+        
+        #admin-content.expanded {
+            margin-left: 70px !important;
+            width: calc(100% - 70px) !important;
+        }
+        
+        /* Fix topbar styling */
+        .topbar {
+            width: 100% !important;
+            padding: 10px 20px !important;
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
+        }
+        
+        /* User image styling */
+        .user {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+        
+        .user img {
+            width: 40px !important;
+            height: 40px !important;
+            border-radius: 50% !important;
+            object-fit: cover !important;
+            cursor: pointer !important;
+        }
+        
+        /* Make sure the toggle button works */
+        .toggle {
+            cursor: pointer !important;
+            font-size: 24px !important;
+        }
+        
+        /* Content container */
+        .orders-container {
+            padding: 20px !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+        }
+        
+        /* Fix any other potential spacing issues */
+        .main {
+            all: unset !important;
+            display: contents !important;
+        }
+        
+        .container {
+            all: unset !important;
+            display: contents !important;
+        }
+        
+        /* Status update message styles */
+        .status-updated, .payment-updated {
+            padding: 5px 10px;
+            margin: 5px 0;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            animation: fadeOut 5s forwards;
+        }
+        
+        .status-updated {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .payment-updated {
+            background-color: #cce5ff;
+            color: #004085;
+            border: 1px solid #b8daff;
+        }
+        
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            70% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+        
         .orders-container {
             width: 100%;
             padding: 20px;
-            margin-left: 300px;
+            margin: 0;
+            box-sizing: border-box;
         }
         
         .orders-table {
@@ -250,62 +430,29 @@ $result = $conn->query($sql);
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="navigation">
-            <ul>
-                <li>
-                    <a href="">
-                        <span class="icon"><i class="fas fa-brain"></i> <i class="fas fa-couch"></i></span>
-                        <span class="title">RoomGenius</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="users.php">
-                        <span class="icon"><i class='bx bx-group'></i></span>
-                        <span class="title">Users</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <span class="icon"><i class='bx bx-buildings'></i></span>
-                        <span class="title">Companies</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="message.php">
-                        <span class="icon"><i class='bx bx-message'></i></span>
-                        <span class="title">Messages</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="category_item.php">
-                        <span class="icon"><i class='bx bx-basket'></i></span>
-                        <span class="title">Category items</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="product.php">
-                        <span class="icon"><i class='bx bx-box'></i></span>
-                        <span class="title">Product</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="orders.php">
-                        <span class="icon"><i class='bx bx-receipt'></i></span>
-                        <span class="title">Orders</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="adminLogout.php">
-                        <span class="icon"><i class='bx bx-log-out'></i></span>
-                        <span class="title">Sign out</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
+    <!-- Custom wrapper structure with original elements -->
+    <div id="admin-wrapper">
+        <!-- Include the original sidebar -->
+        <?php include 'admin_sidebar.php'; ?>
         
-        <div class="orders-container">
-            <h2>Orders Dashboard</h2>
+        <!-- Custom content container -->
+        <div id="admin-content">
+            <!-- Original main div for compatibility -->
+            <div class="main">
+            <div class="topbar">
+                <div class="toggle">
+                    <i class='bx bx-menu'></i>
+                </div>
+                <div class="user">
+                    <img src="photos/adminphoto.JPG" alt="Admin">
+                </div>
+            </div>
+
+
+            <div class="orders-container">
+                <div class="header">
+                    <h2>Orders Dashboard</h2>
+                </div>
             
             <table class="orders-table">
                 <thead>
@@ -326,28 +473,68 @@ $result = $conn->query($sql);
                             <tr>
                                 <td><?php echo $row['order_id']; ?></td>
                                 <td><?php echo $row['customer_name']; ?></td>
-                                <td><?php echo date('M d, Y', strtotime($row['order_date'])); ?></td>
+                                <td><?php 
+                                    // Use created_at instead of order_date, and add a fallback
+                                    $dateStr = isset($row['created_at']) ? $row['created_at'] : null;
+                                    echo $dateStr ? date('M d, Y', strtotime($dateStr)) : 'N/A'; 
+                                ?></td>
                                 <td>$<?php echo $row['total']; ?></td>
                                 <td><?php echo $row['payment_method']; ?></td>
                                 <td>
                                     <form method="post" action="">
                                         <input type="hidden" name="order_id" value="<?php echo $row['id']; ?>">
+                                        <?php 
+                                        // Use status instead of order_status, and add a fallback
+                                        $orderStatus = isset($row['status']) ? $row['status'] : 'pending';
+                                        // Normalize status to title case for display
+                                        $displayStatus = ucfirst($orderStatus);
+                                        // Determine button class based on status
+                                        $statusClass = strtolower($orderStatus) === 'pending' ? 'status-pending' : 'status-delivered';
+                                        // Determine next status value
+                                        $nextStatus = strtolower($orderStatus) === 'pending' ? 'delivered' : 'pending';
+                                        
+                                        // Add success message if status was updated
+                                        if (isset($statusMessage) && isset($_POST['order_id']) && $_POST['order_id'] == $row['id']) {
+                                            echo "<div class='status-updated'>$statusMessage</div>";
+                                        }
+                                        ?>
                                         <button type="submit" 
-                                            class="status-btn <?php echo $row['order_status'] === 'Pending' ? 'status-pending' : 'status-delivered'; ?>"
+                                            class="status-btn <?php echo $statusClass; ?>"
                                             name="status" 
-                                            value="<?php echo $row['order_status'] === 'Pending' ? 'Delivered' : 'Pending'; ?>">
-                                            <?php echo $row['order_status']; ?>
+                                            value="<?php echo $nextStatus; ?>">
+                                            <?php echo $displayStatus; ?>
                                         </button>
                                     </form>
                                 </td>
                                 <td>
                                     <form method="post" action="">
                                         <input type="hidden" name="order_id" value="<?php echo $row['id']; ?>">
+                                        <?php
+                                        // Derive payment status from payment_method
+                                        $paymentMethod = isset($row['payment_method']) ? $row['payment_method'] : '';
+                                        
+                                        // Determine payment status based on payment method
+                                        if (strpos($paymentMethod, 'credit_card') !== false && strpos($paymentMethod, 'refunded') === false) {
+                                            $paymentStatus = 'Paid';
+                                        } else if (strpos($paymentMethod, 'cash_on_delivery_paid') !== false) {
+                                            $paymentStatus = 'Paid';
+                                        } else {
+                                            $paymentStatus = 'Unpaid';
+                                        }
+                                        
+                                        $paymentClass = $paymentStatus === 'Paid' ? 'payment-paid' : 'payment-unpaid';
+                                        $nextPaymentStatus = $paymentStatus === 'Paid' ? 'Unpaid' : 'Paid';
+                                        
+                                        // Add success message if payment status was updated
+                                        if (isset($paymentMessage) && isset($_POST['order_id']) && $_POST['order_id'] == $row['id']) {
+                                            echo "<div class='payment-updated'>$paymentMessage</div>";
+                                        }
+                                        ?>
                                         <button type="submit" 
-                                            class="payment-btn <?php echo $row['payment_status'] === 'Paid' ? 'payment-paid' : 'payment-unpaid'; ?>"
+                                            class="payment-btn <?php echo $paymentClass; ?>"
                                             name="payment_status" 
-                                            value="<?php echo $row['payment_status'] === 'Paid' ? 'Unpaid' : 'Paid'; ?>">
-                                            <?php echo $row['payment_status']; ?>
+                                            value="<?php echo $nextPaymentStatus; ?>">
+                                            <?php echo $paymentStatus; ?>
                                         </button>
                                     </form>
                                 </td>
@@ -362,7 +549,10 @@ $result = $conn->query($sql);
                         </tr>
                     <?php endif; ?>
                 </tbody>
-            </table>
+                </table>
+            </div>
+            <!-- Close the main div -->
+            </div>
         </div>
     </div>
     
@@ -379,12 +569,29 @@ $result = $conn->query($sql);
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
     
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&libraries=places"></script>
     <script>
         // View order details
         function viewOrderDetails(orderId) {
-            fetch('get_order_details.php?id=' + orderId)
-                .then(response => response.json())
+            // Use the new get_order_details_new.php file
+            fetch('get_order_details_new.php?id=' + orderId)
+                .then(response => {
+                    // Log the raw response for debugging
+                    console.log('Response status:', response.status);
+                    return response.text().then(text => {
+                        try {
+                            // Try to parse as JSON
+                            console.log('Raw response:', text);
+                            return JSON.parse(text);
+                        } catch (e) {
+                            // If not valid JSON, log the raw response and throw error
+                            console.error('Invalid JSON response:', text);
+                            throw new Error('Server returned invalid JSON: ' + text);
+                        }
+                    });
+                })
                 .then(data => {
+                    console.log('Parsed data:', data);
                     if (data.success) {
                         displayOrderDetails(data.order, data.items);
                     } else {
@@ -393,7 +600,7 @@ $result = $conn->query($sql);
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    alert('An error occurred while fetching order details.');
+                    alert('An error occurred while fetching order details: ' + error.message);
                 });
         }
         
@@ -459,20 +666,34 @@ $result = $conn->query($sql);
                             </thead>
                             <tbody>`;
             
-            // Add order items
+            // Add order items with improved price handling
             items.forEach(item => {
-                const itemTotal = parseFloat(item.price) * parseInt(item.quantity);
+                // Add detailed logging to debug price issues
+                console.log('Item data:', item);
+                
+                // Use price_at_purchase from order_items table, with fallbacks to handle missing data
+                const price = item.price ? parseFloat(item.price) : 
+                             (item.price_at_purchase ? parseFloat(item.price_at_purchase) : 
+                             (item.product_price ? parseFloat(item.product_price) : 0));
+                
+                // Ensure quantity is a valid number
+                const quantity = parseInt(item.quantity) || 1;
+                
+                // Calculate total with safeguards against NaN
+                const itemTotal = price * quantity;
+                
+                // Format the HTML with proper price display and fallbacks for missing images
                 html += `
                     <tr>
                         <td>
                             <div class="item-image">
-                                <img src="${item.image}" alt="${item.product_name}">
+                                ${item.image ? `<img src="${item.image}" alt="${item.product_name || 'Product'}" onerror="this.src='images/placeholder.jpg';">` : '<div class="no-image">No Image</div>'}
                             </div>
                         </td>
-                        <td>${item.product_name}</td>
-                        <td>$${parseFloat(item.price).toFixed(2)}</td>
-                        <td>${item.quantity}</td>
-                        <td>$${itemTotal.toFixed(2)}</td>
+                        <td>${item.product_name || 'Unknown Product'}</td>
+                        <td>$${isNaN(price) ? '0.00' : price.toFixed(2)}</td>
+                        <td>${quantity}</td>
+                        <td>$${isNaN(itemTotal) ? '0.00' : itemTotal.toFixed(2)}</td>
                     </tr>`;
             });
             
@@ -550,6 +771,36 @@ $result = $conn->query($sql);
                 modal.style.display = 'none';
             }
         };
+    </script>
+    <script>
+        // Toggle sidebar with restored structure
+        document.addEventListener('DOMContentLoaded', function() {
+            let toggle = document.querySelector('.toggle');
+            let navigation = document.querySelector('.navigation');
+            let content = document.getElementById('admin-content');
+            let main = document.querySelector('.main');
+            
+            if (toggle && navigation && content) {
+                toggle.onclick = function() {
+                    // Toggle active class on navigation
+                    navigation.classList.toggle('active');
+                    // Toggle expanded class on content
+                    content.classList.toggle('expanded');
+                    
+                    // Toggle icon if it exists
+                    const icon = toggle.querySelector('i');
+                    if (icon) {
+                        if (navigation.classList.contains('active')) {
+                            icon.classList.remove('bx-menu');
+                            icon.classList.add('bx-x');
+                        } else {
+                            icon.classList.remove('bx-x');
+                            icon.classList.add('bx-menu');
+                        }
+                    }
+                }
+            }
+        });
     </script>
 </body>
 </html>

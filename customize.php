@@ -101,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </span>
       </div>
       <div class="ai-button-container">
-        <button class="ai-button" onclick="window.location.href='ai-page.php'">
+        <button class="ai-button" onclick="window.location.href='gallery.php'">
         <i class='bx bx-image'></i>Gallery
         </button>
       </div>

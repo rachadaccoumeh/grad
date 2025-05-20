@@ -493,7 +493,7 @@ if (isset($_SESSION['user_id'])) {
       <p class="order-id">Order ID: <?php echo htmlspecialchars($orderId); ?></p>
       <p>We've received your custom order request and will begin processing it right away.</p>
       <p>You will receive an email confirmation shortly.</p>
-      <a href="index.html" class="continue-shopping">Continue Shopping</a>
+      <a href="gallery.php" class="continue-shopping">Continue Shopping</a>
     </div>
   </div>
   <?php else: ?>

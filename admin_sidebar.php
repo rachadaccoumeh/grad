@@ -34,6 +34,12 @@ function isActive($page, $current) {
                 <span class="title">Users</span>
             </a>
         </li>
+        <li class="<?php echo isActive('messages', $current_page); ?>">
+            <a href="message.php">
+                <span class="icon"><i class='bx bx-message'></i></span>
+                <span class="title">Messages</span>
+            </a>
+        </li>
         <li class="<?php echo isActive('custom_builds', $current_page); ?>">
             <a href="custom_builds.php">
                 <span class="icon"><i class='bx bx-customize'></i></span>

@@ -301,7 +301,7 @@ function formatPrice($price) {
       </div>
     </div>
     <div class="user-popup-footer">
-      <a href="profile.php">View Profile</a>
+      <!-- <a href="profile.php">View Profile</a> -->
       <a href="logout.php" class="logout-btn">Logout</a>
     </div>
   <?php else: ?>

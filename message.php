@@ -1,6 +1,17 @@
 <?php
+session_start();
+
+// Check if user is logged in and is an admin
+if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 'admin') { 
+    header("Location: index.php");
+    exit; 
+}
+
+// Set the current page for the sidebar
+$current_page = 'messages';
+
 // Database connection
-$conn = new mysqli("localhost", "root", "", "roomgenius_db");
+$conn = new mysqli("localhost", "root", "root123", "roomgenius_db");
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -85,34 +96,82 @@ $totalCount = $totalResult->fetch_assoc()['total_count'];
     <link rel="stylesheet" href="admin.css">
     <link rel="stylesheet" href="message.css">
     <title>Messages - RoomGenius Admin</title>
+    <style>
+        /* Define CSS variables for dynamic values */
+        :root {
+            --admin-content-margin: 250px;
+            --sidebar-width: 250px;
+            --sidebar-collapsed-width: 70px;
+        }
+        
+        /* Fix for admin wrapper layout */
+        #admin-wrapper {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Navigation styles */
+        .navigation {
+            width: var(--sidebar-width);
+            transition: width 0.3s ease;
+            position: fixed;
+            height: 100%;
+            z-index: 1000;
+        }
+        
+        /* Collapsed navigation */
+        .navigation.active {
+            width: var(--sidebar-collapsed-width) !important;
+        }
+        
+        /* Hide text in navigation when collapsed */
+        .navigation.active .title {
+            display: none;
+        }
+        
+        #admin-content {
+            flex: 1;
+            margin-left: var(--admin-content-margin); /* Match the width of the navigation */
+            transition: margin-left 0.3s ease, width 0.3s ease;
+            width: calc(100% - var(--admin-content-margin));
+            overflow-x: hidden;
+        }
+        
+        /* When navigation is active (collapsed) */
+        .navigation.active + #admin-content {
+            margin-left: var(--sidebar-collapsed-width);
+            width: calc(100% - var(--sidebar-collapsed-width));
+        }
+        
+        /* Override any absolute positioning in main */
+        .main {
+            position: relative !important;
+            left: 0 !important;
+            width: 100% !important;
+            margin-left: 0 !important;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Navigation Sidebar -->
-        <div class="navigation">
-            <ul>
-                <li><a href="admin.php"><span class="icon"><i class="fas fa-brain"></i> <i class="fas fa-couch"></i></span><span class="title">RoomGenius</span></a></li>
-                <li><a href="users.php"><span class="icon"><i class='bx bx-group'></i></span><span class="title">Users</span></a></li>
-                <li><a href="companies.php"><span class="icon"><i class='bx bx-buildings'></i></span><span class="title">Companies</span></a></li>
-                <li class="active"><a href="message.php"><span class="icon"><i class='bx bx-message'></i></span><span class="title">Messages</span></a></li>
-                <li><a href="category_item.php"><span class="icon"><i class='bx bx-basket'></i></span><span class="title">Category items</span></a></li>
-                <li><a href="product.php"><span class="icon"><i class='bx bx-box'></i></span><span class="title">Product</span></a></li>
-                <li><a href="orders.php"><span class="icon"><i class='bx bx-receipt'></i></span><span class="title">Orders</span></a></li>
-                <li><a href=""><span class="icon"><i class='bx bx-log-out'></i></span><span class="title">Sign out</span></a></li>
-            </ul>
-        </div>
-
-        <!-- Main Content -->
-        <div class="main">
-            <div class="topbar">
-                <div class="toggle"><i class='bx bx-menu'></i></div>
-                <div class="search">
-                    <label>
-                        <input type="text" placeholder="Search messages..." id="search-input">
-                        <i class='bx bx-search'></i>
-                    </label>
-                </div>
-                <div class="user"><img src="photos/adminphoto.JPG" alt="Admin"></div>
+    <div id="admin-wrapper">
+        <?php include 'admin_sidebar.php'; ?>
+        
+        <div id="admin-content">
+            <div class="main">
+                <div class="topbar">
+                    <div class="toggle" onclick="toggleSidebar()">
+                        <i class='bx bx-menu'></i>
+                    </div>
+                    <div class="search">
+                        <label>
+                            <input type="text" placeholder="Search messages..." id="search-input">
+                            <i class='bx bx-search'></i>
+                        </label>
+                    </div>
+                    <div class="user"><img src="photos/adminphoto.JPG" alt="Admin"></div>
             </div>
 
             <!-- Message Dashboard -->
@@ -195,17 +254,36 @@ $totalCount = $totalResult->fetch_assoc()['total_count'];
     </div>
 
     <script>
-        // Toggle sidebar
-        let toggle = document.querySelector('.toggle');
-        let navigation = document.querySelector('.navigation');
-        let main = document.querySelector('.main');
-        
-        toggle.onclick = function() {
-            navigation.classList.toggle('active');
-            main.classList.toggle('active');
+        // Toggle sidebar function for the burger menu
+        function toggleSidebar() {
+            const navigation = document.querySelector('.navigation');
+            const main = document.querySelector('.main');
+            const adminContent = document.querySelector('#admin-content');
+            
+            if (navigation) navigation.classList.toggle('active');
+            if (main) main.classList.toggle('active');
+            
+            // Force immediate style update for admin content
+            if (adminContent) {
+                // Apply transition for smooth animation
+                adminContent.style.transition = 'margin-left 0.3s ease, width 0.3s ease';
+                
+                if (navigation && navigation.classList.contains('active')) {
+                    // When sidebar is collapsed
+                    adminContent.style.marginLeft = '70px';
+                    adminContent.style.width = 'calc(100% - 70px)';
+                    document.documentElement.style.setProperty('--admin-content-margin', '70px');
+                } else {
+                    // When sidebar is expanded
+                    adminContent.style.marginLeft = '250px';
+                    adminContent.style.width = 'calc(100% - 250px)';
+                    document.documentElement.style.setProperty('--admin-content-margin', '250px');
+                }
+            }
+            
+            return false;
         }
         
-        // Add this script at the end of your HTML, just before the closing </body> tag
         document.addEventListener('DOMContentLoaded', function() {
             const searchInput = document.getElementById('search-input');
             const messageItems = document.querySelectorAll('.message-item');

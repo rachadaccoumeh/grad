@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function() {
         this.cart.push({
           id: productId,
           name: productName,
-          price: productPrice,
+          price: parseFloat(productPrice.replace(/[^0-9.-]+/g, '')), // Ensure price is a number
           image: productImage,
           quantity: 1
         });

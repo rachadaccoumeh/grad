@@ -5,7 +5,7 @@ RewriteEngine On
 Options -Indexes
 
 # Protect sensitive files
-<FilesMatch "^(config\.php|generate_design\.php|composer\.(json|lock))$">
+<FilesMatch "^(config\.php|composer\.(json|lock))$">
     Order allow,deny
     Deny from all
 </FilesMatch>

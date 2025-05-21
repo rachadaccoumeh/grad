@@ -2548,3 +2548,1159 @@
 [2025-05-18 15:06:03] Saving first 1000 characters of response for debugging
 [2025-05-18 15:06:03] Extracted 1 images from the response
 [2025-05-18 15:06:03] Generation successful. 1 images generated.
+[2025-05-20 22:08:14] 
+================================================================================
+[2025-05-20 22:08:14] New request
+[2025-05-20 22:08:14] POST data: Array
+(
+    [roomType] => office
+    [designStyle] => traditional
+    [colorScheme] => red color
+    [styleIntensity] => 1
+    [additionalInstructions] => red colors
+    [variationCount] => 1
+)
+
+[2025-05-20 22:08:14] FILES data: Array
+(
+    [imageUpload] => Array
+        (
+            [name] => minimalist_sofa.jpg
+            [full_path] => minimalist_sofa.jpg
+            [type] => image/jpeg
+            [tmp_name] => /private/var/folders/29/6bbz0ptn075b0b6fv8by0xb40000gn/T/php60d3n28blsmcaBUx50Q
+            [error] => 0
+            [size] => 227827
+        )
+
+)
+
+[2025-05-20 22:08:14] Checking file upload...
+[2025-05-20 22:08:14] File received: minimalist_sofa.jpg (227827 bytes, type: image/jpeg)
+[2025-05-20 22:08:14] File validation successful. MIME type: image/jpeg
+[2025-05-20 22:08:14] Generated target path: uploads/img_682cd31ebeb20_1747768094.jpg
+[2025-05-20 22:08:14] Moving file from /private/var/folders/29/6bbz0ptn075b0b6fv8by0xb40000gn/T/php60d3n28blsmcaBUx50Q to uploads/img_682cd31ebeb20_1747768094.jpg
+[2025-05-20 22:08:14] File successfully moved to target location.
+[2025-05-20 22:08:14] File is ready for processing: exists=true, readable=true, size=227827 bytes
+[2025-05-20 22:08:14] Generated prompt: I'm uploading a photo of my office. Create a realistic redesign of this exact room using traditional style. IMPORTANT: Strictly maintain the exact same dimensions, proportions, wall structure, doorways, windows, and architectural elements as the original photo. Only change the decoration, furniture, colors, and finishes while preserving the exact room structure, layout, and perspective. Transform the room with subtle traditional elements and use a color scheme of red color. The output image must have exactly the same aspect ratio and composition as the input image. Include classic furniture pieces, symmetrical arrangements, rich color palettes, and decorative details like crown molding or wainscoting. Additional specifications: red colors. Generate a photorealistic, high-resolution image of this redesign that precisely matches the dimensions and composition of the input image. The image should be highly detailed, with realistic lighting, shadows, and textures that enhance the traditional aesthetic. Ensure the image has proper proportions with no distortion and maintains a consistent perspective with the original photo. The final result should be a high-quality image with no text overlays, watermarks, or artifacts.
+[2025-05-20 22:08:14] Attempting to generate image with path: uploads/img_682cd31ebeb20_1747768094.jpg
+[2025-05-20 22:08:14] Verifying image at path: uploads/img_682cd31ebeb20_1747768094.jpg
+[2025-05-20 22:08:14] Image file verified: exists=true, readable=true, size=227827 bytes
+[2025-05-20 22:08:14] Reading image file contents...
+[2025-05-20 22:08:14] Successfully read image file. Content length: 227827 bytes
+[2025-05-20 22:08:14] Base64 encoding image data...
+[2025-05-20 22:08:14] Base64 encoding complete. Encoded length: 303772 characters
+[2025-05-20 22:08:14] Determining MIME type...
+[2025-05-20 22:08:14] MIME type determined: image/jpeg
+[2025-05-20 22:08:14] Using Gemini 2.0 Flash Preview Image Generation model with prompt: I'm uploading a photo of my office. Create a realistic redesign of this exact room using traditional...
+[2025-05-20 22:08:14] VERIFICATION: Request parts check:
+[2025-05-20 22:08:14] - Text prompt: YES (1233 chars)
+[2025-05-20 22:08:14] - Image data: YES (303772 chars)
+[2025-05-20 22:08:14] - Image MIME type: YES (image/jpeg)
+[2025-05-20 22:08:14] - Role specified: YES (user)
+[2025-05-20 22:08:14] - Response modalities: YES (IMAGE,TEXT)
+[2025-05-20 22:08:14] - Response MIME type: YES (text/plain)
+[2025-05-20 22:08:14] Sending request to Gemini API: Array
+(
+    [contents] => Array
+        (
+            [0] => Array
+                (
+                    [role] => user
+                    [parts] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [text] => I'm uploading a photo of my office. Create a realistic redesign of this exact room using traditional style. IMPORTANT: Strictly maintain the exact same dimensions, proportions, wall structure, doorways, windows, and architectural elements as the original photo. Only change the decoration, furniture, colors, and finishes while preserving the exact room structure, layout, and perspective. Transform the room with subtle traditional elements and use a color scheme of red color. The output image must have exactly the same aspect ratio and composition as the input image. Include classic furniture pieces, symmetrical arrangements, rich color palettes, and decorative details like crown molding or wainscoting. Additional specifications: red colors. Generate a photorealistic, high-resolution image of this redesign that precisely matches the dimensions and composition of the input image. The image should be highly detailed, with realistic lighting, shadows, and textures that enhance the traditional aesthetic. Ensure the image has proper proportions with no distortion and maintains a consistent perspective with the original photo. The final result should be a high-quality image with no text overlays, watermarks, or artifacts.
+                                )
+
+                            [1] => Array
+                                (
+                                    [inlineData] => Array
+                                        (
+                                            [mimeType] => image/jpeg
+                                            [data] => [BASE64_IMAGE_DATA]
+                                        )
+
+                                )
+
+                        )
+
+                )
+
+        )
+
+    [generationConfig] => Array
+        (
+            [temperature] => 0.2
+            [topK] => 32
+            [topP] => 1
+            [maxOutputTokens] => 4096
+            [responseModalities] => Array
+                (
+                    [0] => IMAGE
+                    [1] => TEXT
+                )
+
+            [responseMimeType] => text/plain
+        )
+
+    [safetySettings] => Array
+        (
+            [0] => Array
+                (
+                    [category] => HARM_CATEGORY_HARASSMENT
+                    [threshold] => BLOCK_MEDIUM_AND_ABOVE
+                )
+
+            [1] => Array
+                (
+                    [category] => HARM_CATEGORY_HATE_SPEECH
+                    [threshold] => BLOCK_MEDIUM_AND_ABOVE
+                )
+
+            [2] => Array
+                (
+                    [category] => HARM_CATEGORY_SEXUALLY_EXPLICIT
+                    [threshold] => BLOCK_MEDIUM_AND_ABOVE
+                )
+
+        )
+
+)
+
+[2025-05-20 22:08:30] cURL Info: Array
+(
+    [url] => https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-preview-image-generation:generateContent?key=AIzaSyCRqMuWYw4y5FM3VPEOAiiCY2xTV9hqbNA
+    [content_type] => application/json; charset=UTF-8
+    [http_code] => 400
+    [header_size] => 392
+    [request_size] => 309733
+    [filetime] => -1
+    [ssl_verify_result] => 0
+    [redirect_count] => 0
+    [total_time] => 15.228785
+    [namelookup_time] => 0.004884
+    [connect_time] => 0.296484
+    [pretransfer_time] => 0.712221
+    [size_upload] => 309491
+    [size_download] => 571
+    [speed_download] => 37
+    [speed_upload] => 20322
+    [download_content_length] => -1
+    [upload_content_length] => 309491
+    [starttransfer_time] => 15.225922
+    [redirect_time] => 0
+    [redirect_url] => 
+    [primary_ip] => 142.250.201.42
+    [certinfo] => Array
+        (
+        )
+
+    [primary_port] => 443
+    [local_ip] => 192.168.1.125
+    [local_port] => 50673
+    [http_version] => 3
+    [protocol] => 2
+    [ssl_verifyresult] => 0
+    [scheme] => https
+    [appconnect_time_us] => 710956
+    [connect_time_us] => 296484
+    [namelookup_time_us] => 4884
+    [pretransfer_time_us] => 712221
+    [redirect_time_us] => 0
+    [starttransfer_time_us] => 15225922
+    [posttransfer_time_us] => 3992306
+    [total_time_us] => 15228785
+    [effective_method] => POST
+    [capath] => 
+    [cainfo] => 
+)
+
+[2025-05-20 22:08:30] API Response (HTTP 400): {
+  "error": {
+    "code": 400,
+    "message": "API key expired. Please renew the API key.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "API_KEY_INVALID",
+        "domain": "googleapis.com",
+        "metadata": {
+          "service": "generativelanguage.googleapis.com"
+        }
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.LocalizedMessage",
+        "locale": "en-US",
+        "message": "API key expired. Please renew the API key."
+      }
+    ]
+  }
+}
+...
+[2025-05-20 22:08:30] Error in generateImageWithGemini: API request failed with HTTP code 400. Response: {
+  "error": {
+    "code": 400,
+    "message": "API key expired. Please renew the API key.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "API_KEY_INVALID",
+        "domain": "googleapis.com",
+        "metadata": {
+          "service": "generativelanguage.googleapis.com"
+        }
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.LocalizedMessage",
+        "locale": "en-US",
+        "message": "API key expired. Please renew the API key."
+      }
+    ]
+  }
+}
+
+[2025-05-20 22:08:30] Error: API request failed with HTTP code 400. Response: {
+  "error": {
+    "code": 400,
+    "message": "API key expired. Please renew the API key.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "API_KEY_INVALID",
+        "domain": "googleapis.com",
+        "metadata": {
+          "service": "generativelanguage.googleapis.com"
+        }
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.LocalizedMessage",
+        "locale": "en-US",
+        "message": "API key expired. Please renew the API key."
+      }
+    ]
+  }
+}
+ in /Users/rachadaccoumeh/Desktop/grad/generate_design.php on line 259
+[2025-05-20 22:08:49] 
+================================================================================
+[2025-05-20 22:08:49] New request
+[2025-05-20 22:08:49] POST data: Array
+(
+    [roomType] => office
+    [designStyle] => traditional
+    [colorScheme] => red color
+    [styleIntensity] => 1
+    [additionalInstructions] => red colors
+    [variationCount] => 1
+)
+
+[2025-05-20 22:08:49] FILES data: Array
+(
+    [imageUpload] => Array
+        (
+            [name] => minimalist_sofa.jpg
+            [full_path] => minimalist_sofa.jpg
+            [type] => image/jpeg
+            [tmp_name] => /private/var/folders/29/6bbz0ptn075b0b6fv8by0xb40000gn/T/php506tbggdgrhfboycshm
+            [error] => 0
+            [size] => 227827
+        )
+
+)
+
+[2025-05-20 22:08:49] Checking file upload...
+[2025-05-20 22:08:49] File received: minimalist_sofa.jpg (227827 bytes, type: image/jpeg)
+[2025-05-20 22:08:49] File validation successful. MIME type: image/jpeg
+[2025-05-20 22:08:49] Generated target path: uploads/img_682cd3414f672_1747768129.jpg
+[2025-05-20 22:08:49] Moving file from /private/var/folders/29/6bbz0ptn075b0b6fv8by0xb40000gn/T/php506tbggdgrhfboycshm to uploads/img_682cd3414f672_1747768129.jpg
+[2025-05-20 22:08:49] File successfully moved to target location.
+[2025-05-20 22:08:49] File is ready for processing: exists=true, readable=true, size=227827 bytes
+[2025-05-20 22:08:49] Generated prompt: I'm uploading a photo of my office. Create a realistic redesign of this exact room using traditional style. IMPORTANT: Strictly maintain the exact same dimensions, proportions, wall structure, doorways, windows, and architectural elements as the original photo. Only change the decoration, furniture, colors, and finishes while preserving the exact room structure, layout, and perspective. Transform the room with subtle traditional elements and use a color scheme of red color. The output image must have exactly the same aspect ratio and composition as the input image. Include classic furniture pieces, symmetrical arrangements, rich color palettes, and decorative details like crown molding or wainscoting. Additional specifications: red colors. Generate a photorealistic, high-resolution image of this redesign that precisely matches the dimensions and composition of the input image. The image should be highly detailed, with realistic lighting, shadows, and textures that enhance the traditional aesthetic. Ensure the image has proper proportions with no distortion and maintains a consistent perspective with the original photo. The final result should be a high-quality image with no text overlays, watermarks, or artifacts.
+[2025-05-20 22:08:49] Attempting to generate image with path: uploads/img_682cd3414f672_1747768129.jpg
+[2025-05-20 22:08:49] Verifying image at path: uploads/img_682cd3414f672_1747768129.jpg
+[2025-05-20 22:08:49] Image file verified: exists=true, readable=true, size=227827 bytes
+[2025-05-20 22:08:49] Reading image file contents...
+[2025-05-20 22:08:49] Successfully read image file. Content length: 227827 bytes
+[2025-05-20 22:08:49] Base64 encoding image data...
+[2025-05-20 22:08:49] Base64 encoding complete. Encoded length: 303772 characters
+[2025-05-20 22:08:49] Determining MIME type...
+[2025-05-20 22:08:49] MIME type determined: image/jpeg
+[2025-05-20 22:08:49] Using Gemini 2.0 Flash Preview Image Generation model with prompt: I'm uploading a photo of my office. Create a realistic redesign of this exact room using traditional...
+[2025-05-20 22:08:49] VERIFICATION: Request parts check:
+[2025-05-20 22:08:49] - Text prompt: YES (1233 chars)
+[2025-05-20 22:08:49] - Image data: YES (303772 chars)
+[2025-05-20 22:08:49] - Image MIME type: YES (image/jpeg)
+[2025-05-20 22:08:49] - Role specified: YES (user)
+[2025-05-20 22:08:49] - Response modalities: YES (IMAGE,TEXT)
+[2025-05-20 22:08:49] - Response MIME type: YES (text/plain)
+[2025-05-20 22:08:49] Sending request to Gemini API: Array
+(
+    [contents] => Array
+        (
+            [0] => Array
+                (
+                    [role] => user
+                    [parts] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [text] => I'm uploading a photo of my office. Create a realistic redesign of this exact room using traditional style. IMPORTANT: Strictly maintain the exact same dimensions, proportions, wall structure, doorways, windows, and architectural elements as the original photo. Only change the decoration, furniture, colors, and finishes while preserving the exact room structure, layout, and perspective. Transform the room with subtle traditional elements and use a color scheme of red color. The output image must have exactly the same aspect ratio and composition as the input image. Include classic furniture pieces, symmetrical arrangements, rich color palettes, and decorative details like crown molding or wainscoting. Additional specifications: red colors. Generate a photorealistic, high-resolution image of this redesign that precisely matches the dimensions and composition of the input image. The image should be highly detailed, with realistic lighting, shadows, and textures that enhance the traditional aesthetic. Ensure the image has proper proportions with no distortion and maintains a consistent perspective with the original photo. The final result should be a high-quality image with no text overlays, watermarks, or artifacts.
+                                )
+
+                            [1] => Array
+                                (
+                                    [inlineData] => Array
+                                        (
+                                            [mimeType] => image/jpeg
+                                            [data] => [BASE64_IMAGE_DATA]
+                                        )
+
+                                )
+
+                        )
+
+                )
+
+        )
+
+    [generationConfig] => Array
+        (
+            [temperature] => 0.2
+            [topK] => 32
+            [topP] => 1
+            [maxOutputTokens] => 4096
+            [responseModalities] => Array
+                (
+                    [0] => IMAGE
+                    [1] => TEXT
+                )
+
+            [responseMimeType] => text/plain
+        )
+
+    [safetySettings] => Array
+        (
+            [0] => Array
+                (
+                    [category] => HARM_CATEGORY_HARASSMENT
+                    [threshold] => BLOCK_MEDIUM_AND_ABOVE
+                )
+
+            [1] => Array
+                (
+                    [category] => HARM_CATEGORY_HATE_SPEECH
+                    [threshold] => BLOCK_MEDIUM_AND_ABOVE
+                )
+
+            [2] => Array
+                (
+                    [category] => HARM_CATEGORY_SEXUALLY_EXPLICIT
+                    [threshold] => BLOCK_MEDIUM_AND_ABOVE
+                )
+
+        )
+
+)
+
+[2025-05-20 22:09:10] cURL Info: Array
+(
+    [url] => https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-preview-image-generation:generateContent?key=AIzaSyCRqMuWYw4y5FM3VPEOAiiCY2xTV9hqbNA
+    [content_type] => application/json; charset=UTF-8
+    [http_code] => 400
+    [header_size] => 392
+    [request_size] => 309733
+    [filetime] => -1
+    [ssl_verify_result] => 0
+    [redirect_count] => 0
+    [total_time] => 21.183459
+    [namelookup_time] => 0.004374
+    [connect_time] => 0.087444
+    [pretransfer_time] => 0.28239
+    [size_upload] => 309491
+    [size_download] => 571
+    [speed_download] => 26
+    [speed_upload] => 14610
+    [download_content_length] => -1
+    [upload_content_length] => 309491
+    [starttransfer_time] => 21.181773
+    [redirect_time] => 0
+    [redirect_url] => 
+    [primary_ip] => 142.250.203.234
+    [certinfo] => Array
+        (
+        )
+
+    [primary_port] => 443
+    [local_ip] => 192.168.1.125
+    [local_port] => 50860
+    [http_version] => 3
+    [protocol] => 2
+    [ssl_verifyresult] => 0
+    [scheme] => https
+    [appconnect_time_us] => 281565
+    [connect_time_us] => 87444
+    [namelookup_time_us] => 4374
+    [pretransfer_time_us] => 282390
+    [redirect_time_us] => 0
+    [starttransfer_time_us] => 21181773
+    [posttransfer_time_us] => 8087600
+    [total_time_us] => 21183459
+    [effective_method] => POST
+    [capath] => 
+    [cainfo] => 
+)
+
+[2025-05-20 22:09:10] API Response (HTTP 400): {
+  "error": {
+    "code": 400,
+    "message": "API key expired. Please renew the API key.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "API_KEY_INVALID",
+        "domain": "googleapis.com",
+        "metadata": {
+          "service": "generativelanguage.googleapis.com"
+        }
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.LocalizedMessage",
+        "locale": "en-US",
+        "message": "API key expired. Please renew the API key."
+      }
+    ]
+  }
+}
+...
+[2025-05-20 22:09:10] Error in generateImageWithGemini: API request failed with HTTP code 400. Response: {
+  "error": {
+    "code": 400,
+    "message": "API key expired. Please renew the API key.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "API_KEY_INVALID",
+        "domain": "googleapis.com",
+        "metadata": {
+          "service": "generativelanguage.googleapis.com"
+        }
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.LocalizedMessage",
+        "locale": "en-US",
+        "message": "API key expired. Please renew the API key."
+      }
+    ]
+  }
+}
+
+[2025-05-20 22:09:10] Error: API request failed with HTTP code 400. Response: {
+  "error": {
+    "code": 400,
+    "message": "API key expired. Please renew the API key.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "API_KEY_INVALID",
+        "domain": "googleapis.com",
+        "metadata": {
+          "service": "generativelanguage.googleapis.com"
+        }
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.LocalizedMessage",
+        "locale": "en-US",
+        "message": "API key expired. Please renew the API key."
+      }
+    ]
+  }
+}
+ in /Users/rachadaccoumeh/Desktop/grad/generate_design.php on line 259
+[2025-05-20 22:24:19] 
+================================================================================
+[2025-05-20 22:24:19] New request
+[2025-05-20 22:24:19] POST data: Array
+(
+    [roomType] => office
+    [designStyle] => traditional
+    [colorScheme] => red color
+    [styleIntensity] => 1
+    [additionalInstructions] => red colors
+    [variationCount] => 1
+)
+
+[2025-05-20 22:24:19] FILES data: Array
+(
+    [imageUpload] => Array
+        (
+            [name] => minimalist_sofa.jpg
+            [full_path] => minimalist_sofa.jpg
+            [type] => image/jpeg
+            [tmp_name] => /private/var/folders/29/6bbz0ptn075b0b6fv8by0xb40000gn/T/php60c7fo3bkq8m5cUT17I
+            [error] => 0
+            [size] => 227827
+        )
+
+)
+
+[2025-05-20 22:24:19] Checking file upload...
+[2025-05-20 22:24:19] File received: minimalist_sofa.jpg (227827 bytes, type: image/jpeg)
+[2025-05-20 22:24:19] File validation successful. MIME type: image/jpeg
+[2025-05-20 22:24:19] Generated target path: uploads/img_682cd6e347f84_1747769059.jpg
+[2025-05-20 22:24:19] Moving file from /private/var/folders/29/6bbz0ptn075b0b6fv8by0xb40000gn/T/php60c7fo3bkq8m5cUT17I to uploads/img_682cd6e347f84_1747769059.jpg
+[2025-05-20 22:24:19] File successfully moved to target location.
+[2025-05-20 22:24:19] File is ready for processing: exists=true, readable=true, size=227827 bytes
+[2025-05-20 22:24:19] Generated prompt: I'm uploading a photo of my office. Create a realistic redesign of this exact room using traditional style. IMPORTANT: Strictly maintain the exact same dimensions, proportions, wall structure, doorways, windows, and architectural elements as the original photo. Only change the decoration, furniture, colors, and finishes while preserving the exact room structure, layout, and perspective. Transform the room with subtle traditional elements and use a color scheme of red color. The output image must have exactly the same aspect ratio and composition as the input image. Include classic furniture pieces, symmetrical arrangements, rich color palettes, and decorative details like crown molding or wainscoting. Additional specifications: red colors. Generate a photorealistic, high-resolution image of this redesign that precisely matches the dimensions and composition of the input image. The image should be highly detailed, with realistic lighting, shadows, and textures that enhance the traditional aesthetic. Ensure the image has proper proportions with no distortion and maintains a consistent perspective with the original photo. The final result should be a high-quality image with no text overlays, watermarks, or artifacts.
+[2025-05-20 22:24:19] Attempting to generate image with path: uploads/img_682cd6e347f84_1747769059.jpg
+[2025-05-20 22:24:19] Verifying image at path: uploads/img_682cd6e347f84_1747769059.jpg
+[2025-05-20 22:24:19] Image file verified: exists=true, readable=true, size=227827 bytes
+[2025-05-20 22:24:19] Reading image file contents...
+[2025-05-20 22:24:19] Successfully read image file. Content length: 227827 bytes
+[2025-05-20 22:24:19] Base64 encoding image data...
+[2025-05-20 22:24:19] Base64 encoding complete. Encoded length: 303772 characters
+[2025-05-20 22:24:19] Determining MIME type...
+[2025-05-20 22:24:19] MIME type determined: image/jpeg
+[2025-05-20 22:24:19] Using Gemini 2.0 Flash Preview Image Generation model with prompt: I'm uploading a photo of my office. Create a realistic redesign of this exact room using traditional...
+[2025-05-20 22:24:19] VERIFICATION: Request parts check:
+[2025-05-20 22:24:19] - Text prompt: YES (1233 chars)
+[2025-05-20 22:24:19] - Image data: YES (303772 chars)
+[2025-05-20 22:24:19] - Image MIME type: YES (image/jpeg)
+[2025-05-20 22:24:19] - Role specified: YES (user)
+[2025-05-20 22:24:19] - Response modalities: YES (IMAGE,TEXT)
+[2025-05-20 22:24:19] - Response MIME type: YES (text/plain)
+[2025-05-20 22:24:19] Sending request to Gemini API: Array
+(
+    [contents] => Array
+        (
+            [0] => Array
+                (
+                    [role] => user
+                    [parts] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [text] => I'm uploading a photo of my office. Create a realistic redesign of this exact room using traditional style. IMPORTANT: Strictly maintain the exact same dimensions, proportions, wall structure, doorways, windows, and architectural elements as the original photo. Only change the decoration, furniture, colors, and finishes while preserving the exact room structure, layout, and perspective. Transform the room with subtle traditional elements and use a color scheme of red color. The output image must have exactly the same aspect ratio and composition as the input image. Include classic furniture pieces, symmetrical arrangements, rich color palettes, and decorative details like crown molding or wainscoting. Additional specifications: red colors. Generate a photorealistic, high-resolution image of this redesign that precisely matches the dimensions and composition of the input image. The image should be highly detailed, with realistic lighting, shadows, and textures that enhance the traditional aesthetic. Ensure the image has proper proportions with no distortion and maintains a consistent perspective with the original photo. The final result should be a high-quality image with no text overlays, watermarks, or artifacts.
+                                )
+
+                            [1] => Array
+                                (
+                                    [inlineData] => Array
+                                        (
+                                            [mimeType] => image/jpeg
+                                            [data] => [BASE64_IMAGE_DATA]
+                                        )
+
+                                )
+
+                        )
+
+                )
+
+        )
+
+    [generationConfig] => Array
+        (
+            [temperature] => 0.2
+            [topK] => 32
+            [topP] => 1
+            [maxOutputTokens] => 4096
+            [responseModalities] => Array
+                (
+                    [0] => IMAGE
+                    [1] => TEXT
+                )
+
+            [responseMimeType] => text/plain
+        )
+
+    [safetySettings] => Array
+        (
+            [0] => Array
+                (
+                    [category] => HARM_CATEGORY_HARASSMENT
+                    [threshold] => BLOCK_MEDIUM_AND_ABOVE
+                )
+
+            [1] => Array
+                (
+                    [category] => HARM_CATEGORY_HATE_SPEECH
+                    [threshold] => BLOCK_MEDIUM_AND_ABOVE
+                )
+
+            [2] => Array
+                (
+                    [category] => HARM_CATEGORY_SEXUALLY_EXPLICIT
+                    [threshold] => BLOCK_MEDIUM_AND_ABOVE
+                )
+
+        )
+
+)
+
+[2025-05-20 22:25:24] 
+================================================================================
+[2025-05-20 22:25:24] New request
+[2025-05-20 22:25:24] POST data: Array
+(
+    [roomType] => living room
+    [designStyle] => industrial
+    [colorScheme] => red
+    [styleIntensity] => 2
+    [additionalInstructions] => modern
+    [variationCount] => 1
+)
+
+[2025-05-20 22:25:24] FILES data: Array
+(
+    [imageUpload] => Array
+        (
+            [name] => minimalist_sofa.jpg
+            [full_path] => minimalist_sofa.jpg
+            [type] => image/jpeg
+            [tmp_name] => /private/var/folders/29/6bbz0ptn075b0b6fv8by0xb40000gn/T/phpdg6g1bac7rc08mNFJiI
+            [error] => 0
+            [size] => 227827
+        )
+
+)
+
+[2025-05-20 22:25:24] Checking file upload...
+[2025-05-20 22:25:24] File received: minimalist_sofa.jpg (227827 bytes, type: image/jpeg)
+[2025-05-20 22:25:24] File validation successful. MIME type: image/jpeg
+[2025-05-20 22:25:24] Generated target path: uploads/img_682cd72493914_1747769124.jpg
+[2025-05-20 22:25:24] Moving file from /private/var/folders/29/6bbz0ptn075b0b6fv8by0xb40000gn/T/phpdg6g1bac7rc08mNFJiI to uploads/img_682cd72493914_1747769124.jpg
+[2025-05-20 22:25:24] File successfully moved to target location.
+[2025-05-20 22:25:24] File is ready for processing: exists=true, readable=true, size=227827 bytes
+[2025-05-20 22:25:24] Generated prompt: I'm uploading a photo of my living room. Create a realistic redesign of this exact room using industrial style. IMPORTANT: Strictly maintain the exact same dimensions, proportions, wall structure, doorways, windows, and architectural elements as the original photo. Only change the decoration, furniture, colors, and finishes while preserving the exact room structure, layout, and perspective. Transform the room with moderate industrial elements and use a color scheme of red. The output image must have exactly the same aspect ratio and composition as the input image. Incorporate exposed brick or concrete, metal fixtures, vintage or repurposed furniture, and an unfinished, raw aesthetic. Additional specifications: modern. Generate a photorealistic, high-resolution image of this redesign that precisely matches the dimensions and composition of the input image. The image should be highly detailed, with realistic lighting, shadows, and textures that enhance the industrial aesthetic. Ensure the image has proper proportions with no distortion and maintains a consistent perspective with the original photo. The final result should be a high-quality image with no text overlays, watermarks, or artifacts.
+[2025-05-20 22:25:24] Attempting to generate image with path: uploads/img_682cd72493914_1747769124.jpg
+[2025-05-20 22:25:24] Verifying image at path: uploads/img_682cd72493914_1747769124.jpg
+[2025-05-20 22:25:24] Image file verified: exists=true, readable=true, size=227827 bytes
+[2025-05-20 22:25:24] Reading image file contents...
+[2025-05-20 22:25:24] Successfully read image file. Content length: 227827 bytes
+[2025-05-20 22:25:24] Base64 encoding image data...
+[2025-05-20 22:25:24] Base64 encoding complete. Encoded length: 303772 characters
+[2025-05-20 22:25:24] Determining MIME type...
+[2025-05-20 22:25:24] MIME type determined: image/jpeg
+[2025-05-20 22:25:24] Using Gemini 2.0 Flash Preview Image Generation model with prompt: I'm uploading a photo of my living room. Create a realistic redesign of this exact room using indust...
+[2025-05-20 22:25:24] VERIFICATION: Request parts check:
+[2025-05-20 22:25:24] - Text prompt: YES (1210 chars)
+[2025-05-20 22:25:24] - Image data: YES (303772 chars)
+[2025-05-20 22:25:24] - Image MIME type: YES (image/jpeg)
+[2025-05-20 22:25:24] - Role specified: YES (user)
+[2025-05-20 22:25:24] - Response modalities: YES (IMAGE,TEXT)
+[2025-05-20 22:25:24] - Response MIME type: YES (text/plain)
+[2025-05-20 22:25:24] Sending request to Gemini API: Array
+(
+    [contents] => Array
+        (
+            [0] => Array
+                (
+                    [role] => user
+                    [parts] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [text] => I'm uploading a photo of my living room. Create a realistic redesign of this exact room using industrial style. IMPORTANT: Strictly maintain the exact same dimensions, proportions, wall structure, doorways, windows, and architectural elements as the original photo. Only change the decoration, furniture, colors, and finishes while preserving the exact room structure, layout, and perspective. Transform the room with moderate industrial elements and use a color scheme of red. The output image must have exactly the same aspect ratio and composition as the input image. Incorporate exposed brick or concrete, metal fixtures, vintage or repurposed furniture, and an unfinished, raw aesthetic. Additional specifications: modern. Generate a photorealistic, high-resolution image of this redesign that precisely matches the dimensions and composition of the input image. The image should be highly detailed, with realistic lighting, shadows, and textures that enhance the industrial aesthetic. Ensure the image has proper proportions with no distortion and maintains a consistent perspective with the original photo. The final result should be a high-quality image with no text overlays, watermarks, or artifacts.
+                                )
+
+                            [1] => Array
+                                (
+                                    [inlineData] => Array
+                                        (
+                                            [mimeType] => image/jpeg
+                                            [data] => [BASE64_IMAGE_DATA]
+                                        )
+
+                                )
+
+                        )
+
+                )
+
+        )
+
+    [generationConfig] => Array
+        (
+            [temperature] => 0.2
+            [topK] => 32
+            [topP] => 1
+            [maxOutputTokens] => 4096
+            [responseModalities] => Array
+                (
+                    [0] => IMAGE
+                    [1] => TEXT
+                )
+
+            [responseMimeType] => text/plain
+        )
+
+    [safetySettings] => Array
+        (
+            [0] => Array
+                (
+                    [category] => HARM_CATEGORY_HARASSMENT
+                    [threshold] => BLOCK_MEDIUM_AND_ABOVE
+                )
+
+            [1] => Array
+                (
+                    [category] => HARM_CATEGORY_HATE_SPEECH
+                    [threshold] => BLOCK_MEDIUM_AND_ABOVE
+                )
+
+            [2] => Array
+                (
+                    [category] => HARM_CATEGORY_SEXUALLY_EXPLICIT
+                    [threshold] => BLOCK_MEDIUM_AND_ABOVE
+                )
+
+        )
+
+)
+
+[2025-05-20 22:26:37] 
+================================================================================
+[2025-05-20 22:26:37] New request
+[2025-05-20 22:26:37] POST data: Array
+(
+    [roomType] => living room
+    [designStyle] => industrial
+    [colorScheme] => red
+    [styleIntensity] => 2
+    [additionalInstructions] => modern
+    [variationCount] => 1
+)
+
+[2025-05-20 22:26:37] FILES data: Array
+(
+    [imageUpload] => Array
+        (
+            [name] => minimalist_sofa.jpg
+            [full_path] => minimalist_sofa.jpg
+            [type] => image/jpeg
+            [tmp_name] => /private/var/folders/29/6bbz0ptn075b0b6fv8by0xb40000gn/T/phpfehnpdc9thlcaaMgtvy
+            [error] => 0
+            [size] => 227827
+        )
+
+)
+
+[2025-05-20 22:26:37] Checking file upload...
+[2025-05-20 22:26:37] File received: minimalist_sofa.jpg (227827 bytes, type: image/jpeg)
+[2025-05-20 22:26:37] File validation successful. MIME type: image/jpeg
+[2025-05-20 22:26:37] Generated target path: uploads/img_682cd76de60a7_1747769197.jpg
+[2025-05-20 22:26:37] Moving file from /private/var/folders/29/6bbz0ptn075b0b6fv8by0xb40000gn/T/phpfehnpdc9thlcaaMgtvy to uploads/img_682cd76de60a7_1747769197.jpg
+[2025-05-20 22:26:37] File successfully moved to target location.
+[2025-05-20 22:26:37] File is ready for processing: exists=true, readable=true, size=227827 bytes
+[2025-05-20 22:26:37] Generated prompt: I'm uploading a photo of my living room. Create a realistic redesign of this exact room using industrial style. IMPORTANT: Strictly maintain the exact same dimensions, proportions, wall structure, doorways, windows, and architectural elements as the original photo. Only change the decoration, furniture, colors, and finishes while preserving the exact room structure, layout, and perspective. Transform the room with moderate industrial elements and use a color scheme of red. The output image must have exactly the same aspect ratio and composition as the input image. Incorporate exposed brick or concrete, metal fixtures, vintage or repurposed furniture, and an unfinished, raw aesthetic. Additional specifications: modern. Generate a photorealistic, high-resolution image of this redesign that precisely matches the dimensions and composition of the input image. The image should be highly detailed, with realistic lighting, shadows, and textures that enhance the industrial aesthetic. Ensure the image has proper proportions with no distortion and maintains a consistent perspective with the original photo. The final result should be a high-quality image with no text overlays, watermarks, or artifacts.
+[2025-05-20 22:26:37] Attempting to generate image with path: uploads/img_682cd76de60a7_1747769197.jpg
+[2025-05-20 22:26:37] Verifying image at path: uploads/img_682cd76de60a7_1747769197.jpg
+[2025-05-20 22:26:37] Image file verified: exists=true, readable=true, size=227827 bytes
+[2025-05-20 22:26:37] Reading image file contents...
+[2025-05-20 22:26:37] Successfully read image file. Content length: 227827 bytes
+[2025-05-20 22:26:37] Base64 encoding image data...
+[2025-05-20 22:26:37] Base64 encoding complete. Encoded length: 303772 characters
+[2025-05-20 22:26:37] Determining MIME type...
+[2025-05-20 22:26:37] MIME type determined: image/jpeg
+[2025-05-20 22:26:37] Using Gemini 2.0 Flash Preview Image Generation model with prompt: I'm uploading a photo of my living room. Create a realistic redesign of this exact room using indust...
+[2025-05-20 22:26:37] VERIFICATION: Request parts check:
+[2025-05-20 22:26:37] - Text prompt: YES (1210 chars)
+[2025-05-20 22:26:37] - Image data: YES (303772 chars)
+[2025-05-20 22:26:37] - Image MIME type: YES (image/jpeg)
+[2025-05-20 22:26:37] - Role specified: YES (user)
+[2025-05-20 22:26:37] - Response modalities: YES (IMAGE,TEXT)
+[2025-05-20 22:26:37] - Response MIME type: YES (text/plain)
+[2025-05-20 22:26:37] Sending request to Gemini API: Array
+(
+    [contents] => Array
+        (
+            [0] => Array
+                (
+                    [role] => user
+                    [parts] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [text] => I'm uploading a photo of my living room. Create a realistic redesign of this exact room using industrial style. IMPORTANT: Strictly maintain the exact same dimensions, proportions, wall structure, doorways, windows, and architectural elements as the original photo. Only change the decoration, furniture, colors, and finishes while preserving the exact room structure, layout, and perspective. Transform the room with moderate industrial elements and use a color scheme of red. The output image must have exactly the same aspect ratio and composition as the input image. Incorporate exposed brick or concrete, metal fixtures, vintage or repurposed furniture, and an unfinished, raw aesthetic. Additional specifications: modern. Generate a photorealistic, high-resolution image of this redesign that precisely matches the dimensions and composition of the input image. The image should be highly detailed, with realistic lighting, shadows, and textures that enhance the industrial aesthetic. Ensure the image has proper proportions with no distortion and maintains a consistent perspective with the original photo. The final result should be a high-quality image with no text overlays, watermarks, or artifacts.
+                                )
+
+                            [1] => Array
+                                (
+                                    [inlineData] => Array
+                                        (
+                                            [mimeType] => image/jpeg
+                                            [data] => [BASE64_IMAGE_DATA]
+                                        )
+
+                                )
+
+                        )
+
+                )
+
+        )
+
+    [generationConfig] => Array
+        (
+            [temperature] => 0.2
+            [topK] => 32
+            [topP] => 1
+            [maxOutputTokens] => 4096
+            [responseModalities] => Array
+                (
+                    [0] => IMAGE
+                    [1] => TEXT
+                )
+
+            [responseMimeType] => text/plain
+        )
+
+    [safetySettings] => Array
+        (
+            [0] => Array
+                (
+                    [category] => HARM_CATEGORY_HARASSMENT
+                    [threshold] => BLOCK_MEDIUM_AND_ABOVE
+                )
+
+            [1] => Array
+                (
+                    [category] => HARM_CATEGORY_HATE_SPEECH
+                    [threshold] => BLOCK_MEDIUM_AND_ABOVE
+                )
+
+            [2] => Array
+                (
+                    [category] => HARM_CATEGORY_SEXUALLY_EXPLICIT
+                    [threshold] => BLOCK_MEDIUM_AND_ABOVE
+                )
+
+        )
+
+)
+
+[2025-05-20 22:28:40] 
+================================================================================
+[2025-05-20 22:28:40] New request
+[2025-05-20 22:28:40] POST data: Array
+(
+    [roomType] => living room
+    [designStyle] => industrial
+    [colorScheme] => red
+    [styleIntensity] => 2
+    [additionalInstructions] => modern
+    [variationCount] => 1
+)
+
+[2025-05-20 22:28:40] FILES data: Array
+(
+    [imageUpload] => Array
+        (
+            [name] => minimalist_sofa.jpg
+            [full_path] => minimalist_sofa.jpg
+            [type] => image/jpeg
+            [tmp_name] => /private/var/folders/29/6bbz0ptn075b0b6fv8by0xb40000gn/T/php8cglv1c7nfio2n0GSN8
+            [error] => 0
+            [size] => 227827
+        )
+
+)
+
+[2025-05-20 22:28:40] Checking file upload...
+[2025-05-20 22:28:40] File received: minimalist_sofa.jpg (227827 bytes, type: image/jpeg)
+[2025-05-20 22:28:40] File validation successful. MIME type: image/jpeg
+[2025-05-20 22:28:40] Generated target path: uploads/img_682cd7e81847c_1747769320.jpg
+[2025-05-20 22:28:40] Moving file from /private/var/folders/29/6bbz0ptn075b0b6fv8by0xb40000gn/T/php8cglv1c7nfio2n0GSN8 to uploads/img_682cd7e81847c_1747769320.jpg
+[2025-05-20 22:28:40] File successfully moved to target location.
+[2025-05-20 22:28:40] File is ready for processing: exists=true, readable=true, size=227827 bytes
+[2025-05-20 22:28:40] Generated prompt: I'm uploading a photo of my living room. Create a realistic redesign of this exact room using industrial style. IMPORTANT: Strictly maintain the exact same dimensions, proportions, wall structure, doorways, windows, and architectural elements as the original photo. Only change the decoration, furniture, colors, and finishes while preserving the exact room structure, layout, and perspective. Transform the room with moderate industrial elements and use a color scheme of red. The output image must have exactly the same aspect ratio and composition as the input image. Incorporate exposed brick or concrete, metal fixtures, vintage or repurposed furniture, and an unfinished, raw aesthetic. Additional specifications: modern. Generate a photorealistic, high-resolution image of this redesign that precisely matches the dimensions and composition of the input image. The image should be highly detailed, with realistic lighting, shadows, and textures that enhance the industrial aesthetic. Ensure the image has proper proportions with no distortion and maintains a consistent perspective with the original photo. The final result should be a high-quality image with no text overlays, watermarks, or artifacts.
+[2025-05-20 22:28:40] Attempting to generate image with path: uploads/img_682cd7e81847c_1747769320.jpg
+[2025-05-20 22:28:40] Verifying image at path: uploads/img_682cd7e81847c_1747769320.jpg
+[2025-05-20 22:28:40] Image file verified: exists=true, readable=true, size=227827 bytes
+[2025-05-20 22:28:40] Reading image file contents...
+[2025-05-20 22:28:40] Successfully read image file. Content length: 227827 bytes
+[2025-05-20 22:28:40] Base64 encoding image data...
+[2025-05-20 22:28:40] Base64 encoding complete. Encoded length: 303772 characters
+[2025-05-20 22:28:40] Determining MIME type...
+[2025-05-20 22:28:40] MIME type determined: image/jpeg
+[2025-05-20 22:28:40] Using Gemini 2.0 Flash Preview Image Generation model with prompt: I'm uploading a photo of my living room. Create a realistic redesign of this exact room using indust...
+[2025-05-20 22:28:40] VERIFICATION: Request parts check:
+[2025-05-20 22:28:40] - Text prompt: YES (1210 chars)
+[2025-05-20 22:28:40] - Image data: YES (303772 chars)
+[2025-05-20 22:28:40] - Image MIME type: YES (image/jpeg)
+[2025-05-20 22:28:40] - Role specified: YES (user)
+[2025-05-20 22:28:40] - Response modalities: YES (IMAGE,TEXT)
+[2025-05-20 22:28:40] - Response MIME type: YES (text/plain)
+[2025-05-20 22:28:40] Sending request to Gemini API: Array
+(
+    [contents] => Array
+        (
+            [0] => Array
+                (
+                    [role] => user
+                    [parts] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [text] => I'm uploading a photo of my living room. Create a realistic redesign of this exact room using industrial style. IMPORTANT: Strictly maintain the exact same dimensions, proportions, wall structure, doorways, windows, and architectural elements as the original photo. Only change the decoration, furniture, colors, and finishes while preserving the exact room structure, layout, and perspective. Transform the room with moderate industrial elements and use a color scheme of red. The output image must have exactly the same aspect ratio and composition as the input image. Incorporate exposed brick or concrete, metal fixtures, vintage or repurposed furniture, and an unfinished, raw aesthetic. Additional specifications: modern. Generate a photorealistic, high-resolution image of this redesign that precisely matches the dimensions and composition of the input image. The image should be highly detailed, with realistic lighting, shadows, and textures that enhance the industrial aesthetic. Ensure the image has proper proportions with no distortion and maintains a consistent perspective with the original photo. The final result should be a high-quality image with no text overlays, watermarks, or artifacts.
+                                )
+
+                            [1] => Array
+                                (
+                                    [inlineData] => Array
+                                        (
+                                            [mimeType] => image/jpeg
+                                            [data] => [BASE64_IMAGE_DATA]
+                                        )
+
+                                )
+
+                        )
+
+                )
+
+        )
+
+    [generationConfig] => Array
+        (
+            [temperature] => 0.2
+            [topK] => 32
+            [topP] => 1
+            [maxOutputTokens] => 4096
+            [responseModalities] => Array
+                (
+                    [0] => IMAGE
+                    [1] => TEXT
+                )
+
+            [responseMimeType] => text/plain
+        )
+
+    [safetySettings] => Array
+        (
+            [0] => Array
+                (
+                    [category] => HARM_CATEGORY_HARASSMENT
+                    [threshold] => BLOCK_MEDIUM_AND_ABOVE
+                )
+
+            [1] => Array
+                (
+                    [category] => HARM_CATEGORY_HATE_SPEECH
+                    [threshold] => BLOCK_MEDIUM_AND_ABOVE
+                )
+
+            [2] => Array
+                (
+                    [category] => HARM_CATEGORY_SEXUALLY_EXPLICIT
+                    [threshold] => BLOCK_MEDIUM_AND_ABOVE
+                )
+
+        )
+
+)
+
+[2025-05-20 22:31:02] 
+================================================================================
+[2025-05-20 22:31:02] New request
+[2025-05-20 22:31:02] POST data: Array
+(
+    [roomType] => living room
+    [designStyle] => industrial
+    [colorScheme] => red
+    [styleIntensity] => 2
+    [additionalInstructions] => modern
+    [variationCount] => 1
+)
+
+[2025-05-20 22:31:02] FILES data: Array
+(
+    [imageUpload] => Array
+        (
+            [name] => minimalist_sofa.jpg
+            [full_path] => minimalist_sofa.jpg
+            [type] => image/jpeg
+            [tmp_name] => /private/var/folders/29/6bbz0ptn075b0b6fv8by0xb40000gn/T/phps0if6aga9kfp87TKLcl
+            [error] => 0
+            [size] => 227827
+        )
+
+)
+
+[2025-05-20 22:31:02] Checking file upload...
+[2025-05-20 22:31:02] File received: minimalist_sofa.jpg (227827 bytes, type: image/jpeg)
+[2025-05-20 22:31:02] File validation successful. MIME type: image/jpeg
+[2025-05-20 22:31:02] Generated target path: uploads/img_682cd876ce185_1747769462.jpg
+[2025-05-20 22:31:02] Moving file from /private/var/folders/29/6bbz0ptn075b0b6fv8by0xb40000gn/T/phps0if6aga9kfp87TKLcl to uploads/img_682cd876ce185_1747769462.jpg
+[2025-05-20 22:31:02] File successfully moved to target location.
+[2025-05-20 22:31:02] File is ready for processing: exists=true, readable=true, size=227827 bytes
+[2025-05-20 22:31:02] Generated prompt: I'm uploading a photo of my living room. Create a realistic redesign of this exact room using industrial style. IMPORTANT: Strictly maintain the exact same dimensions, proportions, wall structure, doorways, windows, and architectural elements as the original photo. Only change the decoration, furniture, colors, and finishes while preserving the exact room structure, layout, and perspective. Transform the room with moderate industrial elements and use a color scheme of red. The output image must have exactly the same aspect ratio and composition as the input image. Incorporate exposed brick or concrete, metal fixtures, vintage or repurposed furniture, and an unfinished, raw aesthetic. Additional specifications: modern. Generate a photorealistic, high-resolution image of this redesign that precisely matches the dimensions and composition of the input image. The image should be highly detailed, with realistic lighting, shadows, and textures that enhance the industrial aesthetic. Ensure the image has proper proportions with no distortion and maintains a consistent perspective with the original photo. The final result should be a high-quality image with no text overlays, watermarks, or artifacts.
+[2025-05-20 22:31:02] Attempting to generate image with path: uploads/img_682cd876ce185_1747769462.jpg
+[2025-05-20 22:31:02] Verifying image at path: uploads/img_682cd876ce185_1747769462.jpg
+[2025-05-20 22:31:02] Image file verified: exists=true, readable=true, size=227827 bytes
+[2025-05-20 22:31:02] Reading image file contents...
+[2025-05-20 22:31:02] Successfully read image file. Content length: 227827 bytes
+[2025-05-20 22:31:02] Base64 encoding image data...
+[2025-05-20 22:31:02] Base64 encoding complete. Encoded length: 303772 characters
+[2025-05-20 22:31:02] Determining MIME type...
+[2025-05-20 22:31:02] MIME type determined: image/jpeg
+[2025-05-20 22:31:02] Using Gemini 2.0 Flash Preview Image Generation model with prompt: I'm uploading a photo of my living room. Create a realistic redesign of this exact room using indust...
+[2025-05-20 22:31:02] VERIFICATION: Request parts check:
+[2025-05-20 22:31:02] - Text prompt: YES (1210 chars)
+[2025-05-20 22:31:02] - Image data: YES (303772 chars)
+[2025-05-20 22:31:02] - Image MIME type: YES (image/jpeg)
+[2025-05-20 22:31:02] - Role specified: YES (user)
+[2025-05-20 22:31:02] - Response modalities: YES (IMAGE,TEXT)
+[2025-05-20 22:31:02] - Response MIME type: YES (text/plain)
+[2025-05-20 22:31:02] Sending request to Gemini API: Array
+(
+    [contents] => Array
+        (
+            [0] => Array
+                (
+                    [role] => user
+                    [parts] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [text] => I'm uploading a photo of my living room. Create a realistic redesign of this exact room using industrial style. IMPORTANT: Strictly maintain the exact same dimensions, proportions, wall structure, doorways, windows, and architectural elements as the original photo. Only change the decoration, furniture, colors, and finishes while preserving the exact room structure, layout, and perspective. Transform the room with moderate industrial elements and use a color scheme of red. The output image must have exactly the same aspect ratio and composition as the input image. Incorporate exposed brick or concrete, metal fixtures, vintage or repurposed furniture, and an unfinished, raw aesthetic. Additional specifications: modern. Generate a photorealistic, high-resolution image of this redesign that precisely matches the dimensions and composition of the input image. The image should be highly detailed, with realistic lighting, shadows, and textures that enhance the industrial aesthetic. Ensure the image has proper proportions with no distortion and maintains a consistent perspective with the original photo. The final result should be a high-quality image with no text overlays, watermarks, or artifacts.
+                                )
+
+                            [1] => Array
+                                (
+                                    [inlineData] => Array
+                                        (
+                                            [mimeType] => image/jpeg
+                                            [data] => [BASE64_IMAGE_DATA]
+                                        )
+
+                                )
+
+                        )
+
+                )
+
+        )
+
+    [generationConfig] => Array
+        (
+            [temperature] => 0.2
+            [topK] => 32
+            [topP] => 1
+            [maxOutputTokens] => 4096
+            [responseModalities] => Array
+                (
+                    [0] => IMAGE
+                    [1] => TEXT
+                )
+
+            [responseMimeType] => text/plain
+        )
+
+    [safetySettings] => Array
+        (
+            [0] => Array
+                (
+                    [category] => HARM_CATEGORY_HARASSMENT
+                    [threshold] => BLOCK_MEDIUM_AND_ABOVE
+                )
+
+            [1] => Array
+                (
+                    [category] => HARM_CATEGORY_HATE_SPEECH
+                    [threshold] => BLOCK_MEDIUM_AND_ABOVE
+                )
+
+            [2] => Array
+                (
+                    [category] => HARM_CATEGORY_SEXUALLY_EXPLICIT
+                    [threshold] => BLOCK_MEDIUM_AND_ABOVE
+                )
+
+        )
+
+)
+
+[2025-05-20 22:31:44] cURL Info: Array
+(
+    [url] => https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-preview-image-generation:generateContent?key=AIzaSyA6ts-Bin0P7xDCUqAHd24M4PA5yjRvqmc
+    [content_type] => application/json; charset=UTF-8
+    [http_code] => 200
+    [header_size] => 392
+    [request_size] => 309710
+    [filetime] => -1
+    [ssl_verify_result] => 0
+    [redirect_count] => 0
+    [total_time] => 41.592112
+    [namelookup_time] => 0.003254
+    [connect_time] => 0.087811
+    [pretransfer_time] => 0.283572
+    [size_upload] => 309468
+    [size_download] => 2461651
+    [speed_download] => 59185
+    [speed_upload] => 7440
+    [download_content_length] => -1
+    [upload_content_length] => 309468
+    [starttransfer_time] => 19.872453
+    [redirect_time] => 0
+    [redirect_url] => 
+    [primary_ip] => 172.217.21.10
+    [certinfo] => Array
+        (
+        )
+
+    [primary_port] => 443
+    [local_ip] => 192.168.1.125
+    [local_port] => 58186
+    [http_version] => 3
+    [protocol] => 2
+    [ssl_verifyresult] => 0
+    [scheme] => https
+    [appconnect_time_us] => 280944
+    [connect_time_us] => 87811
+    [namelookup_time_us] => 3254
+    [pretransfer_time_us] => 283572
+    [redirect_time_us] => 0
+    [starttransfer_time_us] => 19872453
+    [posttransfer_time_us] => 5104734
+    [total_time_us] => 41592112
+    [effective_method] => POST
+    [capath] => 
+    [cainfo] => 
+)
+
+[2025-05-20 22:31:44] API Response (HTTP 200): {
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "I will redesign your living room in a realistic industrial style, maintaining all existing architectural elements, dimensions, and perspective. The new design will feature exposed brick walls, metal light fixtures, vintage-inspired furniture with a red color scheme, and concrete accents, creating a modern industrial aesthetic with a raw, unfinished feel.\n\n"
+          },
+          {
+            "inlineData": {
+              "mimeType": "image/png",
+              "data": "iVBORw0KGgoAAAANSUhEUgAABAAAAAQACAIAAADwf7zUAAAAiXpUWHRSYXcgcHJvZmlsZSB0eXBlIGlwdGMAAAiZTYwxDgIxDAT7vOKekDjrtV1T0VHwgbtcIiEhgfh/QaDgmGlWW0w6X66n5fl6jNu9p+ULkapDENgzpj+Kl5aFfa6KnYWgSjZjGOiSYRxTY/v8KIijI/rXyc236kHdAK22RvHVummEN+91ML0BQ+siou79WmMAAAKHaVRYdFhNTDpjb20uYWRvYmUueG1wAAAAAAA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJYTVAgQ29yZS...
+[2025-05-20 22:31:44] RESPONSE ANALYSIS BEGIN ========================
+[2025-05-20 22:31:44] HTTP Status Code: 200
+[2025-05-20 22:31:44] Response top-level keys: candidates, usageMetadata, modelVersion
+[2025-05-20 22:31:44] Candidates count: 1
+[2025-05-20 22:31:44] First candidate content keys: parts, role
+[2025-05-20 22:31:44] Parts count: 2
+[2025-05-20 22:31:44] Part 0 keys: text
+[2025-05-20 22:31:44] Part 0 has text: I will redesign your living room in a realistic industrial style, maintaining all existing architect...
+[2025-05-20 22:31:44] Part 1 keys: inlineData
+[2025-05-20 22:31:44] Part 1 has inlineData with keys: mimeType, data
+[2025-05-20 22:31:44] Part 1 inlineData mimeType: image/png
+[2025-05-20 22:31:44] Part 1 has inlineData with data length: 2460476 chars
+[2025-05-20 22:31:44] Saving first 1000 characters of response for debugging
+[2025-05-20 22:31:44] Extracted 1 images from the response
+[2025-05-20 22:31:44] Generation successful. 1 images generated.

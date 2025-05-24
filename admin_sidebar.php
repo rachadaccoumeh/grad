@@ -12,7 +12,7 @@ function isActive($page, $current) {
 }
 ?>
 
-<div class="navigation">
+<div class="navigation" style="overflow-y: auto !important; overflow-x: hidden !important; -ms-overflow-style: none !important; scrollbar-width: none !important;">
     <ul>
         <!-- Logo item - not clickable -->
         <li>
@@ -56,6 +56,12 @@ function isActive($page, $current) {
             <a href="orders.php">
                 <span class="icon"><i class='bx bx-package'></i></span>
                 <span class="title">Orders</span>
+            </a>
+        </li>
+        <li class="<?php echo isActive('companies', $current_page); ?>">
+            <a href="companies.php">
+                <span class="icon"><i class='bx bx-building'></i></span>
+                <span class="title">Companies</span>
             </a>
         </li>
         <li>

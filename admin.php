@@ -71,6 +71,7 @@ while ($row = $categoryResult->fetch_assoc()) {
             overflow-x: hidden;
             margin: 0;
             padding: 0;
+            min-height: 100vh;
         }
         
         /* Custom layout structure */
@@ -89,6 +90,19 @@ while ($row = $categoryResult->fetch_assoc()) {
             z-index: 1000 !important;
             transition: 0.5s !important;
             left: 0 !important;
+            overflow-y: auto !important;
+            overflow-x: hidden !important;
+        }
+        
+        /* Hide scrollbar for all browsers */
+        .navigation::-webkit-scrollbar {
+            display: none !important;
+            width: 0 !important;
+        }
+        
+        .navigation {
+            -ms-overflow-style: none !important;  /* IE and Edge */
+            scrollbar-width: none !important;  /* Firefox */
         }
         
         /* Fix the main content area */
@@ -96,9 +110,12 @@ while ($row = $categoryResult->fetch_assoc()) {
             margin-left: 250px !important;
             width: calc(100% - 250px) !important;
             min-height: 100vh !important;
+            height: auto !important;
             transition: margin-left 0.3s ease, width 0.3s ease !important;
             position: relative !important;
-            overflow-x: hidden !important;
+            overflow: hidden !important;
+            display: flex !important;
+            flex-direction: column !important;
         }
         
         /* Handle sidebar toggle states */
@@ -149,12 +166,18 @@ while ($row = $categoryResult->fetch_assoc()) {
             overflow-x: hidden !important;
             padding: 20px !important;
             box-sizing: border-box !important;
+            height: auto !important;
+            min-height: calc(100vh - 60px) !important;
         }
         
         /* Override any existing styles */
         .main, .container {
             all: unset !important;
-            display: contents !important;
+            display: flex !important;
+            flex-direction: column !important;
+            flex: 1 !important;
+            overflow: hidden !important;
+            width: 100% !important;
         }
     </style>
 </head>

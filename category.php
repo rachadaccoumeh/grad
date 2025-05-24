@@ -50,7 +50,7 @@ if (empty($category)) {
 }
 
 // Get products from database filtered by category
-$query = "SELECT * FROM products WHERE category = ? ORDER BY date_added DESC";
+$query = "SELECT * FROM products WHERE category = ? AND stock_quantity > 0 ORDER BY date_added DESC";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("s", $db_category);
 $stmt->execute();

@@ -679,16 +679,14 @@ require_once 'config.php'; // We'll create this next
     };
     
     // Download function
-    window.downloadImage = function(imageId, filename) {
-      const img = document.getElementById(imageId);
-      if (img) {
-        const link = document.createElement('a');
-        link.href = img.src;
-        link.download = filename;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      }
+    window.downloadImage = function(imageSrc, filename) {
+      // Create a temporary link element
+      const link = document.createElement('a');
+      link.href = imageSrc;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     };
   </script>
 </body>

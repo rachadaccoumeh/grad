@@ -224,11 +224,25 @@ if (isset($_SESSION['user_id'])) {
 
     .custom-item {
       display: grid;
-      grid-template-columns: 1fr auto;
+      grid-template-columns: auto 1fr auto;
       gap: 15px;
       margin-bottom: 15px;
       padding-bottom: 15px;
       border-bottom: 1px solid rgba(36, 66, 76, 0.1);
+    }
+    
+    .item-image {
+      width: 120px;
+      height: 120px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .item-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .item-details {
@@ -504,6 +518,15 @@ if (isset($_SESSION['user_id'])) {
       <div class="custom-request-summary">
         <?php if ($custom_request): ?>
         <div class="custom-item">
+          <!-- Image display section -->
+          <div class="item-image">
+            <?php if (!empty($custom_request['image_path']) && file_exists($custom_request['image_path'])): ?>
+              <img src="<?php echo htmlspecialchars($custom_request['image_path']); ?>" alt="Custom <?php echo htmlspecialchars($custom_request['product_type']); ?>">
+            <?php else: ?>
+              <img src="images/placeholder-furniture.jpg" alt="Custom Product Placeholder">
+            <?php endif; ?>
+          </div>
+          
           <div class="item-details">
             <div class="item-name">Custom <?php echo htmlspecialchars($custom_request['product_type']); ?></div>
             <div class="item-description">

@@ -2,8 +2,8 @@
 /**
  * save_order.php - Handles saving order data to the database
  * 
- * This file processes the order data from the checkout form and saves it to the database.
- * It returns a JSON response indicating success or failure.
+ * This file processes the order data from the checkout form and saves it to the database,
+ * updates product stock quantities, and returns a JSON response indicating success or failure.
  */
 
 // Set content type to JSON
@@ -26,6 +26,9 @@ try {
     
     // Create connection with error suppression
     $conn = @new mysqli($servername, $username, $password, $dbname);
+    
+    // Enable transaction support
+    $conn->autocommit(false);
     
     // Check connection
     if ($conn->connect_error) {
@@ -205,6 +208,27 @@ try {
                 $productRow = $productResult->fetch_assoc();
                 $productId = $productRow['id'];
                 error_log("Found product ID: $productId for cart item ID: $cartItemId");
+                
+                // Check product stock availability
+                $stockCheckSql = "SELECT stock_quantity FROM products WHERE id = $productId";
+                $stockResult = $conn->query($stockCheckSql);
+                
+                if ($stockResult && $stockResult->num_rows > 0) {
+                    $stockRow = $stockResult->fetch_assoc();
+                    $currentStock = (int)$stockRow['stock_quantity'];
+                    error_log("Current stock for product ID $productId: $currentStock, Requested: $quantity");
+                    
+                    // Check if we have enough stock
+                    if ($currentStock < $quantity) {
+                        error_log("Insufficient stock for product ID: $productId. Available: $currentStock, Requested: $quantity");
+                        $itemsSkipped++;
+                        continue;
+                    }
+                } else {
+                    error_log("Could not retrieve stock information for product ID: $productId");
+                    $itemsSkipped++;
+                    continue;
+                }
             } else {
                 error_log("Could not find product for cart item ID: $cartItemId");
                 $itemsSkipped++;
@@ -231,13 +255,29 @@ try {
             
             // Execute the query
             if ($conn->query($itemSql)) {
-                $itemsSaved++;
-                error_log("Successfully saved order item for product ID: $productId");
+                // Update the product stock quantity
+                $newStock = $currentStock - $quantity;
+                $updateStockSql = "UPDATE products SET stock_quantity = $newStock WHERE id = $productId";
+                
+                if ($conn->query($updateStockSql)) {
+                    $itemsSaved++;
+                    error_log("Successfully saved order item and updated stock for product ID: $productId. New stock: $newStock");
+                } else {
+                    error_log('Error updating product stock: ' . $conn->error);
+                    $conn->rollback();
+                    throw new Exception('Error updating product stock for product ID: ' . $productId);
+                }
             } else {
                 error_log('Error saving order item: ' . $conn->error);
                 $itemsSkipped++;
             }
         }
+    }
+    
+    // Commit the transaction if everything was successful
+    if (!$conn->commit()) {
+        error_log('Transaction commit failed: ' . $conn->error);
+        throw new Exception('Transaction commit failed. Please try again.');
     }
     
     // Return success response with detailed information
@@ -259,6 +299,11 @@ try {
     ]);
     
 } catch (Exception $e) {
+    // Rollback the transaction if an error occurred
+    if (isset($conn) && $conn) {
+        $conn->rollback();
+    }
+    
     // Return error response
     echo json_encode([
         'success' => false,

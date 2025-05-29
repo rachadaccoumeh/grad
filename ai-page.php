@@ -105,8 +105,10 @@ require_once 'config.php'; // We'll create this next
     }
     
     .image-preview img {
-      max-width: 100%;
-      max-height: 300px;
+      width: 100%;
+      height: auto;
+      min-height: 400px;
+      object-fit: contain;
       border-radius: 8px;
       border: 1px solid #e0e0e0;
       margin: 10px 0;
@@ -388,14 +390,14 @@ require_once 'config.php'; // We'll create this next
               <textarea class="form-control" id="additionalInstructions" name="additionalInstructions" rows="3" placeholder="Any specific requirements or preferences..."></textarea>
             </div>
             
-            <div class="form-group">
+            <!-- <div class="form-group">
               <label>Number of Variations</label>
               <select class="form-control" id="variationCount" name="variationCount">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="4">4</option>
               </select>
-            </div>
+            </div> -->
           </div>
           
           <button type="submit" class="generate-btn" id="generateBtn">

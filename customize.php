@@ -26,14 +26,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Get user ID if logged in
         $user_id = $_SESSION['user_id'] ?? null;
         
+        // Handle file upload
+        $image_path = null;
+        if (isset($_FILES['product_image']) && $_FILES['product_image']['error'] === UPLOAD_ERR_OK) {
+            // Create upload directory if it doesn't exist
+            $upload_dir = 'uploads/custom_products/';
+            if (!file_exists($upload_dir)) {
+                mkdir($upload_dir, 0755, true);
+            }
+            
+            // Generate unique filename
+            $file_extension = pathinfo($_FILES['product_image']['name'], PATHINFO_EXTENSION);
+            $new_filename = uniqid('custom_') . '_' . time() . '.' . $file_extension;
+            $upload_path = $upload_dir . $new_filename;
+            
+            // Move uploaded file to destination
+            if (move_uploaded_file($_FILES['product_image']['tmp_name'], $upload_path)) {
+                $image_path = $upload_path;
+            } else {
+                throw new Exception("Failed to upload image. Please try again.");
+            }
+        }
+        
         // Insert into database with updated fields for checkout step
         $stmt = $conn->prepare("INSERT INTO custom_requests 
             (user_id, product_type, style, material, wood_type, fabric_type, color, 
-             finish_type, dimensions, add_ons, special_requests, budget, estimated_price) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+             finish_type, dimensions, add_ons, special_requests, budget, estimated_price, image_path) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             
         $stmt->bind_param(
-            'issssssssssdd', 
+            'issssssssssdds', 
             $user_id, 
             $product_type, 
             $style, 
@@ -46,7 +68,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $add_ons, 
             $special_requests, 
             $budget, 
-            $estimated_price
+            $estimated_price,
+            $image_path
         );
         
         if ($stmt->execute()) {

@@ -280,7 +280,12 @@ $result = $conn->query($sql);
         }
         
         .status-delivered {
-            background-color: #5cb85c;
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .status-cancelled {
+            background-color: #f44336;
             color: white;
         }
         
@@ -371,6 +376,21 @@ $result = $conn->query($sql);
         .info-label {
             font-weight: 600;
             color: #24424c;
+        }
+        
+        .status-text-pending {
+            color: #ff9800;
+            font-weight: 600;
+        }
+        
+        .status-text-delivered {
+            color: #4CAF50;
+            font-weight: 600;
+        }
+        
+        .status-text-cancelled {
+            color: #f44336;
+            font-weight: 600;
         }
         
         .items-table {
@@ -488,10 +508,24 @@ $result = $conn->query($sql);
                                         $orderStatus = isset($row['status']) ? $row['status'] : 'pending';
                                         // Normalize status to title case for display
                                         $displayStatus = ucfirst($orderStatus);
+                                        // Add a special label for cancelled orders
+                                        if (strtolower($orderStatus) === 'cancelled') {
+                                            $displayStatus = '<span style="color: white; background-color: #f44336; padding: 3px 6px; border-radius: 3px;">Cancelled</span>';
+                                        }
                                         // Determine button class based on status
-                                        $statusClass = strtolower($orderStatus) === 'pending' ? 'status-pending' : 'status-delivered';
-                                        // Determine next status value
-                                        $nextStatus = strtolower($orderStatus) === 'pending' ? 'delivered' : 'pending';
+                                        if (strtolower($orderStatus) === 'pending') {
+                                            $statusClass = 'status-pending';
+                                            $nextStatus = 'delivered';
+                                        } else if (strtolower($orderStatus) === 'delivered') {
+                                            $statusClass = 'status-delivered';
+                                            $nextStatus = 'cancelled';
+                                        } else if (strtolower($orderStatus) === 'cancelled') {
+                                            $statusClass = 'status-cancelled';
+                                            $nextStatus = 'pending';
+                                        } else {
+                                            $statusClass = 'status-pending';
+                                            $nextStatus = 'delivered';
+                                        }
                                         
                                         // Add success message if status was updated
                                         if (isset($statusMessage) && isset($_POST['order_id']) && $_POST['order_id'] == $row['id']) {
@@ -629,6 +663,7 @@ $result = $conn->query($sql);
                     <div>
                         <h3>Total: $${order.total}</h3>
                         <p>Payment Method: ${order.payment_method}</p>
+                        <p>Status: <span class="${order.status === 'cancelled' ? 'status-text-cancelled' : (order.status === 'delivered' ? 'status-text-delivered' : 'status-text-pending')}">${order.status ? order.status.charAt(0).toUpperCase() + order.status.slice(1) : 'Pending'}</span></p>
                     </div>
                 </div>
                 

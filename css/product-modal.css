@@ -152,6 +152,11 @@
   font-weight: bold;
 }
 
+.out-of-stock {
+  color: #dc3545;
+  font-weight: bold;
+}
+
 /* Quantity selector styles */
 .product-modal-quantity {
   margin-bottom: 20px;

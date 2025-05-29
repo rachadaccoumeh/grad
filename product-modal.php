@@ -18,7 +18,7 @@
           <p><strong>Category:</strong> <span id="modalProductCategory"></span></p>
           <p><strong>Style:</strong> <span id="modalProductStyle"></span></p>
           <p><strong>Size:</strong> <span id="modalProductSize"></span></p>
-          <p><strong>Availability:</strong> <span class="in-stock">In Stock</span></p>
+          <p><strong>Availability:</strong> <span id="modalProductAvailability" class="in-stock">In Stock</span></p>
         </div>
         <div class="product-modal-quantity">
           <label for="quantity">Quantity:</label>

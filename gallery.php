@@ -31,7 +31,7 @@ if (isset($_SESSION['user_id'])) {
 }
 
 // Get featured products from database
-$query = "SELECT * FROM products WHERE is_featured = 1 AND stock_quantity > 0 ORDER BY date_added DESC";
+$query = "SELECT * FROM products WHERE is_featured = 1 ORDER BY date_added DESC";
 $result = $conn->query($query);
 
 // Initialize an array to store products
@@ -456,6 +456,7 @@ function formatPrice($price) {
               data-id="<?php echo htmlspecialchars($product['product_id']); ?>"
               data-size="<?php echo isset($product['size']) ? htmlspecialchars($product['size']) : ''; ?>"
               data-name="<?php echo htmlspecialchars($product['name']); ?>"
+              data-quantity="<?php echo $product['stock_quantity']; ?>"
               data-description="<?php echo htmlspecialchars($product['description']); ?>">
             <img src="<?php echo htmlspecialchars($product['image_path']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>" />
             <h4><?php echo htmlspecialchars($product['name']); ?></h4>

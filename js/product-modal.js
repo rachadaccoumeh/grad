@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const productDescription = card.getAttribute('data-description');
       const productStyle = card.getAttribute('data-style') || 'Not specified';
       const productSize = card.getAttribute('data-size') || 'Not specified';
+      const productQuantity = parseInt(card.getAttribute('data-quantity') || '0');
       const productCategory = document.querySelector('.section-title h3').textContent.replace(' Products', '') || 'All Products';
       const productImage = card.querySelector('img').src;
       
@@ -43,6 +44,16 @@ document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('modalProductCategory').textContent = productCategory;
       document.getElementById('modalProductStyle').textContent = productStyle;
       document.getElementById('modalProductSize').textContent = productSize;
+      
+      // Update availability status based on quantity
+      const availabilityElement = document.getElementById('modalProductAvailability');
+      if (productQuantity <= 0) {
+        availabilityElement.textContent = 'Out of Stock';
+        availabilityElement.className = 'out-of-stock';
+      } else {
+        availabilityElement.textContent = 'In Stock';
+        availabilityElement.className = 'in-stock';
+      }
       document.getElementById('modalProductImage').src = productImage;
       
       // Reset quantity to 1

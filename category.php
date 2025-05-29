@@ -50,7 +50,7 @@ if (empty($category)) {
 }
 
 // Get products from database filtered by category
-$query = "SELECT * FROM products WHERE category = ? AND stock_quantity > 0 ORDER BY date_added DESC";
+$query = "SELECT * FROM products WHERE category = ? ORDER BY date_added DESC";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("s", $db_category);
 $stmt->execute();
@@ -371,6 +371,7 @@ function formatPrice($price) {
               data-id="<?php echo htmlspecialchars($product['product_id']); ?>"
               data-size="<?php echo isset($product['size']) ? htmlspecialchars($product['size']) : ''; ?>"
               data-name="<?php echo htmlspecialchars($product['name']); ?>"
+              data-quantity="<?php echo $product['stock_quantity']; ?>"
               data-description="<?php echo htmlspecialchars($product['description']); ?>">
             <img src="<?php echo htmlspecialchars($product['image_path']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>" />
             <h4><?php echo htmlspecialchars($product['name']); ?></h4>

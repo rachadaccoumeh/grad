@@ -68,6 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
       addToCartBtn.setAttribute('data-name', productName);
       addToCartBtn.setAttribute('data-price', productPrice);
       addToCartBtn.setAttribute('data-image', productImage);
+      addToCartBtn.setAttribute('data-quantity', productQuantity);
       
       // Show the modal
       modal.style.display = 'block';
@@ -111,25 +112,33 @@ document.addEventListener('DOMContentLoaded', function() {
     const productName = this.getAttribute('data-name');
     const productPrice = this.getAttribute('data-price');
     const productImage = this.getAttribute('data-image');
+    const availableQuantity = parseInt(this.getAttribute('data-quantity') || '0');
     
-    // Get quantity
-    const quantity = parseInt(document.getElementById('quantity').value) || 1;
+    // Get requested quantity
+    const requestedQuantity = parseInt(document.getElementById('quantity').value) || 1;
+    
+    // Check if requested quantity is available in stock
+    if (availableQuantity < requestedQuantity) {
+      // Show error message
+      showNotification(`Sorry, only ${availableQuantity} item(s) available in stock.`, true);
+      return;
+    }
     
     // Call the addToCart function from cart.js with quantity
     // If the original addToCart function doesn't support quantity, we'll need to modify it
     try {
       // Try to use the quantity parameter if the function supports it
-      addToCart(productId, productName, productPrice, productImage, quantity);
+      addToCart(productId, productName, productPrice, productImage, requestedQuantity);
     } catch (e) {
       // Fallback to the original function if it doesn't support quantity
       // Add the product multiple times based on quantity
-      for (let i = 0; i < quantity; i++) {
+      for (let i = 0; i < requestedQuantity; i++) {
         addToCart(productId, productName, productPrice, productImage);
       }
     }
     
     // Show success message
-    showNotification(`${quantity} ${quantity > 1 ? 'items' : 'item'} added to cart!`);
+    showNotification(`${requestedQuantity} ${requestedQuantity > 1 ? 'items' : 'item'} added to cart!`);
   });
   
   // Setup image zoom functionality
@@ -186,14 +195,34 @@ document.addEventListener('DOMContentLoaded', function() {
       // Increase quantity
       plusBtn.addEventListener('click', function() {
         let value = parseInt(quantityInput.value);
-        quantityInput.value = value + 1;
+        // Get available quantity from add to cart button
+        const addToCartBtn = document.getElementById('modalAddToCartBtn');
+        const availableQuantity = parseInt(addToCartBtn.getAttribute('data-quantity') || '0');
+        
+        // Only allow increasing if there's enough stock
+        if (value < availableQuantity) {
+          quantityInput.value = value + 1;
+        } else {
+          // Show notification that max quantity reached
+          showNotification(`Maximum available quantity is ${availableQuantity}`, true);
+        }
       });
       
-      // Ensure valid input
+      // Ensure valid input and respect stock limits
       quantityInput.addEventListener('change', function() {
         let value = parseInt(this.value);
         if (isNaN(value) || value < 1) {
           this.value = 1;
+        } else {
+          // Get available quantity from add to cart button
+          const addToCartBtn = document.getElementById('modalAddToCartBtn');
+          const availableQuantity = parseInt(addToCartBtn.getAttribute('data-quantity') || '0');
+          
+          // Cap the value at the available quantity
+          if (value > availableQuantity) {
+            this.value = availableQuantity;
+            showNotification(`Maximum available quantity is ${availableQuantity}`, true);
+          }
         }
       });
     }
@@ -222,7 +251,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   // Function to show notification
-  function showNotification(message) {
+  function showNotification(message, isError = false) {
     // Check if notification container exists, if not create it
     let notificationContainer = document.getElementById('notification-container');
     if (!notificationContainer) {
@@ -238,7 +267,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Create notification element
     const notification = document.createElement('div');
     notification.className = 'notification';
-    notification.style.backgroundColor = '#906e2b';
+    notification.style.backgroundColor = isError ? '#e74c3c' : '#906e2b';
     notification.style.color = 'white';
     notification.style.padding = '12px 20px';
     notification.style.borderRadius = '4px';

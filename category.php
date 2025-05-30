@@ -385,7 +385,8 @@ function formatPrice($price) {
                     data-id="<?php echo htmlspecialchars($product['product_id']); ?>" 
                     data-name="<?php echo htmlspecialchars($product['name']); ?>" 
                     data-price="<?php echo $product['price']; ?>" 
-                    data-image="<?php echo htmlspecialchars($product['image_path']); ?>">Add to cart</button>
+                    data-image="<?php echo htmlspecialchars($product['image_path']); ?>"
+                    data-quantity="<?php echo $product['stock_quantity']; ?>">Add to cart</button>
               </div>
             </div>
           </div>

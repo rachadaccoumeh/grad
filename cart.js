@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
     },
     
     // Add to cart method accessible from gallery.php
-    addToCart: function(button) {
+    addToCart: function(button, requestedQuantity = 1) {
       if (!button) return;
       
       // Get product details from data attributes
@@ -91,18 +91,35 @@ document.addEventListener('DOMContentLoaded', function() {
       const productName = button.getAttribute('data-name');
       const productPrice = button.getAttribute('data-price');
       const productImage = button.getAttribute('data-image');
+      const availableQuantity = parseInt(button.getAttribute('data-quantity') || '0');
       
       if (!productId || !productName || !productPrice) {
         console.error('Missing product data for adding to cart');
         return;
       }
       
+      // Check if there's enough stock available
+      if (availableQuantity < requestedQuantity) {
+        // Show error notification
+        this.showNotification(`Sorry, only ${availableQuantity} item(s) available in stock.`, true);
+        return false;
+      }
+      
       // Check if product already exists in the cart
       const existingItemIndex = this.cart.findIndex(item => item.id === productId);
       
       if (existingItemIndex > -1) {
+        // Check if adding the requested quantity would exceed available stock
+        const currentQuantity = this.cart[existingItemIndex].quantity;
+        const newQuantity = currentQuantity + requestedQuantity;
+        
+        if (newQuantity > availableQuantity) {
+          this.showNotification(`Cannot add ${requestedQuantity} more. Only ${availableQuantity - currentQuantity} more available.`, true);
+          return false;
+        }
+        
         // Increment quantity if product already exists
-        this.cart[existingItemIndex].quantity += 1;
+        this.cart[existingItemIndex].quantity = newQuantity;
       } else {
         // Add new product to cart
         this.cart.push({
@@ -110,7 +127,8 @@ document.addEventListener('DOMContentLoaded', function() {
           name: productName,
           price: parseFloat(productPrice.replace(/[^0-9.-]+/g, '')), // Ensure price is a number
           image: productImage,
-          quantity: 1
+          quantity: requestedQuantity,
+          stockQuantity: availableQuantity // Store stock quantity for future reference
         });
       }
       
@@ -129,6 +147,8 @@ document.addEventListener('DOMContentLoaded', function() {
       
       // Show notification
       this.showNotification(`${productName} added to cart!`);
+      
+      return true;
     },
     
     // Update cart count badge
@@ -229,22 +249,52 @@ document.addEventListener('DOMContentLoaded', function() {
       this.listCart.querySelectorAll('.plus').forEach(button => {
         button.addEventListener('click', function() {
           const index = parseInt(this.getAttribute('data-index'));
-          self.cart[index].quantity++;
-          self.saveCart();
-          self.updateCartUI();
-          self.updateCartCount();
+          const cartItem = self.cart[index];
+          const productId = cartItem.id;
+          
+          // If we already have the stock quantity stored, use it
+          if (cartItem.stockQuantity !== undefined) {
+            if (cartItem.quantity < cartItem.stockQuantity) {
+              // Only increase if there's enough stock
+              cartItem.quantity++;
+              self.saveCart();
+              self.updateCartUI();
+              self.updateCartCount();
+            } else {
+              // Show error notification if at max stock
+              self.showNotification(`Sorry, only ${cartItem.stockQuantity} item(s) available in stock.`, true);
+            }
+          } else {
+            // Get the stock quantity from the database via AJAX if not stored
+            self.checkStockQuantity(productId, (availableQuantity) => {
+              // Store the stock quantity for future reference
+              cartItem.stockQuantity = availableQuantity;
+              self.saveCart();
+              
+              if (cartItem.quantity < availableQuantity) {
+                // Only increase if there's enough stock
+                cartItem.quantity++;
+                self.saveCart();
+                self.updateCartUI();
+                self.updateCartCount();
+              } else {
+                // Show error notification if at max stock
+                self.showNotification(`Sorry, only ${availableQuantity} item(s) available in stock.`, true);
+              }
+            });
+          }
         });
       });
     },
     
     // Show notification when adding to cart
-    showNotification: function(message) {
+    showNotification: function(message, isError = false) {
       const notification = document.createElement('div');
       notification.textContent = message;
       notification.style.position = 'fixed';
       notification.style.bottom = '20px';
       notification.style.right = '20px';
-      notification.style.backgroundColor = '#24424c';
+      notification.style.backgroundColor = isError ? '#e74c3c' : '#24424c';
       notification.style.color = '#fff8e3';
       notification.style.padding = '10px 20px';
       notification.style.borderRadius = '5px';
@@ -259,6 +309,42 @@ document.addEventListener('DOMContentLoaded', function() {
           document.body.removeChild(notification);
         }, 500);
       }, 2000);
+    },
+    
+    // Check stock quantity from the database
+    checkStockQuantity: function(productId, callback) {
+      // Create AJAX request to check stock quantity
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', `check_stock.php?product_id=${productId}`, true);
+      
+      xhr.onload = function() {
+        if (this.status === 200) {
+          try {
+            const response = JSON.parse(this.responseText);
+            if (response.success) {
+              // Call the callback with the available quantity
+              callback(parseInt(response.quantity) || 0);
+            } else {
+              console.error('Error checking stock:', response.message);
+              // Default to 0 if there's an error
+              callback(0);
+            }
+          } catch (e) {
+            console.error('Error parsing stock check response:', e);
+            callback(0);
+          }
+        } else {
+          console.error('Error checking stock. Status:', this.status);
+          callback(0);
+        }
+      };
+      
+      xhr.onerror = function() {
+        console.error('Request error while checking stock');
+        callback(0);
+      };
+      
+      xhr.send();
     }
   };
   
@@ -268,8 +354,8 @@ document.addEventListener('DOMContentLoaded', function() {
     window.cartManager.updateCartCount();
   };
   
-  window.addToCart = function(button) {
-    window.cartManager.addToCart(button);
+  window.addToCart = function(button, quantity = 1) {
+    return window.cartManager.addToCart(button, quantity);
   };
   
   // Initialize the cart
